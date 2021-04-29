@@ -22,7 +22,7 @@ const App = () => {
 
   const val = country.filter(note => note.name.toLowerCase().includes(searchTerm.toLowerCase()))
   const showOnly = val.map(ans => <li key = {ans.name}>{ans.name}<button onClick={()=>{setSearchTerm(ans.name)}}>Show</button></li> )
-  const val2 = val[0]//simplifing array for statehook else it will show an error
+  const val2 = val[0]//simplifying array for effecthook else it will show an error
 
   useEffect(() => {
       //api docs help for below lines
