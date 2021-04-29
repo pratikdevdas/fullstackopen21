@@ -15,22 +15,21 @@ const App = () => {
       console.log('promise fulfilled')
   }, [])
  
- const handleSearch = event => {
+  const handleSearch = event => {
   setSearchTerm(event.target.value);
- //the event handler which syncronizes the change made to input with component state
-};
+  //the event handler which syncronizes the change made to input with component state
+  };
 
-     const val = country.filter(note => note.name.toLowerCase().includes(searchTerm.toLowerCase()))
-     const showOnly = val.map(ans => <li key = {ans.name}>{ans.name}<button onClick={()=>{setSearchTerm(ans.name)}}>Show</button></li> )
-     
-     const val2 = val[0]
-     useEffect(() => {
-       //api docs help for below lines
+  const val = country.filter(note => note.name.toLowerCase().includes(searchTerm.toLowerCase()))
+  const showOnly = val.map(ans => <li key = {ans.name}>{ans.name}<button onClick={()=>{setSearchTerm(ans.name)}}>Show</button></li> )
+  const val2 = val[0]//simplifing array for statehook else it will show an error
+
+  useEffect(() => {
+      //api docs help for below lines
       const params = {
           access_key: process.env.REACT_APP_API_KEY,
           query: val2.capital
       };
-
       axios
           .get('http://api.weatherstack.com/current', {params})
           .then(response => setWeather(response.data.current));
@@ -74,6 +73,7 @@ const App = () => {
           //else
      : <ul><li>{showOnly} </li></ul>
       }
-        </div>)}
+        </div>)
+}
   
 export default App;
