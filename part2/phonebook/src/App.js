@@ -21,9 +21,9 @@ const App = () => {
   }, [])
   console.log('render', persons.length, 'notes')
 
- const handleChange = event => {
+ const handleSearch = event => {
   setSearchTerm(event.target.value);
- 
+ //the event handler which that syncronizes the change made to input with component state
 };
 
    const addName = (event) => {
@@ -31,8 +31,13 @@ const App = () => {
     const noteObject = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1
+     
       }
+      axios
+      .post('http://localhost:3001/notes', noteObject)
+      .then(response => {
+        console.log(response)
+      })
       const result = persons.some((k) => k.name === newName );
       console.log(result)
      if (result === true)
@@ -55,7 +60,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Filter prop={searchTerm} prop2={handleChange}/>
+      <Filter prop={searchTerm} prop2={handleSearch}/>
       <h3>Add a new</h3>
       <PersonForm prop1={addName} prop2={newName} prop3={handleNameChange} prop4={newNumber} prop5={handleNumberChange} />
       <h2>Numbers</h2>
