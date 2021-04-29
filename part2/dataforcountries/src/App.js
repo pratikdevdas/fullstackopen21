@@ -25,6 +25,7 @@ const App = () => {
      
      const val2 = val[0]
      useEffect(() => {
+       //api docs help for below lines
       const params = {
           access_key: process.env.REACT_APP_API_KEY,
           query: val2.capital
