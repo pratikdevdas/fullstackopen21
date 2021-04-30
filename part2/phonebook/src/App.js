@@ -3,6 +3,7 @@ import axios from 'axios'
 import Filter from'./components/Filter'
 import PersonForm from './components/PersonForm'
 import Person from './components/Person'
+import noteService from './services/backend'
 
 const App = () => {
   const [ persons, setPersons ] = useState([]) 
@@ -11,13 +12,11 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
-      })
+    noteService
+    .getAll()
+    .then(initialPersons => {
+      setPersons(initialPersons)
+    })
   }, [])
   console.log('render', persons.length, 'notes')
 
@@ -31,12 +30,11 @@ const App = () => {
     const noteObject = {
       name: newName,
       number: newNumber,
-     
       }
-      axios
-      .post('http://localhost:3001/notes', noteObject)
-      .then(response => {
-        console.log(response)
+      noteService
+      .create(noteObject)
+      .then(personCreate => {
+        console.log(personCreate)
       })
       const result = persons.some((k) => k.name === newName );
       console.log(result)
