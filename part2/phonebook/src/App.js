@@ -10,8 +10,6 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState([])
   const [ searchTerm, setSearchTerm] = useState("");
-  const [ message, setMessage ] = useState(null);
-  const [ final, setFinal ] = useState('');
 
   useEffect(() => {
     noteService
@@ -50,13 +48,12 @@ const App = () => {
     //delete person
   const toggleRemove = (id, name) => {
     if (window.confirm(`Want to delete ${name} from phonebook?`)) {
+      const removal = () => {
+        setPersons(persons.filter(person => person.id !== id));
+             }
       noteService
       .remove(id)
-      .then(() => {
-        setPersons(persons.filter(person => person.id !== id));
-        // setMessage(`Deleted ${name}`);
-        // setFinal('info');
-      });
+      .then(removal());
     } 
   };
  

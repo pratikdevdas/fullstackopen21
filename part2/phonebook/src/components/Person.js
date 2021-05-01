@@ -1,8 +1,8 @@
 import React from 'react'
-import Note from './Note'
+
 const Person = ({prop,prop2,prop3}) =>{
-          
-    return (<div>
+         const call = (note) => { prop3(note.id, note.name)}
+    return (prop.length ?<div>
     
       {prop.filter(note => note.name.toLowerCase().includes(prop2.toLowerCase())).map(note => 
       <div>
@@ -11,7 +11,9 @@ const Person = ({prop,prop2,prop3}) =>{
           </div></div>
         // <Note key={note.id} note={note} prop={prop3}/>
       )}</div>
- 
+      :
+      
+      <p>nare nare na</p>
       
       )
 }
