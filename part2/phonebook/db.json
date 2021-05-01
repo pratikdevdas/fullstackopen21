@@ -1,29 +1,9 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas",
-      "number": "040-123456",
-      "id": 1
-    },
-    {
-      "name": "Ada Lovelace",
-      "number": "39-44-5323523",
-      "id": 2
-    },
-    {
-      "name": "Dan Abramov",
-      "number": "12-43-234345",
-      "id": 3
-    },
-    {
       "name": "Mary Poppendieck",
       "number": "39-23-6423122",
       "id": 4
-    },
-    {
-      "name": "Media",
-      "number": "8980030",
-      "id": 5
     },
     {
       "name": "thakur",
@@ -39,6 +19,21 @@
       "name": "RAm Mathur",
       "number": "456785652",
       "id": 8
+    },
+    {
+      "name": "Gajirao Apte",
+      "number": "57325389873",
+      "id": 9
+    },
+    {
+      "name": "Arto Hellas",
+      "number": "65646457",
+      "id": 10
+    },
+    {
+      "name": "Aplozela Alliack",
+      "number": "r8934759734",
+      "id": 11
     }
   ]
 }

@@ -9,7 +9,9 @@ const App = () => {
   const [ persons, setPersons ] = useState([]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState([])
-  const [searchTerm, setSearchTerm] = useState("");
+  const [ searchTerm, setSearchTerm] = useState("");
+  const [ message, setMessage ] = useState(null);
+  const [ final, setFinal ] = useState('');
 
   useEffect(() => {
     noteService
@@ -44,6 +46,21 @@ const App = () => {
     setNewName('')
     setNewNumber('')
   }
+
+    //delete person
+  const toggleRemove = (id, name) => {
+    if (window.confirm(`Want to delete ${name} from phonebook?`)) {
+      noteService
+      .remove(id)
+      .then(() => {
+        setPersons(persons.filter(person => person.id !== id));
+        // setMessage(`Deleted ${name}`);
+        // setFinal('info');
+      });
+    } 
+  };
+ 
+  
   const handleNameChange = (event) => {
     console.log(event.target.value)
     setNewName(event.target.value)
@@ -62,7 +79,7 @@ const App = () => {
       <h3>Add a new</h3>
       <PersonForm prop1={addName} prop2={newName} prop3={handleNameChange} prop4={newNumber} prop5={handleNumberChange} />
       <h2>Numbers</h2>
-      <Person prop={persons} prop2={searchTerm}/>  
+      <Person prop={persons} prop2={searchTerm} prop3={toggleRemove}/>  
     </div>
   )
 }
