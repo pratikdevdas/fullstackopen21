@@ -8,8 +8,7 @@ const Person = ({prop,prop2,prop3}) =>{
       <div key ={note.id}>
        {note.name} {note.number} <button onClick={() => prop3(note.id, note.name)}>Delete</button>
         </div>
-        // <Note key={note.id} note={note} prop={prop3}/>
-      )}</div>
+        )}</div>
  
        )
 }
