@@ -1,59 +1,24 @@
 {
   "persons": [
     {
+      "name": "Arto Hellas",
+      "number": "040-123456",
+      "id": 1
+    },
+    {
+      "name": "Ada Lovelace",
+      "number": "39-44-5323523",
+      "id": 2
+    },
+    {
+      "name": "Dan Abramov",
+      "number": "12-43-234345",
+      "id": 3
+    },
+    {
       "name": "Mary Poppendieck",
       "number": "39-23-6423122",
       "id": 4
-    },
-    {
-      "name": "thakur",
-      "number": "4353534534534",
-      "id": 6
-    },
-    {
-      "name": "Whits man gandhi",
-      "number": "4589043579",
-      "id": 7
-    },
-    {
-      "name": "RAm Mathur",
-      "number": "456785652",
-      "id": 8
-    },
-    {
-      "name": "Gajirao Apte",
-      "number": "57325389873",
-      "id": 9
-    },
-    {
-      "name": "Arto Hellas",
-      "number": "65646457",
-      "id": 10
-    },
-    {
-      "name": "Aplozela Alliack",
-      "number": "r8934759734",
-      "id": 11
-    },
-    {
-      "name": "Mary Poppendieck",
-      "number": "4365345",
-      "id": 12
-    },
-    {
-      "name": "Mary Poppendieck",
-      "number": "4355",
-      "id": 13
-    },
-    {
-      "name": "vfdvdfvdfv",
-      "number": "dfvfdvfdvfdvdf",
-      "id": 14
-    },
-    {
-      "name": "Hollywood Singh",
-      "number": "324879254",
-      "id": 15
     }
   ]
 }
