@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Person from "./components/Person";
@@ -21,6 +20,7 @@ const App = () => {
     });
   }, []);
   // console.log("render", persons.length, "notes");
+
 
   const handleSearch = event => {
     setSearchTerm(event.target.value);
