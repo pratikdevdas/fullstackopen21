@@ -24,33 +24,47 @@ const App = () => {
     setSearchTerm(event.target.value);
     //the event handler which that syncronizes the change made to input with component state
   };
+ 
 
   const addName = event => {
     event.preventDefault();
-    const checkPerson = persons.some(k => k.name === newName);
+    
+
+    const checkPerson = persons.find(person => person.name === newName);
     console.log(checkPerson);
-    if (checkPerson === false) {
-    const newObject = {
-      name: newName,
-      number: newNumber,
-      };console.log(newObject)
-          herePerson.create(newObject)
+
+    if (!checkPerson) {
+      const newPerson = {
+        name: newName,
+        number: newNumber,
+        id : persons.length+1,
+        }
+        console.log(newPerson)
+       herePerson.create(newPerson)
           .then(response=>{          
          setPersons(persons.concat(response));
-      setNewName("");
-      setNewNumber("");
-          })
+            })
+            setNewName("");
+            setNewNumber("");
         }
-    else {
-      alert(`${newName} is already there`); 
-      setPersons(persons.concat())
-      setNewName("");
-      setNewNumber("");}
-      };
+        
+        else {
+          herePerson.update(checkPerson.id,{name: checkPerson.name,
+            number: newNumber,
+            })
+          .then(response=>{ console.log(response)         
+            setPersons(persons.map(person => person.name === response.name ? response : person))
+          })
+            
+          setNewName("");
+          setNewNumber("");
+          }
+  
+   };
 
       const removePerson = (id, name) => {
         if (window.confirm(`delete ${name}?`)) {
-          herePerson.remove(id)
+          herePerson.remove(id,name)
           .then(() => {
             setPersons(persons.filter(person => person.id !== id));
             });
@@ -66,7 +80,9 @@ const App = () => {
     // console.log(event2.target.value);
     setNewNumber(event2.target.value);
   };
-
+  
+  const filterSearch = persons.filter(note => note.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  
   return (
     <div>
       <h2>Phonebook</h2>
@@ -80,7 +96,7 @@ const App = () => {
         prop5={handleNumberChange}
       />
       <h2>Numbers</h2>
-      <Person prop={persons} prop2={searchTerm} prop3={removePerson}/>
+      <Person filterSearch={filterSearch} removePerson={removePerson}/>
     </div>
   );
 };
