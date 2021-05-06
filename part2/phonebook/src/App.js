@@ -53,7 +53,7 @@ const App = () => {
             number: newNumber,
             })
           .then(response=>{ console.log(response)         
-            setPersons(persons.map(person => person.name === response.name ? response : person))
+            setPersons(persons.map(p => p.name === response.name ? response : p))
           })
             
           setNewName("");
