@@ -1,0 +1,17 @@
+h2{
+    color: green;
+}
+
+.msg {
+    padding: 20px;
+    background-color: #20d83f; 
+    color: white;
+    margin-bottom: 15px;
+  }
+
+.msgerror{
+    padding: 20px;
+    background-color: #c23737; 
+    color: white;
+    margin-bottom: 15px;
+}

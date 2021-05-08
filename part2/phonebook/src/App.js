@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Person from "./components/Person";
+import Notification from "./components/Notification"
 import herePerson from "./services/backend"
 
 const App = () => {
@@ -9,7 +10,8 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [message, setMessage] = useState(null);
+  
   useEffect(() => {
     console.log("effect");
    herePerson.getAll()
@@ -29,7 +31,6 @@ const App = () => {
   const addName = event => {
     event.preventDefault();
     
-
     const checkPerson = persons.find(person => person.name === newName);
     console.log(checkPerson);
 
@@ -37,32 +38,49 @@ const App = () => {
       const newPerson = {
         name: newName,
         number: newNumber,
-        id : persons.length+1,
-        }
+                }
         console.log(newPerson)
        herePerson.create(newPerson)
           .then(response=>{          
          setPersons(persons.concat(response));
-            })
-            setNewName("");
-            setNewNumber("");
+         setNewName("")
+         setNewNumber("")})
+         .then(
+          setMessage(`${newName} has been added`)
+          
+         ).then(setTimeout(() => {
+          setMessage(null)
+        }, 5000)).catch((error)=>console.log(error))
+                                
         }
         
         else {
-          herePerson.update(checkPerson.id,{name: checkPerson.name,
-            number: newNumber,
-            })
+          const cool = {name: checkPerson.name,
+            number: newNumber};
+            
+          if (window.confirm(`Update ${checkPerson.name}'s number to "${newNumber}"`))
+          herePerson.update(checkPerson.id,cool)
           .then(response=>{ console.log(response)         
             setPersons(persons.map(p => p.name === response.name ? response : p))
-          })
-            
-          setNewName("");
-          setNewNumber("");
+            setNewName("");
+            setNewNumber("");
+            setMessage(
+              `${checkPerson.name} has been updated`)
+              setTimeout(() => {
+                setMessage(null)
+              }, 5000) })
+              .catch(error=>{console.log('gamdu')
+              setMessage(`Information of ${checkPerson.name} has been already removed. Please refresh`)
+              setTimeout(() => {
+                setMessage(null)
+              }, 5000)})
+                       
           }
-  
-   };
+          };
 
-      const removePerson = (id, name) => {
+
+      
+         const removePerson = (id, name) => {
         if (window.confirm(`delete ${name}?`)) {
           herePerson.remove(id,name)
           .then(() => {
@@ -86,6 +104,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message}/>
       <Filter prop={searchTerm} prop2={handleSearch} />
       <h3>Add a new</h3>
       <PersonForm
