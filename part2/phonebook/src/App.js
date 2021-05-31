@@ -26,38 +26,50 @@ const App = () => {
     setSearchTerm(event.target.value);
     //the event handler which that syncronizes the change made to input with component state
   };
- 
+  const handleNameChange = event => {
+    // console.log(event.target.value);
+    setNewName(event.target.value);
+  };
+  const handleNumberChange = event2 => {
+    // console.log(event2.target.value);
+    setNewNumber(event2.target.value);
+  };
 
   const addName = event => {
     event.preventDefault();
     
     const checkPerson = persons.find(person => person.name === newName);
     console.log(checkPerson);
-
+      
     if (!checkPerson) {
       const newPerson = {
         name: newName,
         number: newNumber,
                 }
-        console.log(newPerson)
-       herePerson.create(newPerson)
+        const nameIsInvalid = newPerson.name.length > 4 && newPerson.number.toString().length > 8;
+        console.log(!nameIsInvalid)//true
+          if(!nameIsInvalid){
+            console.log("hi");
+            setMessage(`shorter than allowed length`)
+            setTimeout(() => {
+            setMessage(null)
+        }, 5000)
+      }
+       herePerson.create(newPerson)                 
           .then(response=>{          
          setPersons(persons.concat(response));
          setNewName("")
-         setNewNumber("")})
-         .then(
-          setMessage(`${newName} has been added`)
-          
-         ).then(setTimeout(() => {
+         setNewNumber("")
+         setMessage(`${newName} has been added`)})
+          .then(setTimeout(() => {
           setMessage(null)
-        }, 5000)).catch((error)=>console.log(error))
-                                
+        }, 5000)).catch((error)=>console.log(error))               
         }
         
         else {
           const cool = {name: checkPerson.name,
             number: newNumber};
-            
+            console.log(cool)
           if (window.confirm(`Update ${checkPerson.name}'s number to "${newNumber}"`))
           herePerson.update(checkPerson.id,cool)
           .then(response=>{ console.log(response)         
@@ -69,7 +81,7 @@ const App = () => {
               setTimeout(() => {
                 setMessage(null)
               }, 5000) })
-              .catch(error=>{console.log('gamdu')
+              .catch(error=>{console.log('error')
               setMessage(`Information of ${checkPerson.name} has been already removed. Please refresh`)
               setTimeout(() => {
                 setMessage(null)
@@ -78,8 +90,6 @@ const App = () => {
           }
           };
 
-
-      
          const removePerson = (id, name) => {
         if (window.confirm(`delete ${name}?`)) {
           herePerson.remove(id,name)
@@ -88,16 +98,6 @@ const App = () => {
             });
         } 
       };
-
-  const handleNameChange = event => {
-    // console.log(event.target.value);
-    setNewName(event.target.value);
-  };
-
-  const handleNumberChange = event2 => {
-    // console.log(event2.target.value);
-    setNewNumber(event2.target.value);
-  };
   
   const filterSearch = persons.filter(note => note.name.toLowerCase().includes(searchTerm.toLowerCase()));
   
