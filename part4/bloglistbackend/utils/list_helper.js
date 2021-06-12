@@ -1,12 +1,17 @@
 const dummy = (blogs) => {
     return 1;
   }
-  console.log('grg');
 
-  const totalLikes = (blogs) => {
-      return likes
+  const totalLikes = (array) => {
+    const reducer = (sum, item) => {
+          return sum + item.likes
+    }
+    return array.reduce(reducer, 0)
   }
+   
   module.exports = {
-    dummy
+    dummy,
+    totalLikes
   }
 
+ 
