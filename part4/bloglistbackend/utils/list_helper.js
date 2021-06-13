@@ -14,4 +14,5 @@ const dummy = (blogs) => {
     totalLikes
   }
 
+  //4.7 initiate
  
