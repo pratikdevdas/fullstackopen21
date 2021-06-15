@@ -9,9 +9,16 @@ const dummy = (blogs) => {
     return array.reduce(reducer, 0)
   }
    
+  const favouriteBlog = (array) => {
+    const reducer = (sum, item) => {
+          return sum + item.likes
+    }
+    return array.reduce(reducer, 0)
+  }
   module.exports = {
     dummy,
-    totalLikes
+    totalLikes,
+    favouriteBlog
   }
 
 
