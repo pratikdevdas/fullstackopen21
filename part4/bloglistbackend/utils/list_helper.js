@@ -17,6 +17,13 @@ const dummy = (blogs) => {
     const val = {title:obj.title,author:obj.author,likes:obj.likes}
     return val
   }
+
+  const mostBlogs = (blogs) => {
+    //to be written
+  }
+  const mostLikes = (blogs) => {
+    //to be written
+  }
   module.exports = {
     dummy,
     totalLikes,
