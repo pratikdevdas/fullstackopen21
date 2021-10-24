@@ -2,7 +2,6 @@ const dummy = () => 1
 
 const totalLikes = (blogs) => {
     const reducer = (sum,blog) => {
-        console.log(reducer)
         return sum + blog.likes
     }
     return blogs.lemgth === 0
