@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --verbose",
-    "dev": "nodemon index.js",
+    "test": "cross-env NODE_ENV=test jest --verbose",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
     "misc": "nodemon misc.js",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix"
@@ -13,9 +14,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "eslint": "^8.1.0",
     "jest": "^27.3.1",
-    "nodemon": "^2.0.9"
+    "nodemon": "^2.0.9",
+    "supertest": "^6.1.6"
   },
   "dependencies": {
     "cors": "^2.8.5",
