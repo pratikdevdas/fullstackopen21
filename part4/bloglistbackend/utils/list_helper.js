@@ -10,10 +10,24 @@ const totalLikes = (blogs) => {
         ? 0
         : blogs.reduce(reducer,0)
 
+
 }
 
 const favouriteBlog = (blogs) => {
-    return blogs.reduce((acc,blog) => acc = acc> blog.likes ? acc : blog.likes,0)
+    const blogSummaries = blogs.map((post) => ({
+        title: post.title,
+        author: post.author,
+        likes: post.likes
+    })
+    )
+    console.log(blogSummaries)
+    const mostLikedBlog = blogSummaries.reduce(
+        (acc, blog) => (acc = acc > blog.likes ? acc : blog.likes),
+        0
+    )
+    const found = blogSummaries.find((blog) => blog.likes === mostLikedBlog)
+    console.log(found)
+    return found
 }
 
 module.exports={
