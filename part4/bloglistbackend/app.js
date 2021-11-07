@@ -22,7 +22,7 @@ app.use(cors())
 app.use(express.json())
 app.use(middleware.requestLogger)
 
-app.use('/', blogsRouter)
+app.use('/api/blogs', blogsRouter)
 //relative use
 
 app.use(middleware.unknownEndpoint)
