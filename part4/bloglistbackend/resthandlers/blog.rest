@@ -1,13 +1,12 @@
-GET http://localhost:3003/api/blogs/
+GET http://localhost:3002/api/blogs/
 
 ###
 
-POST http://localhost:3003/api/blogs
+POST http://localhost:3002/api/blogs
 content-type: application/json
 
 {
-     "title": "er",
-  "author": "defewe",
-  "url": "wffe",
-  "likes": 4
+     "title": "Adelaide",
+  "author": "chudfgbtia",
+  "likes": 0
 }
