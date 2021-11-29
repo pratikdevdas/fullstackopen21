@@ -85,6 +85,39 @@ describe('api tests',() => {
         const blogsAtEnd = await helper.blogsInDb()
         expect(blogsAtEnd).toHaveLength(helper.initialBlog.length)
     })
+
+    test('deleting a single note', async() => {
+        const blogsAtStart = await helper.blogsInDb()
+        const blogToDelete = blogsAtStart[0]
+
+        await api
+            .delete(`/api/blogs/${blogToDelete.id}`)
+            .expect(204)
+
+        const blogsAtEnd = await helper.blogsInDb()
+        expect(blogsAtEnd).toHaveLength(helper.initialBlog.length-1)
+    })
+
+    test('updating a single note ', async() => {
+
+        const updateBlog = {
+            author: 'Re',
+            likes: 1232
+        }
+        const blogsAtStart = await helper.blogsInDb()
+        const blogToUpdate = blogsAtStart[0]
+
+        await api.put(`/api/blogs/${blogToUpdate.id}`)
+            .send(updateBlog)
+
+        const blogsAtEnd = await helper.blogsInDb()
+        expect(blogsAtEnd).toHaveLength(helper.initialBlog.length)
+
+        const likes = blogsAtEnd.map(r => r.likes)
+        expect(likes).toContain(1232)
+    })
+
+
 })
 
 afterAll(() => {

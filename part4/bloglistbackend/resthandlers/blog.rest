@@ -1,12 +1,25 @@
-GET http://localhost:3002/api/blogs/
-
+GET http://localhost:3002/api/blogs/60ba4d2b005b4f75d22e6e09
 ###
-
 POST http://localhost:3002/api/blogs
 content-type: application/json
 
 {
-     "title": "Adelaide",
-  "author": "chudfgbtia",
-  "likes": 0
+     "title": "Adelfsdaiwersdfde",
+  "author": "chudfgfsdbtia",
+  "likes": 0,
+  "url": "dhkasdfj"
+}
+
+###
+DELETE http://localhost:3002/api/blogs/6187221681da1e3e4cc81362
+
+###
+PUT http://localhost:3002/api/blogs/60ba4d2b005b4f75d22e6e09
+content-type: application/json
+
+{
+     "title": "Adelfsdaiwasdersdfde",
+  "author": "chudfgfsdbtia",
+  "likes": 34,
+  "url": "dhkasdfj"
 }
