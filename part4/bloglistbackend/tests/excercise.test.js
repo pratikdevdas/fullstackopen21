@@ -49,7 +49,7 @@ describe('api tests',() => {
 
         const blogsAtEnd = await helper.blogsInDb()
         expect(blogsAtEnd).toHaveLength(helper.initialBlog.length+1)
-        
+
         const contents = blogsAtEnd.map(r => r.title)
         expect(contents).toContain('React patterns are here finally')
     })
