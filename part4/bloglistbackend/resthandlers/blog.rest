@@ -1,27 +1,30 @@
 GET http://localhost:3002/api/blogs/60ba4d2b005b4f75d22e6e09
 ###
+
 POST http://localhost:3002/api/blogs
 content-type: application/json
 
 {
-     "title": "Adelfsdaiwersdfde",
-  "author": "chudfgfsdbtia",
-  "likes": 0,
-  "url": "dhkasdfj"
+   "url": "dhkasdfj.com",
+  "title": "We take responsibilty of our actions",
+  "author": "Pratap Singh",
+  "likes": 2,
+ 
+  "userId":"61aaceaa7c471a9f9f60d874"
 }
 
 ###
-DELETE http://localhost:3002/api/blogs/6187221681da1e3e4cc81362
-
+DELETE http://localhost:3002/api/users/61a8bf14b5ee7011acf922b2
 ###
 PUT http://localhost:3002/api/blogs/60ba4d2b005b4f75d22e6e09
 content-type: application/json
 
 {
-     "title": "Adelfsdaiwasdersdfde",
-  "author": "chudfgfsdbtia",
-  "likes": 34,
-  "url": "dhkasdfj"
+     "title": "Sleeping soundly with wrapped in your fist",
+  "author": "Sebastian Rathore",
+  "likes": 21,
+  "url": "jijijiji",
+  "userId":"61a8bf14b5ee7011acf922b2"
 }
 
 ###
@@ -29,7 +32,10 @@ POST http://localhost:3002/api/users
 content-type: application/json
 
 {
-   "username":"re",
-   "name":"revenanttototo",
-   "password":"eyasdf"
+   "username":"rev",
+   "name":"revenant",
+   "password":"easy"
 }
+
+###
+GET http://localhost:3002/api/users/

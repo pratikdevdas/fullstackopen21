@@ -1,9 +1,9 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
-
+const User = require('../models/user')
 
 blogsRouter.get('/', async(request, response) => {
-    const blogs=await Blog.find({})
+    const blogs=await Blog.find({}).populate('user', { username:1, name:1 })
     response.json(blogs)
 })
 
@@ -16,13 +16,20 @@ blogsRouter.get('/:id', async(request, response) => {
 blogsRouter.post('/', async(request, response) => {
     const body = request.body
 
+    const user = await User.findById(body.userId)
+
     const blog = new Blog({
         title: body.title,
         author: body.author,
         url: body.url,
-        likes: body.likes
+        likes: body.likes,
+        user: user
     })
+
     const savedBlog = await blog.save()
+    user.blogs = user.blogs.concat(savedBlog._id)
+    await user.save()
+
     response.json(savedBlog)
 
 })
@@ -38,21 +45,21 @@ blogsRouter.put('/:id', async(request,response) => {
     const blog = {
         title: body.title,
         author: body.author,
-        url: body.url,
         likes: body.likes,
+        url: body.url,
     }
 
     const updatedBLog = await Blog.findByIdAndUpdate(request.params.id, blog, { new:true })
     response.json(updatedBLog.toJSON())
-    // 
-  /*  try{
+    //since we have async await it automattically pushes errors to next
+    /*  try{
         const updatedBLog = await Blog.findByIdAndUpdate(request.params.id, blog, { new:true })
         response.json(updatedBLog.toJSON())
     } catch(exception) {
         next(exception)
     } */
 
-  /*  Blog.findByIdAndUpdate(request.params.id, blog, { new:true })
+    /*  Blog.findByIdAndUpdate(request.params.id, blog, { new:true })
     .then(updatedBlog => {
     response.json(updatedBlog.toJSON())
     })*/
