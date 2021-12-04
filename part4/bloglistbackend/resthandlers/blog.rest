@@ -3,13 +3,13 @@ GET http://localhost:3002/api/blogs/60ba4d2b005b4f75d22e6e09
 
 POST http://localhost:3002/api/blogs
 content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJldiIsImlkIjoiNjFhYWNlYWE3YzQ3MWE5ZjlmNjBkODc0IiwiaWF0IjoxNjM4NjAwNzQxfQ.6WwdNfej2RKvdd9ErBpeC__1fv5exOGtSkK8hwp0ZvU
 
 {
    "url": "dhkasdfj.com",
-  "title": "We take responsibilty of our actions",
+  "title": "Verifies token based authenti",
   "author": "Pratap Singh",
   "likes": 2,
- 
   "userId":"61aaceaa7c471a9f9f60d874"
 }
 
@@ -24,7 +24,7 @@ content-type: application/json
   "author": "Sebastian Rathore",
   "likes": 21,
   "url": "jijijiji",
-  "userId":"61a8bf14b5ee7011acf922b2"
+  "userId":"61aaceaa7c471a9f9f60d874"
 }
 
 ###
@@ -32,13 +32,13 @@ POST http://localhost:3002/api/users
 content-type: application/json
 
 {
-   "username":"rev",
-   "name":"revenant",
+   "username":"rev2",
+   "name":"revenants",
    "password":"easy"
 }
 
 ###
-GET http://localhost:3002/api/users/
+GET http://localhost:3002/api/blogs/
 
 ###
 POST http://localhost:3002/api/login
