@@ -7,21 +7,22 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJld
 
 {
    "url": "dhkasdfj.com",
-  "title": "Delete ME",
+  "title": "May not updarea",
   "author": "Pratap Singh",
   "likes": 2,
   "userId":"61aaceaa7c471a9f9f60d874"
 }
 
 ###
-DELETE http://localhost:3002/api/blogs/61aee948fd6f038019c1b7b3
+DELETE http://localhost:3002/api/blogs/61af316fbbf11bfb228e5b40
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJldiIsImlkIjoiNjFhYWNlYWE3YzQ3MWE5ZjlmNjBkODc0IiwiaWF0IjoxNjM4ODQyNjA5fQ.1jT0ybiP2v8QoiVnHUw26D-gbCyD9NN9XKNM8hSCdzI
+
 ###
 PUT http://localhost:3002/api/blogs/60ba4d2b005b4f75d22e6e09
 content-type: application/json
 
 {
-     "title": "Sleeping soundly with wrapped in your fist",
+     "title": "New Token New request which is gonna get DELETED",
   "author": "Sebastian Rathore",
   "likes": 21,
   "url": "jijijiji",
