@@ -7,7 +7,6 @@ const Blog = require('../models/blog')
 const User = require('../models/user')
 const helper = require('./test_helper')
 
-
 beforeEach(async () => {
     await Blog.deleteMany({})
 
@@ -24,7 +23,7 @@ describe('api tests',() => {
             .expect(200)
             .expect('Content-Type', /application\/json/)
 
-    })
+    },10000)
 
     test('checking if blogs contains the unique identifier:id', async() => {
         const response = await api.get('/api/blogs')

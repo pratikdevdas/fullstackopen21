@@ -21,7 +21,7 @@ usersRouter.post('/',async(request,response) => {
         name: body.name,
         passwordHash
     })
-    console.log(User.findById(body._id))
+    // console.log(User.findById(body._id))
 
     const savedUser = await user.save()
 

@@ -7,14 +7,14 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJld
 
 {
    "url": "dhkasdfj.com",
-  "title": "May not updarea",
+  "title": "Middleware Working",
   "author": "Pratap Singh",
   "likes": 2,
   "userId":"61aaceaa7c471a9f9f60d874"
 }
 
 ###
-DELETE http://localhost:3002/api/blogs/61af316fbbf11bfb228e5b40
+DELETE http://localhost:3002/api/blogs/61af6624fe8c5c0fcf823b56
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJldiIsImlkIjoiNjFhYWNlYWE3YzQ3MWE5ZjlmNjBkODc0IiwiaWF0IjoxNjM4ODQyNjA5fQ.1jT0ybiP2v8QoiVnHUw26D-gbCyD9NN9XKNM8hSCdzI
 
 ###

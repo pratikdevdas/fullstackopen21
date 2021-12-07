@@ -26,7 +26,7 @@ app.use(express.json())
 app.use(middleware.requestLogger)
 // middleware for extracting token
 app.use(middleware.tokenExtractor)
-app.use(middleware.userExtractor)
+// only to be used with blogs router not with all routers
 
 app.use('/api/blogs', blogsRouter)
 app.use('/api/users', usersRouter)
