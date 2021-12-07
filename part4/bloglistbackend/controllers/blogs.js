@@ -49,9 +49,23 @@ blogsRouter.post('/', async(request, response) => {
 
 })
 
-blogsRouter.delete('/:id', async(request, response, ) => {
-    await Blog.findByIdAndRemove(request.params.id)
-    response.status(204).end()
+blogsRouter.delete('/:id', async(request, response) => {
+    const token =  request.token
+    const decodedToken = jwt.verify(token, process.env.SECRET)
+
+    const user = await User.findById(decodedToken.id)
+    // fetching this after decoding token
+    const blog = await Blog.findById(request.params.id)
+    // fetching this from partitcular blog itself
+    console.log(blog.user._id.toString())
+
+    if(blog.user._id.toString() === user._id.toString()){
+        await Blog.findByIdAndRemove(decodedToken.id)
+        response.status(204).end()
+    }
+    else{
+        return response.status(401).json({ error : 'unauthorized' })
+    }
 })
 
 blogsRouter.put('/:id', async(request,response) => {
