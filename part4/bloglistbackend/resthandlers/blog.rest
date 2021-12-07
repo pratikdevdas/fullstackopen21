@@ -3,11 +3,11 @@ GET http://localhost:3002/api/blogs/60ba4d2b005b4f75d22e6e09
 
 POST http://localhost:3002/api/blogs
 content-type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJldiIsImlkIjoiNjFhYWNlYWE3YzQ3MWE5ZjlmNjBkODc0IiwiaWF0IjoxNjM4NjAwNzQxfQ.6WwdNfej2RKvdd9ErBpeC__1fv5exOGtSkK8hwp0ZvU
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJldiIsImlkIjoiNjFhYWNlYWE3YzQ3MWE5ZjlmNjBkODc0IiwiaWF0IjoxNjM4ODQyNjA5fQ.1jT0ybiP2v8QoiVnHUw26D-gbCyD9NN9XKNM8hSCdzI
 
 {
    "url": "dhkasdfj.com",
-  "title": "Verifies token based authenti",
+  "title": "Checking The middleware  fourth time",
   "author": "Pratap Singh",
   "likes": 2,
   "userId":"61aaceaa7c471a9f9f60d874"
