@@ -1,7 +1,6 @@
 const blogsRouter = require('express').Router()
-const jwt = require('jsonwebtoken')
 const Blog = require('../models/blog')
-const User = require('../models/user')
+const middleware = require('../utils/middleware')
 
 blogsRouter.get('/', async(request, response) => {
     const blogs=await Blog.find({}).populate('user', { username:1, name:1 })
@@ -22,11 +21,10 @@ blogsRouter.get('/:id', async(request, response) => {
     return null
 }
 */
-
 //  ex 4.20 applied getTokenFrom refactored to middleware
-blogsRouter.post('/', async(request, response) => {
+blogsRouter.post('/', middleware.userExtractor, async(request, response) => {
     const body = request.body
-   const user = request.user
+    const user = request.user
 
     const blog = new Blog({
         title: body.title,
@@ -44,7 +42,7 @@ blogsRouter.post('/', async(request, response) => {
 
 })
 
-blogsRouter.delete('/:id', async(request, response) => {
+blogsRouter.delete('/:id',middleware.userExtractor, async(request, response) => {
     const user = request.user
 
     const blog = await Blog.findById(request.params.id)
