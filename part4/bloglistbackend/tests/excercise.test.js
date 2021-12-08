@@ -91,7 +91,7 @@ describe('api tests',() => {
         expect(blogsAtEnd.likes).toBe(0)
     })
 
-    test('blog without titlr is not added', async() => {
+    test('blog without title is not added', async() => {
         const newBlog = {
             author: 'Revenant Xob',
             likes: 12
