@@ -112,7 +112,7 @@ describe('api tests',() => {
         const blogToDelete = blogsAtStart[0]
         console.log(blogToDelete.id)
         console.log(token)
-        
+
         await api
             .delete(`/api/blogs/${blogToDelete.id}`)
             .set('Authorization', `bearer ${token}`)
