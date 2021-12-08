@@ -1,22 +1,38 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
-const api = supertest(app)
 const bcrypt = require('bcrypt')
 const Blog = require('../models/blog')
 const User = require('../models/user')
 const helper = require('./test_helper')
-
-beforeEach(async () => {
-    await Blog.deleteMany({})
-
-    for (let blog of helper.initialBlog) {
-        let blogObject = new Blog(blog)
-        await blogObject.save()
-    }
-})
+const jwt = require('jsonwebtoken')
+const api = supertest(app)
 
 describe('api tests',() => {
+    let token
+    beforeEach(async () => {
+        await Blog.deleteMany({})
+        await User.deleteMany({})
+
+        const passwordHash = await bcrypt.hash('random', 10)
+        const user = new User({
+            username: 'admin',
+            name:'admin',
+            passwordHash
+        })
+        const savedUser = await user.save()
+        const forToken =  {
+            username: savedUser.username,
+            id: savedUser._id
+        }
+        token = jwt.sign(forToken, process.env.SECRET )
+
+        for (let blog of helper.initialBlog) {
+            let blogObject = new Blog(blog)
+            await blogObject.save()
+        }
+    },10000)
+
     test('checking get req to /api/blogs', async() => {
         await api
             .get('/api/blogs')
@@ -42,6 +58,7 @@ describe('api tests',() => {
 
         await api
             .post('/api/blogs')
+            .set('Authorization', `bearer ${token}`)
             .send(newBlog)
             .expect(200)
             .expect('Content-Type', /application\/json/)
@@ -63,6 +80,7 @@ describe('api tests',() => {
 
         await api
             .post('/api/blogs')
+            .set('Authorization', `bearer ${token}`)
             .send(newBlog)
             .expect(200)
 
@@ -73,7 +91,7 @@ describe('api tests',() => {
         expect(blogsAtEnd.likes).toBe(0)
     })
 
-    test('sending blogs to server', async() => {
+    test('blog without titlr is not added', async() => {
         const newBlog = {
             author: 'Revenant Xob',
             likes: 12
@@ -81,6 +99,7 @@ describe('api tests',() => {
 
         await api
             .post('/api/blogs')
+            .set('Authorization', `bearer ${token}`)
             .send(newBlog)
             .expect(400)
 
@@ -91,14 +110,17 @@ describe('api tests',() => {
     test('deleting a single note', async() => {
         const blogsAtStart = await helper.blogsInDb()
         const blogToDelete = blogsAtStart[0]
-
+        console.log(blogToDelete.id)
+        console.log(token)
+        
         await api
             .delete(`/api/blogs/${blogToDelete.id}`)
+            .set('Authorization', `bearer ${token}`)
             .expect(204)
 
         const blogsAtEnd = await helper.blogsInDb()
         expect(blogsAtEnd).toHaveLength(helper.initialBlog.length-1)
-    })
+    },100000)
 
     test('updating a single note ', async() => {
 
