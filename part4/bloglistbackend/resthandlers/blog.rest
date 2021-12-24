@@ -1,24 +1,23 @@
-GET http://localhost:3002/api/blogs/60ba4d2b005b4f75d22e6e09
+GET http://localhost:3003/api/blogs/60ba4d2b005b4f75d22e6e09
 ###
 
-POST http://localhost:3002/api/blogs
+POST http://localhost:3003/api/blogs
 content-type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJldiIsImlkIjoiNjFhYWNlYWE3YzQ3MWE5ZjlmNjBkODc0IiwiaWF0IjoxNjM4ODQyNjA5fQ.1jT0ybiP2v8QoiVnHUw26D-gbCyD9NN9XKNM8hSCdzI
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJldiIsImlkIjoiNjFhYWNlYWE3YzQ3MWE5ZjlmNjBkODc0IiwiaWF0IjoxNjQwMjI4MjY4fQ.hfOhTuQhmXBkbZHJTS4org4YZj4ult9O16BFVBeiBJ8
 
 {
    "url": "dhkasdfj.com",
-  "title": "Middleware Working to deltee this",
-  "author": "Pratap Singh",
-  "likes": 2,
-  "userId":"61aaceaa7c471a9f9f60d874"
+  "title": "In sooth I know not",
+  "author": "Satish Chandra",
+  "likes": 526
 }
 
 ###
-DELETE http://localhost:3002/api/blogs/61b00b0f951ab094e40bef81
+DELETE http://localhost:3003/api/blogs/61b00b0f951ab094e40bef81
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJldiIsImlkIjoiNjFhYWNlYWE3YzQ3MWE5ZjlmNjBkODc0IiwiaWF0IjoxNjM4ODQyNjA5fQ.1jT0ybiP2v8QoiVnHUw26D-gbCyD9NN9XKNM8hSCdzI
 
 ###
-PUT http://localhost:3002/api/blogs/60ba4d2b005b4f75d22e6e09
+PUT http://localhost:3003/api/blogs/60ba4d2b005b4f75d22e6e09
 content-type: application/json
 
 {
@@ -30,7 +29,7 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:3002/api/users
+POST http://localhost:3003/api/users
 content-type: application/json
 
 {
@@ -40,10 +39,10 @@ content-type: application/json
 }
 
 ###
-GET http://localhost:3002/api/blogs/
+GET http://localhost:3003/api/blogs/
 
 ###
-POST http://localhost:3002/api/login
+POST http://localhost:3003/api/login
 content-type: application/json
 
 {
