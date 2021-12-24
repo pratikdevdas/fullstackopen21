@@ -15,9 +15,15 @@ const App = () => {
     console.log('logging in with',username,password)
 
     try{
-      const user = loginService.login({
+      const user = await loginService.login({
         username, password,
       })
+      // saving toekn to browesers local storage
+      window.localStorage.setItem(
+        'loggedBlogappUser', JSON.stringify(user)
+      )
+      blogService.setToken(user.token)
+
       setUser(user)
       setUsername('')
       setPassword('')
@@ -66,10 +72,10 @@ const App = () => {
      <>{loginForm()}
      </>
    )
-   
+
   return (
     <div>
-     
+     {user.name} loggedin
       <h2>blogs</h2>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
