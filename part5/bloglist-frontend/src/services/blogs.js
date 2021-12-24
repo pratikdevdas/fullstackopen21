@@ -21,5 +21,4 @@ const response = await axios.post(baseUrl, newObject, config)
 return response.data
 }
 
-
 export default { getAll,create,setToken }

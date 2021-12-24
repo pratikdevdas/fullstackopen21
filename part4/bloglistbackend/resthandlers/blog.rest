@@ -1,7 +1,7 @@
-GET http://localhost:3003/api/blogs/60ba4d2b005b4f75d22e6e09
-###
+GET http://localhost:8000/api/blogs/61c4035f1df09498ebe4f88c
 
-POST http://localhost:3003/api/blogs
+###
+POST http://localhost:8000/api/blogs
 content-type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJldiIsImlkIjoiNjFhYWNlYWE3YzQ3MWE5ZjlmNjBkODc0IiwiaWF0IjoxNjQwMjI4MjY4fQ.hfOhTuQhmXBkbZHJTS4org4YZj4ult9O16BFVBeiBJ8
 
@@ -13,11 +13,11 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJld
 }
 
 ###
-DELETE http://localhost:3003/api/blogs/61b00b0f951ab094e40bef81
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJldiIsImlkIjoiNjFhYWNlYWE3YzQ3MWE5ZjlmNjBkODc0IiwiaWF0IjoxNjM4ODQyNjA5fQ.1jT0ybiP2v8QoiVnHUw26D-gbCyD9NN9XKNM8hSCdzI
+DELETE http://localhost:8000/api/blogs/61c4035f1df09498ebe4f88c
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJldiIsImlkIjoiNjFhYWNlYWE3YzQ3MWE5ZjlmNjBkODc0IiwiaWF0IjoxNjQwMzQ4NzA4fQ.BxaDHVd5oRkRqnm095xBG0FusDQXyU_5DdgA1DvKkf0
 
 ###
-PUT http://localhost:3003/api/blogs/60ba4d2b005b4f75d22e6e09
+PUT http://localhost:8000/api/blogs/60ba4d2b005b4f75d22e6e09
 content-type: application/json
 
 {
@@ -28,24 +28,5 @@ content-type: application/json
   "userId":"61aaceaa7c471a9f9f60d874"
 }
 
-###
-POST http://localhost:3003/api/users
-content-type: application/json
 
-{
-   "username":"rev2",
-   "name":"revenants",
-   "password":"easy"
-}
 
-###
-GET http://localhost:3003/api/blogs/
-
-###
-POST http://localhost:3003/api/login
-content-type: application/json
-
-{
-   "username":"rev",
-   "password":"easy"
-}

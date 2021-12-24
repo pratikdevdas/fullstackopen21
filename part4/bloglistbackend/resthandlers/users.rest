@@ -1,2 +1,14 @@
+###
+POST http://localhost:8000/api/users
+content-type: application/json
+
+{
+   "username":"rev2",
+   "name":"revenants",
+   "password":"easy"
+}
+
+###
+GET http://localhost:3003/api/users/
 
 
