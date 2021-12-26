@@ -48,8 +48,6 @@ useEffect(() => {
     }
   }
 
-
-
   const loginForm = () => {
     return(
     <form onSubmit={handleLogin}>
@@ -75,9 +73,6 @@ useEffect(() => {
         <button type="submit">login</button>
       </form>)
   }
-
-
-
    const blogForm = () => {
      
    }
@@ -87,7 +82,7 @@ useEffect(() => {
      <>{loginForm()}
      </>
    )
-   
+
   //logout
    const logOut = () => {
     return (<div>
