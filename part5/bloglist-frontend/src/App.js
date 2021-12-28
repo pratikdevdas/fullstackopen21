@@ -59,12 +59,6 @@ useEffect(() => {
     }
   }
   
-  const handleLogout = (event) =>{
-    event.preventDefault()
-    setUser(null)
-    window.localStorage.removeItem('loggedBlogappUser')
-  }
-
   const handleTitle = (event) => {
     setNewTitle(event.target.value)   
   }
@@ -166,6 +160,12 @@ useEffect(() => {
 
   //logout
    const logOut = () => {
+    const handleLogout = (event) =>{
+      event.preventDefault()
+      setUser(null)
+      window.localStorage.removeItem('loggedBlogappUser')
+    }
+  
     return (<div>
       <button onClick={handleLogout}>logOut</button>
     </div>)
