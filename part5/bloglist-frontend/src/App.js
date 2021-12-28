@@ -102,9 +102,9 @@ useEffect(() => {
       setNewAuthor("")
       setNewUrl("")
       setNewMessage(`${newBlog} has been added`)
-      .then(setTimeout(() => {
+      setTimeout(() => {
         setNewMessage(null)
-      },5000)).catch(console.error('errror fir'))
+      },5000)
       console.log(response)
     })
   }
