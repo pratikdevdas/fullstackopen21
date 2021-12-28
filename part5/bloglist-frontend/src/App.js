@@ -101,7 +101,7 @@ useEffect(() => {
       setNewTitle("")
       setNewAuthor("")
       setNewUrl("")
-      setNewMessage(`${newBlog} has been added`)
+      setNewMessage(`${newBlog.title} has been added`)
       setTimeout(() => {
         setNewMessage(null)
       },5000)
