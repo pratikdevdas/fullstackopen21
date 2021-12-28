@@ -11,6 +11,7 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [message, setNewMessage] = useState(null)
 
 // effect to get blogs
   useEffect(() => {
@@ -44,14 +45,24 @@ useEffect(() => {
       )
       blogService.setToken(user.token)
 
+      setUser(user)
       // for token change to call method
       blogService.setToken(user.token)
-      setUser(user)
       setUsername('')
       setPassword('')
     } catch (exception){
+      setNewMessage(`wrong usernasme or password`)
+      setTimeout(() => {
+        setNewMessage(null)
+      },5000)
       console.log('error hogaya')
     }
+  }
+  
+  const handleLogout = (event) =>{
+    event.preventDefault()
+    setUser(null)
+    window.localStorage.removeItem('loggedBlogappUser')
   }
 
   const handleTitle = (event) => {
@@ -77,7 +88,11 @@ useEffect(() => {
     }
     if(newBlog.title.length<4)
     {
-      return console.log('give longer value')
+      setNewMessage(`Very short`)
+      setTimeout(() => {
+        setNewMessage(null)
+      },5000)
+     return console.log('give longer value')
     }
     console.log('suceed')
     blogService.create(newBlog)
@@ -86,6 +101,10 @@ useEffect(() => {
       setNewTitle("")
       setNewAuthor("")
       setNewUrl("")
+      setNewMessage(`${newBlog} has been added`)
+      .then(setTimeout(() => {
+        setNewMessage(null)
+      },5000)).catch(console.error('errror fir'))
       console.log(response)
     })
   }
@@ -93,6 +112,7 @@ useEffect(() => {
   const loginForm = () => {
     return(
     <form onSubmit={handleLogin}>
+      <div>{message}</div>
       <h2>Login</h2>
           <div>
            username
@@ -109,15 +129,34 @@ useEffect(() => {
         type="password" 
         value={password} 
         name="Password" 
-        onChange={({target})=> setPassword(target.value)} 
+        onChange={({target})=> setPassword(target.value)}
         />
         </div>
         <button type="submit">login</button>
       </form>)
   }
    const blogForm = () => {
-     
+     return(
+    <div>
+      <div className='msg'>{message}</div>
+    <form onSubmit={blogAdder}>
+      {/* <div>{message}</div> */}
+      <div>
+        Title: <input value={newTitle} onChange={handleTitle}/>
+      </div>
+      <div>
+        author: <input value={newAuthor} onChange={handleAuthor}/>
+      </div>
+      <div>
+        url: <input value={newUrl} onChange={handleUrl}/>
+      </div>
+      <div>     
+        <button type="submit">add</button>
+      </div>
+    </form>
+  </div>)
    }
+
 
    if(user === null)
    return(
@@ -128,38 +167,27 @@ useEffect(() => {
   //logout
    const logOut = () => {
     return (<div>
-      <button onClick={()=>{setUser(null)}}>logOut</button>
+      <button onClick={handleLogout}>logOut</button>
     </div>)
-
   }
+
+  
   return (
 
     <div>
 
       <section className='header'>
       <h2>blogs</h2>
+      <div className="notificationShow">
+        
+      </div>
      {user.name} loggedin 
      {logOut()}
      </section>
 
-     <section className="newBlogCreation">
+     <section >
         <h2>createNew</h2>
-         <div className="inputForm">
-            <form onSubmit={blogAdder}>
-              <div>
-                Title: <input value={newTitle} onChange={handleTitle}/>
-              </div>
-              <div>
-                author: <input value={newAuthor} onChange={handleAuthor}/>
-              </div>
-              <div>
-                url: <input value={newUrl} onChange={handleUrl}/>
-              </div>
-              <div>     
-                <button type="submit">add</button>
-              </div>
-            </form>
-          </div>
+        {blogForm()}
       </section>
 
      <section className="blogsCreated">
