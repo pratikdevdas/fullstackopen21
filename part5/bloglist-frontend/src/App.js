@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import LoginForm from './components/LoginForm'
+import BlogForm from './components/BlogForm'
+import Togglable from './components/Togglable'
 
 const App = () => {
+  const [loginVisible, setLoginVisible] = useState(false)
   const [blogs, setBlogs] = useState([])
   const [newTitle, setNewTitle] = useState("")
   const [newAuthor, setNewAuthor] = useState("")
@@ -104,53 +108,58 @@ useEffect(() => {
   }
 
   const loginForm = () => {
+    const hideWhenVisible = {display : loginVisible ? 'none' : ''}
+    const showWhenVisible = {display : loginVisible ? '' : 'none'}
     return(
-    <form onSubmit={handleLogin}>
-      <div>{message}</div>
-      <h2>Login</h2>
-          <div>
-           username
-        <input 
-        type="text" 
-        value={username} 
-        name="Username" 
-        onChange={({target})=> setUsername(target.value)} 
-        />
+      <div>
+        <div style={hideWhenVisible}>
+          <button onClick={() => setLoginVisible(true)}>
+            log in
+          </button>
         </div>
-        <div>
-           password
-        <input 
-        type="password" 
-        value={password} 
-        name="Password" 
-        onChange={({target})=> setPassword(target.value)}
-        />
-        </div>
-        <button type="submit">login</button>
-      </form>)
+        <div style={showWhenVisible}>
+      <LoginForm
+      message={message}
+      username={username}
+      password={password}
+      handleUsernameChange={({ target }) => setUsername(target.value)}
+      handlePasswordChange={({ target }) => setPassword(target.value)}
+      handleSubmit={handleLogin}/>
+      <button onClick={()=> setLoginVisible(false)}> cancel </button>
+      </div>
+      </div>
+      )
   }
    const blogForm = () => {
+    // const hideWhenVisible =  
+
      return(
-    <div>
-      <div className='msg'>{message}</div>
-    <form onSubmit={blogAdder}>
-      {/* <div>{message}</div> */}
-      <div>
-        Title: <input value={newTitle} onChange={handleTitle}/>
-      </div>
-      <div>
-        author: <input value={newAuthor} onChange={handleAuthor}/>
-      </div>
-      <div>
-        url: <input value={newUrl} onChange={handleUrl}/>
-      </div>
-      <div>     
-        <button type="submit">add</button>
-      </div>
-    </form>
-  </div>)
+       <Togglable buttonLabel="Create a new Blog">
+      <BlogForm
+      message={message}
+      blogAdder={blogAdder}
+      newTitle={newTitle}
+      handleTitle={handleTitle}
+      newAuthor={newAuthor}
+      handleAuthor={handleAuthor}
+      newUrl={newUrl}
+      handleUrl={handleUrl}
+      />
+      </Togglable>
+      )
    }
 
+     //logout
+     const logOut = () => {
+      const handleLogout = (event) =>{
+        event.preventDefault()
+        setUser(null)
+        window.localStorage.removeItem('loggedBlogappUser')
+      }
+      return (<div>
+        <button onClick={handleLogout}>logOut</button>
+      </div>)
+    }
 
    if(user === null)
    return(
@@ -158,24 +167,8 @@ useEffect(() => {
      </>
    )
 
-  //logout
-   const logOut = () => {
-    const handleLogout = (event) =>{
-      event.preventDefault()
-      setUser(null)
-      window.localStorage.removeItem('loggedBlogappUser')
-    }
-  
-    return (<div>
-      <button onClick={handleLogout}>logOut</button>
-    </div>)
-  }
-
-  
   return (
-
     <div>
-
       <section className='header'>
       <h2>blogs</h2>
       <div className="notificationShow">
