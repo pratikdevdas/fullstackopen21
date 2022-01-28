@@ -11,6 +11,8 @@ const BlogForm = ({
     newUrl
 }) => {
     return (
+      <div>
+     
             <div>
       <div className='msg'>{message}</div>
     <form onSubmit={blogAdder}>
@@ -27,6 +29,7 @@ const BlogForm = ({
         <button type="submit">add</button>
       </div>
     </form>
+  </div>
   </div>
     )
 }
