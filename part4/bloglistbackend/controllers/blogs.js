@@ -41,12 +41,10 @@ blogsRouter.post('/', async(request, response) => {
         user: user._id
     })
     console.log(user)
-
     const savedBlog = await addBlog.save()
     user.blogs = user.blogs.concat(savedBlog._id)
     await user.save()
     response.json(savedBlog)
-
 })
 
 blogsRouter.delete('/:id',middleware.userExtractor, async(request, response) => {
@@ -76,8 +74,8 @@ blogsRouter.put('/:id', async(request,response) => {
         likes: body.likes,
         url: body.url,
     }
-
-    const updatedBLog = await Blog.findByIdAndUpdate(request.params.id, blog, { new:true })
+    const updatedBLog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
+    // console.log(updatedBLog, 'HI', request.params.id)
     response.json(updatedBLog.toJSON())
     //since we have async await it automattically pushes errors to next
     /*  try{

@@ -1,7 +1,7 @@
 import React from 'react'
 import Togglable from './Togglable'
 
-const Blog = ({blog}) => {
+const Blog = ({blog,updateBlog}) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -9,7 +9,12 @@ const Blog = ({blog}) => {
     borderWidth: 1,
     marginBottom: 5,
   }
-
+  const addLike = () => {
+    updateBlog({
+      ...blog,
+      likes: blog.likes + 1,
+    })
+  }
   return (
   <div style={blogStyle}>
          {blog.title}
@@ -17,6 +22,7 @@ const Blog = ({blog}) => {
          <div>
           {blog.author} 
          </div>
+         likes:{blog.likes} <button onClick={addLike}> like </button>
          <div>
          {blog.url}
          </div>

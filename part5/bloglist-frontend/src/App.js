@@ -16,6 +16,7 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [message, setNewMessage] = useState(null)
+  const [likes,setLike] = useState(0)
 
 // effect to get blogs
   useEffect(() => {
@@ -43,8 +44,8 @@ useEffect(() => {
         username, password,
       })
       console.log(user)
-      // saving toekn to browesers local storage
-      window.localStorage.setItem(
+      // saving token to browsers local storage
+      window.localStoOMETrage.setItem(
         'loggedBlogappUser', JSON.stringify(user)
       )
       blogService.setToken(user.token)
@@ -64,10 +65,12 @@ useEffect(() => {
   }
   
   const handleTitle = (event) => {
+    event.preventDefault()
     setNewTitle(event.target.value)   
   }
 
   const handleAuthor = (event) => {
+    event.preventDefault()
     setNewAuthor(event.target.value)   
   }
 
@@ -83,6 +86,7 @@ useEffect(() => {
       title: newTitle,
       author: newAuthor,
       url: newUrl,
+      likes: likes
     }
     if(newBlog.title.length<4)
     {
@@ -106,6 +110,28 @@ useEffect(() => {
       console.log(response)
     })
   }
+  
+  // updating likes
+  const updateBlog =  async(blog) => {
+    const updateData = {
+      title: blog.title,
+      author: blog.author,
+      url: blog.url,
+      likes: blog.likes,
+    }
+    try {
+     await blogService.update(blog.id,updateData)
+     const newBlogs = blogs.map((currentBlog) =>
+     currentBlog.id === blog.id
+       ? { ...currentBlog, likes: currentBlog.likes + 1 }
+       : currentBlog
+   )
+   setBlogs(newBlogs)
+    } catch  {
+      
+    }
+    
+    }
 
   const loginForm = () => {
     const hideWhenVisible = {display : loginVisible ? 'none' : ''}
@@ -119,16 +145,17 @@ useEffect(() => {
         </div>
         <div style={showWhenVisible}>
       <LoginForm
-      message={message}
-      username={username}
-      password={password}
-      handleUsernameChange={({ target }) => setUsername(target.value)}
-      handlePasswordChange={({ target }) => setPassword(target.value)}
-      handleSubmit={handleLogin}/>
-      <button onClick={()=> setLoginVisible(false)}> cancel </button>
+        message={message}
+        username={username}
+        password={password}
+        handleUsernameChange={({ target }) => setUsername(target.value)}
+        handlePasswordChange={({ target }) => setPassword(target.value)}
+        handleSubmit={handleLogin}/>
+        <button onClick={()=> setLoginVisible(false)}> cancel </button>
+        </div>
       </div>
-      </div>
-      )
+      ) 
+
   }
    const blogForm = () => {
     // const hideWhenVisible =  
@@ -185,7 +212,7 @@ useEffect(() => {
 
      <section className="blogsCreated">
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} updateBlog={updateBlog}/>
       )}
      </section>
 
