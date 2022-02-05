@@ -16,7 +16,6 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [message, setNewMessage] = useState(null)
-  const [likes,setLike] = useState(0)
 
 // effect to get blogs
   useEffect(() => {
@@ -86,7 +85,7 @@ useEffect(() => {
       title: newTitle,
       author: newAuthor,
       url: newUrl,
-      likes: likes
+      likes:0
     }
     if(newBlog.title.length<4)
     {
@@ -128,9 +127,21 @@ useEffect(() => {
    )
    setBlogs(newBlogs)
     } catch  {
-      
+      console.log('error')
     }
-    
+    }
+
+    // removing blogs
+    const removeBlog = async(id, title) =>{
+      try {
+        if(window.confirm(`Delete ${title}`)){
+          await blogService.remove(id)
+          setBlogs(blogs.filter(blog => blog.id !== id))
+
+        }
+      } catch  {
+        console.log('error')
+      }
     }
 
   const loginForm = () => {
@@ -176,6 +187,7 @@ useEffect(() => {
       )
    }
 
+     const sortedBlogs = blogs.sort((a,b)=>b.likes-a.likes)
      //logout
      const logOut = () => {
       const handleLogout = (event) =>{
@@ -211,8 +223,8 @@ useEffect(() => {
       </section>
 
      <section className="blogsCreated">
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} updateBlog={updateBlog}/>
+      {sortedBlogs.map(blog => 
+        <Blog key={blog.id} blog={blog} updateBlog={updateBlog} removingBlog={removeBlog}/>
       )}
      </section>
 
