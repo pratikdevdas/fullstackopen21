@@ -1,7 +1,7 @@
 import React from 'react'
 import Togglable from './Togglable'
 
-const Blog = ({blog,updateBlog,removingBlog}) => {
+const Blog = ({ blog,updateBlog,removingBlog }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -15,24 +15,24 @@ const Blog = ({blog,updateBlog,removingBlog}) => {
       likes: blog.likes + 1,
     })
   }
-    
-  
+
+
   return (
-  <div style={blogStyle}>
-         {blog.title}
-         <Togglable buttonLabel='show'>
-         <div>
-          {blog.author} 
-         </div>
+    <div style={blogStyle}>
+      {blog.title}
+      <Togglable buttonLabel='show'>
+        <div>
+          {blog.author}
+        </div>
          likes:{blog.likes} <button onClick={addLike}> like </button>
-         <div>
-         {blog.url}
-         </div>
-         <div>
-           <button onClick={()=>removingBlog(blog.id, blog.title)}>remove</button>
-         </div>
-       </Togglable>
-  </div>  
-)}
+        <div>
+          {blog.url}
+        </div>
+        <div>
+          <button onClick={() => removingBlog(blog.id, blog.title)}>remove</button>
+        </div>
+      </Togglable>
+    </div>
+  )}
 
 export default Blog
