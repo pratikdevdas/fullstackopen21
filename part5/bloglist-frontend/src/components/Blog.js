@@ -16,9 +16,8 @@ const Blog = ({ blog,updateBlog,removingBlog }) => {
     })
   }
 
-
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='blog'>
       {blog.title}
       <Togglable buttonLabel='show'>
         <div>
