@@ -1,7 +1,8 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
-import { render, fireEvent, getByText } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import Blog from './Blog'
+import {prettyDOM} from '@testing-library/dom'
 
 describe('tests', () => {
   const blog = {
@@ -40,6 +41,21 @@ describe('tests', () => {
     expect(component.getByText('likes:3')).toBeVisible()
   })
 
-  // test('when a like button is clicked twice', () => {  })
+  test('when a like button is clicked twice, event handler receiving the prop is called twice', () => {
+
+    const mockHandler = jest.fn()
+
+    const component = render(
+      <Blog blog={blog} updateBlog={mockHandler}/>
+    )
+
+    const button = component.getByText('like')
+    fireEvent.click(button)
+    fireEvent.click(button)
+
+    // console.log(prettyDOM(button))1111
+
+    expect(mockHandler.mock.calls).toHaveLength(2)
+  })
 })
 
