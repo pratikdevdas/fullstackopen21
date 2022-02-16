@@ -9,9 +9,6 @@ import Togglable from './components/Togglable'
 const App = () => {
   const [loginVisible, setLoginVisible] = useState(false)
   const [blogs, setBlogs] = useState([])
-  const [newTitle, setNewTitle] = useState('')
-  const [newAuthor, setNewAuthor] = useState('')
-  const [newUrl, setNewUrl] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -63,50 +60,26 @@ const App = () => {
     }
   }
 
-  const handleTitle = (event) => {
-    event.preventDefault()
-    setNewTitle(event.target.value)
-  }
+  //addingBlog
+  const blogAdder = (blogObject) => {
 
-  const handleAuthor = (event) => {
-    event.preventDefault()
-    setNewAuthor(event.target.value)
-  }
-
-  const handleUrl = (event) => {
-    setNewUrl(event.target.value)
-    console.log(event.setNewUrl)
-  }
-
-  const blogAdder = (event) => {
-    event.preventDefault()
-    console.log('created with title', newTitle)
-    const newBlog = {
-      title: newTitle,
-      author: newAuthor,
-      url: newUrl,
-      likes:0
-    }
-    if(newBlog.title.length<4)
+    if(blogObject.title.length<4)
     {
+      console.log(blogAdder)
       setNewMessage('Very short')
       setTimeout(() => {
         setNewMessage(null)
       },5000)
       return console.log('give longer value')
     }
-    console.log('suceed')
-    blogService.create(newBlog)
+
+    blogService.create(blogObject)
       .then(response => {
         setBlogs(blogs.concat(response))
-        setNewTitle('')
-        setNewAuthor('')
-        setNewUrl('')
-        setNewMessage(`${newBlog.title} has been added`)
+        setNewMessage(`${blogObject.title} added`)
         setTimeout(() => {
           setNewMessage(null)
         },5000)
-        console.log(response)
       })
   }
 
@@ -175,12 +148,6 @@ const App = () => {
         <BlogForm
           message={message}
           blogAdder={blogAdder}
-          newTitle={newTitle}
-          handleTitle={handleTitle}
-          newAuthor={newAuthor}
-          handleAuthor={handleAuthor}
-          newUrl={newUrl}
-          handleUrl={handleUrl}
         />
       </Togglable>
     )

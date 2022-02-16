@@ -1,23 +1,50 @@
-import React from 'react'
+import React,{ useState } from 'react'
 import PropTypes from 'prop-types'
-const BlogForm = ({
-  message,
-  blogAdder,
-  newTitle,
-  handleTitle,
-  newAuthor,
-  handleAuthor,
-  handleUrl,
-  newUrl
-}) => {
-  return (
-    <div>
 
+const BlogForm = ({ blogAdder, message }) => {
+
+  const [newTitle, setNewTitle] = useState('')
+  const [newAuthor, setNewAuthor] = useState('')
+  const [newUrl, setNewUrl] = useState('')
+
+  const handleTitle = (event) => {
+    event.preventDefault()
+    setNewTitle(event.target.value)
+  }
+
+  const handleAuthor = (event) => {
+    event.preventDefault()
+    setNewAuthor(event.target.value)
+  }
+
+  const handleUrl = (event) => {
+    event.preventDefault()
+    setNewUrl(event.target.value)
+  }
+
+  const addBlog = (event) => {
+    event.preventDefault()
+    blogAdder({
+      title: newTitle,
+      author: newAuthor,
+      url: newUrl,
+      likes:0
+    })
+    setNewTitle('')
+    setNewAuthor('')
+    setNewUrl('')
+  }
+
+  return (
+    <div className='formDiv'>
       <div>
         <div className='msg'>{message}</div>
-        <form onSubmit={blogAdder}>
+        <form onSubmit={addBlog}>
           <div>
-        Title: <input value={newTitle} onChange={handleTitle}/>
+            Title: <input
+              value={newTitle}
+              onChange={handleTitle}
+              placeholder='firsttitle'/>
           </div>
           <div>
         author: <input value={newAuthor} onChange={handleAuthor}/>
