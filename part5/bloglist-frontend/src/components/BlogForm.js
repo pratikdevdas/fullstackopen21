@@ -47,7 +47,7 @@ const BlogForm = ({ blogAdder, message }) => {
               placeholder='firsttitle'/>
           </div>
           <div>
-        author: <input value={newAuthor} onChange={handleAuthor}/>
+        author: <input value={newAuthor} onChange={handleAuthor} className='author'/>
           </div>
           <div>
         url: <input value={newUrl} onChange={handleUrl}/>
