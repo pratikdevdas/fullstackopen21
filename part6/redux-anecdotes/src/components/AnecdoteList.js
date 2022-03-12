@@ -4,6 +4,8 @@ import { setNotification, unSetNotification } from '../reducers/notificationRedu
 
  const AnecdoteList = () => {
     const anecdotes = useSelector(state => state.anecdotes)
+    const filtering = useSelector(state => state.filter.map(n=>n.filter))
+
     const dispatch = useDispatch()
    
     const vote = (id,content) => {
@@ -13,8 +15,18 @@ import { setNotification, unSetNotification } from '../reducers/notificationRedu
         dispatch(unSetNotification())
     }, 3000);
     }
-    const sortedAnecdotes = anecdotes.sort((a,b)=>b.votes - a.votes)
 
+    // https://stackoverflow.com/questions/4317456/getting-the-last-item-in-a-javascript-object
+    const filter = filtering[Object.keys(filtering)[Object.keys(filtering).length - 1]]
+    
+    console.log(filter)
+    
+    
+  
+    const filteredAnecdotes = anecdotes.filter(a=> a.content.toLowerCase().includes(filter.toLowerCase()))
+    console.log(filteredAnecdotes)
+    const sortedAnecdotes = filteredAnecdotes.sort((a,b)=>b.votes - a.votes)
+   
   return (
     <div>
          <h2>Anecdotes</h2>
