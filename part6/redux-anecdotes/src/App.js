@@ -9,11 +9,12 @@ import { useDispatch } from 'react-redux'
 
 const App = () => {
   const dispatch = useDispatch()
+
   useEffect(()=>{
     backendService.getAll().then(anecdotes => dispatch (setAnecdotes(anecdotes)))
-  },[])
-  
-    return (
+  },[dispatch])
+ 
+  return (
     <div>
       <Notification/>
       <h2>Anecdotes</h2>
