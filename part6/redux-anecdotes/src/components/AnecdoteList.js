@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { updateVote } from "../reducers/anecdoteReducer";
-import { setNotification, unSetNotification } from '../reducers/notificationReducer';
+import { manageNotification } from '../reducers/notificationReducer';
 
  const AnecdoteList = () => {
     const anecdotes = useSelector(state => state.anecdotes)
@@ -10,10 +10,7 @@ import { setNotification, unSetNotification } from '../reducers/notificationRedu
    
     const vote = async(anecdote) => {
       dispatch(updateVote(anecdote.id, {...anecdote, votes: anecdote.votes + 1 }))
-      dispatch(setNotification(`${anecdote.content} is voted`))
-      setTimeout(() => {
-        dispatch(unSetNotification())
-    }, 3000);
+      dispatch(manageNotification(`${anecdote.content}`,3))
     }
 
     // https://stackoverflow.com/questions/4317456/getting-the-last-item-in-a-javascript-object

@@ -9,6 +9,7 @@ const notification = useSelector(state => state.notification)
     padding: 10,
     borderWidth: 1
   }
+  
   const value = notification.map(n => n.message).reverse()[0]
   console.log(value)
   
