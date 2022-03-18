@@ -1,6 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { increaseVote } from "../reducers/anecdoteReducer";
 import { setNotification, unSetNotification } from '../reducers/notificationReducer';
+import backendService from "../services/backend"
+
 
  const AnecdoteList = () => {
     const anecdotes = useSelector(state => state.anecdotes)
@@ -8,9 +10,10 @@ import { setNotification, unSetNotification } from '../reducers/notificationRedu
 
     const dispatch = useDispatch()
    
-    const vote = (id,content) => {
-      dispatch(increaseVote(id))
-      dispatch(setNotification(`${content} is voted`))
+    const vote = async(anecdote) => {
+      const updatedAnecdote = await backendService.update(anecdote.id, { ...anecdote, votes: anecdote.votes + 1 })
+      dispatch(increaseVote(updatedAnecdote.id))
+      dispatch(setNotification(`${anecdote.content} is voted`))
       setTimeout(() => {
         dispatch(unSetNotification())
     }, 3000);
@@ -34,7 +37,7 @@ import { setNotification, unSetNotification } from '../reducers/notificationRedu
           </div>
           <div>
             has {anecdote.votes}
-            <button onClick={() => vote(anecdote.id,anecdote.content)}>vote</button>
+            <button onClick={() => vote(anecdote)}>vote</button>
           </div>
         </div>
       )}
