@@ -1,8 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import backendService from "../services/backend"
 
-
-
 const anecdoteSlice = createSlice({
   name:'anecdote',
   initialState:[],
