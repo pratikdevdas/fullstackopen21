@@ -40,6 +40,7 @@ export const initializeAnecdote =  () => {
 
 export const createAnecdote = (content) => {
   return async dispatch => {
+    // we need to extract to a varialble since we dont have the action creater above
     const newAnecdote = await backendService.createNew(content)
     dispatch(appendAnecdote(newAnecdote))
   }
@@ -47,6 +48,7 @@ export const createAnecdote = (content) => {
 
 export const updateVote = (id,place) => {
   return async dispatch => {
+    // we dont need to extract to a varialble since we have the action creater above
      await backendService.update(id,place)
     dispatch(increaseVote(id))
   }
