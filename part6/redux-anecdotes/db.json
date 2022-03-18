@@ -1,29 +1,39 @@
 {
   "anecdotes": [
     {
-      "content": "The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.",
-      "id": "69581",
-      "votes": 2
-    },
-    {
-      "content": "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
-      "id": "98312",
-      "votes": 0
-    },
-    {
-      "content": "fsdfsdfsd",
+      "content": "sdf",
       "votes": 0,
-      "id": "aHMyXyl"
+      "id": 1
     },
     {
-      "content": "dsf",
+      "content": "sfdfsdg",
       "votes": 0,
-      "id": "-DA0eEs"
+      "id": 2
     },
     {
-      "content": "gfdgfd",
+      "content": "sgdfgdf",
       "votes": 0,
-      "id": "1Fv9eS6"
+      "id": 3
+    },
+    {
+      "content": "gfgfdsghdsf",
+      "votes": 0,
+      "id": 4
+    },
+    {
+      "content": "fdsfdsf",
+      "votes": 0,
+      "id": 5
+    },
+    {
+      "content": "sdfsdggdf",
+      "votes": 0,
+      "id": 6
+    },
+    {
+      "content": "gfdvgfferg",
+      "votes": 0,
+      "id": 7
     }
   ]
 }

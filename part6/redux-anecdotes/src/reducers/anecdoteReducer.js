@@ -1,10 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit"
 import backendService from "../services/backend"
 
+
+
 const anecdoteSlice = createSlice({
   name:'anecdote',
   initialState:[],
   reducers: {
+    createAnecdote(state,action){
+      const content = action.payload
+      state.push(content)
+    },
     increaseVote(state, action){
       const id = action.payload
       const anecdoteToVote = state.find(n => n.id === id)
@@ -26,7 +32,7 @@ const anecdoteSlice = createSlice({
   }
 })
 
-export const { increaseVote, appendAnecdote, setAnecdotes } = anecdoteSlice.actions
+export const { increaseVote, appendAnecdote, setNotes, setAnecdotes } = anecdoteSlice.actions
 
 export const initializeAnecdote =  () => {
   return async dispatch => {
@@ -35,12 +41,11 @@ export const initializeAnecdote =  () => {
   }
 }
 
-export const createAnecdote = content => {
+export const createAnecdote = (content) => {
   return async dispatch => {
-    const newAnecdote = await backendService.createNew(content)
-    dispatch(appendAnecdote(newAnecdote))
+    const newNote = await backendService.createNew(content)
+    dispatch(appendAnecdote(newNote))
   }
 }
-
 
 export default anecdoteSlice.reducer
