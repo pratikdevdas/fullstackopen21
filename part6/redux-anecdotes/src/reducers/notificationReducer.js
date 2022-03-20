@@ -21,7 +21,6 @@ const notificationSlice = createSlice({
     }
 })
 
-
 export const { setNotification,unSetNotification } = notificationSlice.actions
 
 export const manageNotification = (content, time) => {
