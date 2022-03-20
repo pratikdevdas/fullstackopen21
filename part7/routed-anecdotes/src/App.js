@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { BrowserRouter as Router, 
-  Switch, Route, Link, useParams} from 'react-router-dom'
+import { Routes, Route, Link, useParams, useNavigate} from 'react-router-dom'
 
 const Menu = () => {
   const padding = {
@@ -24,7 +23,8 @@ const Anecdote = ({ anecdotes }) => {
   console.log(id)
   return(
     <div>
-      <h2>{anecdote.content}</h2>
+      <h2>{anecdote.content} by {anecdote.author}  </h2>
+      has {anecdote.vote} votes
     </div>
   )
 }
@@ -33,7 +33,7 @@ const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
     <ul>
-      {anecdotes.map(anecdote => <li key={anecdote.id} ><Link to={`/anecdote/${anecdote.id}`}>{anecdote.content}</Link></li>)}
+      {anecdotes.map(anecdote => <li key={anecdote.id} ><Link to={`/anecdote/${anecdote.id}`}>{anecdote.content} </Link></li>)}
     </ul>
   </div>
 )
@@ -54,7 +54,7 @@ const About = () => (
 
 const Footer = () => (
   <div>
-    Anecdote app for <a href='https://courses.helsinki.fi/fi/tkt21009'>Full Stack -websovelluskehitys</a>.
+    Anecdote app for <a href='https://courses.helsinki.fi/fi/tkt21009'>Full Stack -websovellus+kehitys</a>.
 
     See <a href='https://github.com/fullstack-hy/routed-anecdotes/blob/master/src/App.js'>https://github.com/fullstack-hy2019/routed-anecdotes/blob/master/src/App.js</a> for the source code.
   </div>
@@ -65,7 +65,7 @@ const CreateNew = (props) => {
   const [author, setAuthor] = useState('')
   const [info, setInfo] = useState('')
 
-
+  console.log(props)
   const handleSubmit = (e) => {
     e.preventDefault()
     props.addNew({
@@ -73,6 +73,9 @@ const CreateNew = (props) => {
       author,
       info,
       votes: 0
+    })
+    props.handleNotification({
+      content
     })
   }
 
@@ -118,8 +121,18 @@ const App = () => {
   ])
 
   const [notification, setNotification] = useState('')
+  const homeAfterCreate = useNavigate()
+
+  const handleNotification = (anecdote) => {
+    setNotification(`a new anecdote created ${anecdote.content}`)
+    setTimeout(()=>{
+      setNotification('')
+    },3000)
+    homeAfterCreate('/')
+  }
 
   const addNew = (anecdote) => {
+    console.log(anecdote)
     anecdote.id = (Math.random() * 10000).toFixed(0)
     setAnecdotes(anecdotes.concat(anecdote))
   }
@@ -142,29 +155,31 @@ const App = () => {
     <div>
       <h1>Software anecdotes</h1>
      
-      <Router>
+      
         <div> 
         <Menu />
+        {notification}
         </div>
          
-         <Switch>
-           <Route path="/about">
-             <About />
+         <Routes>
+           <Route path="/about" element={<About />}>
            </Route>
-           <Route path="/anecdote/:id">
-             <Anecdote anecdotes={anecdotes} />
-           </Route>
-           
-           <Route path="/createnew">
-          <CreateNew addNew={addNew} />4
 
+           <Route path="/anecdote/:id" element={<Anecdote anecdotes={anecdotes} />}>
+             
            </Route>
            
-           <Route path="/">
-            <AnecdoteList anecdotes={anecdotes} />
+           <Route path="/createnew" element={<CreateNew addNew={addNew} handleNotification={handleNotification} />}>
+            
            </Route>
-         </Switch>
-      </Router>
+           
+           <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />}>
+            
+           </Route>
+         </Routes>
+           
+     
+     
       <Footer />
       
     </div>
