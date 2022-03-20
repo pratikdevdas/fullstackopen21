@@ -154,32 +154,20 @@ const App = () => {
   return (
     <div>
       <h1>Software anecdotes</h1>
-     
-      
         <div> 
         <Menu />
         {notification}
         </div>
          
          <Routes>
-           <Route path="/about" element={<About />}>
-           </Route>
+           <Route path="/about" element={<About />}></Route>
 
-           <Route path="/anecdote/:id" element={<Anecdote anecdotes={anecdotes} />}>
-             
-           </Route>
+           <Route path="/anecdote/:id" element={<Anecdote anecdotes={anecdotes} />}></Route>
            
-           <Route path="/createnew" element={<CreateNew addNew={addNew} handleNotification={handleNotification} />}>
-            
-           </Route>
+           <Route path="/createnew" element={<CreateNew addNew={addNew} handleNotification={handleNotification} />}></Route>
            
-           <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />}>
-            
-           </Route>
+           <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />}></Route>
          </Routes>
-           
-     
-     
       <Footer />
       
     </div>
