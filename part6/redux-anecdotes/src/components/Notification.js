@@ -1,8 +1,9 @@
-import { useSelector } from 'react-redux'
+import { connect } from 'react-redux'
 
-const Notification = () => {
+const Notification = (props) => {
   
-const notification = useSelector(state => state.notification)
+const notification = props.notification
+console.log(notification)
 
   const style = {
     border: 'solid',
@@ -10,8 +11,8 @@ const notification = useSelector(state => state.notification)
     borderWidth: 1
   }
   
+  // to show last element of the array
   const value = notification.map(n => n.message).reverse()[0]
-  console.log(value)
   
   return (
     <div style={style}>
@@ -20,4 +21,11 @@ const notification = useSelector(state => state.notification)
   )
 }
 
-export default Notification
+const mapStateToProps = state => {
+  return{
+    notification: state.notification
+  }
+}
+
+const ConnectedAnecdote = connect(mapStateToProps)(Notification)
+export default ConnectedAnecdote
