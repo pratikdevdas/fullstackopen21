@@ -21,15 +21,21 @@ const notificationSlice = createSlice({
     }
 })
 
+    // https://discord.com/channels/757581218085863474/878211601965137961/955791403567419433 (timeoutid)
 
+let timeoutId;
 export const { setNotification,unSetNotification } = notificationSlice.actions
-
 export const manageNotification = (content, time) => {
     return  dispatch => {
         dispatch(setNotification(`you voteds ${content}`))
-        setTimeout(() => {
+        if (timeoutId) {
+            clearTimeout(timeoutId)
+          }
+          
+       timeoutId = setTimeout(() => {
             dispatch(unSetNotification())
         }, time*1000);
+        console.log(timeoutId)
     }
 }
 export default notificationSlice.reducer
