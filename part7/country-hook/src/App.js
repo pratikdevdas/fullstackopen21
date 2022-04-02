@@ -24,7 +24,7 @@ const useCountry = (name) => {
     .then(response => {
       console.log(response.data)
       setCountry(response.data)
-    },[name])
+    },[])
   }) 
   console.log(country)
 
@@ -51,10 +51,11 @@ const App = () => {
   const nameInput = useField('text')
   const [name, setName] = useState('')
   const country = useCountry(name)
-  
+
   const fetch = (e) => {
     e.preventDefault()
     setName(nameInput.value)
+    console.log(name)
   }
 
   // console.log(name , nameInput.value)
