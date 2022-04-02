@@ -19,14 +19,12 @@ const useCountry = (name) => {
   const [country, setCountry] = useState(null)
 
   useEffect(() => {
-    console.log(name)
+    // console.log(name)
     axios.get(`https://restcountries.com/v3.1/name/${name}?fullText=true`)
     .then(response => {
-      console.log(response.data)
       setCountry(response.data)
     },[])
   }) 
-  console.log(country)
 
   return country
 }
@@ -55,7 +53,6 @@ const App = () => {
   const fetch = (e) => {
     e.preventDefault()
     setName(nameInput.value)
-    console.log(name)
   }
 
   // console.log(name , nameInput.value)
