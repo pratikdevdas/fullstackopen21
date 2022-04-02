@@ -19,13 +19,11 @@ const useCountry = (name) => {
   const [country, setCountry] = useState(null)
 
   useEffect(() => {
-    // console.log(name)
     axios.get(`https://restcountries.com/v3.1/name/${name}?fullText=true`)
     .then(response => {
       setCountry(response.data)
     },[])
   }) 
-
   return country
 }
 
