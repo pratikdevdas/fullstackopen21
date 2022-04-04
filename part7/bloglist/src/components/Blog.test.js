@@ -6,17 +6,14 @@ import Blog from './Blog'
 
 describe('tests', () => {
   const blog = {
-    title:'We are best',
-    author:'Rev',
-    url:'something.com',
-    likes:3
+    title: 'We are best',
+    author: 'Rev',
+    url: 'something.com',
+    likes: 3,
   }
 
   test('checks if url and likes are not rendered by default', () => {
-
-    const component = render(
-      <Blog blog={blog}/>
-    )
+    const component = render(<Blog blog={blog} />)
 
     component.debug()
     expect(component.container).toHaveTextContent(blog.title)
@@ -28,12 +25,8 @@ describe('tests', () => {
     // expect(component.container).not.toBeVisible('something.com')
   })
 
-
   test('when like button is clicked twice event handler component received as button is clicked twice', () => {
-
-    const component = render(
-      <Blog blog={blog}/>
-    )
+    const component = render(<Blog blog={blog} />)
     const button = component.getByText('show')
     fireEvent.click(button)
 
@@ -42,12 +35,9 @@ describe('tests', () => {
   })
 
   test('when a like button is clicked twice, event handler receiving the prop is called twice', () => {
-
     const mockHandler = jest.fn()
 
-    const component = render(
-      <Blog blog={blog} updateBlog={mockHandler}/>
-    )
+    const component = render(<Blog blog={blog} updateBlog={mockHandler} />)
 
     const button = component.getByText('like')
     fireEvent.click(button)
@@ -58,4 +48,3 @@ describe('tests', () => {
     expect(mockHandler.mock.calls).toHaveLength(2)
   })
 })
-

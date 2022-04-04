@@ -1,8 +1,7 @@
-import React,{ useState } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 const BlogForm = ({ blogAdder, message }) => {
-
   const [newTitle, setNewTitle] = useState('')
   const [newAuthor, setNewAuthor] = useState('')
   const [newUrl, setNewUrl] = useState('')
@@ -28,7 +27,7 @@ const BlogForm = ({ blogAdder, message }) => {
       title: newTitle,
       author: newAuthor,
       url: newUrl,
-      likes:0
+      likes: 0,
     })
     setNewTitle('')
     setNewAuthor('')
@@ -36,21 +35,28 @@ const BlogForm = ({ blogAdder, message }) => {
   }
 
   return (
-    <div className='formDiv'>
+    <div className="formDiv">
       <div>
-        <div className='msg'>{message}</div>
+        <div className="msg">{message}</div>
         <form onSubmit={addBlog}>
           <div>
-            Title: <input
+            Title:{' '}
+            <input
               value={newTitle}
               onChange={handleTitle}
-              placeholder='firsttitle'/>
+              placeholder="firsttitle"
+            />
           </div>
           <div>
-        author: <input value={newAuthor} onChange={handleAuthor} className='author'/>
+            author:{' '}
+            <input
+              value={newAuthor}
+              onChange={handleAuthor}
+              className="author"
+            />
           </div>
           <div>
-        url: <input value={newUrl} onChange={handleUrl}/>
+            url: <input value={newUrl} onChange={handleUrl} />
           </div>
           <div>
             <button type="submit">add</button>
@@ -61,7 +67,7 @@ const BlogForm = ({ blogAdder, message }) => {
   )
 }
 
-BlogForm.propTypes={
-  handleTitle: PropTypes.func.isRequired
+BlogForm.propTypes = {
+  handleTitle: PropTypes.func.isRequired,
 }
 export default BlogForm

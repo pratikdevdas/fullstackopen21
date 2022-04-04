@@ -7,14 +7,14 @@ const LoginForm = ({
   password,
   handleUsernameChange,
   handlePasswordChange,
-  handleSubmit
+  handleSubmit,
 }) => {
-  return(
+  return (
     <form onSubmit={handleSubmit}>
       <div>{message}</div>
       <h2>Login</h2>
       <div>
-           username
+        username
         <input
           type="text"
           value={username}
@@ -23,7 +23,7 @@ const LoginForm = ({
         />
       </div>
       <div>
-           password
+        password
         <input
           type="password"
           value={password}
@@ -32,12 +32,13 @@ const LoginForm = ({
         />
       </div>
       <button type="submit">login</button>
-    </form>)
+    </form>
+  )
 }
 
 // proptypes for one of the component
-LoginForm.propTypes={
-  username: PropTypes.string.isRequired
+LoginForm.propTypes = {
+  username: PropTypes.string.isRequired,
 }
 
 export default LoginForm
