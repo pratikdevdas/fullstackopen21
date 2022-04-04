@@ -18,17 +18,18 @@ const useField = (type) => {
 const useResource = (baseUrl) => {
   const [resources, setResources] = useState([])
 
-     axios.get(baseUrl).then((response)=>{
-       setResources(response.data)
-     }).catch(
-       error => console.log(error)
-     )
+  useEffect(() => {
+    axios.get(baseUrl).then(response => 
+      setResources(response.data))
+      //eslint-disable-next-line
+    },[resources])
+    // effect will take place everytime value of resourse changes
 
-  const create = async(resource) => {
-    const response = await axios.post(baseUrl, resource)
-    return response.data
-  }
-
+     const create = (resource) => {
+      const response = axios.post(baseUrl, resource)
+      return response.data
+    }
+ 
   const service = {
     create
   }
@@ -43,6 +44,7 @@ const App = () => {
   const name = useField('text')
   const number = useField('text')
 
+  // this is not state hook
   const [notes, noteService] = useResource('http://localhost:3005/notes')
   const [persons, personService] = useResource('http://localhost:3005/persons')
 
