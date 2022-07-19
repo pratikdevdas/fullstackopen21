@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import Notification from './Notification'
 
 const LoginForm = ({
-  message,
   username,
   password,
   handleUsernameChange,
@@ -11,7 +11,7 @@ const LoginForm = ({
 }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <div>{message}</div>
+      <Notification />
       <h2>Login</h2>
       <div>
         username

@@ -25,6 +25,8 @@ const notificationSlice = createSlice({
 
 let timeoutId;
 export const { setNotification,unSetNotification } = notificationSlice.actions
+
+// to show voted Norification in a decent way
 export const manageNotification = (content, time) => {
     return  dispatch => {
         dispatch(setNotification(`you voteds ${content}`))

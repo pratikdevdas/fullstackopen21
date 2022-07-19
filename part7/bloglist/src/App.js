@@ -6,14 +6,16 @@ import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
 import Notification from './components/Notification'
+import { useDispatch } from 'react-redux'
+import { addNotification } from './reducers/notificationReducer'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [message, setNewMessage] = useState(null)
 
+  const dispatch = useDispatch()
   //ref hook is used to extract a variable from a component and use it
 
   /*
@@ -23,9 +25,7 @@ const App = () => {
     a reference to the component. This hook ensures the same
      reference (ref) is kept throughout re-renders of the component.
   */
-
   const blogFormRef = useRef()
-  console.log(blogFormRef)
 
   // effect to get blogs
   useEffect(() => {
@@ -51,7 +51,6 @@ const App = () => {
         username,
         password,
       })
-      console.log(user)
       // saving token to browsers local storage
       window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
       blogService.setToken(user.token)
@@ -62,9 +61,9 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setNewMessage('wrong usernasme or password')
+      dispatch(addNotification('Wrong UserName or Password'))
       setTimeout(() => {
-        setNewMessage(null)
+        dispatch(addNotification(''))
       }, 5000)
       console.log('error hogaya')
     }
@@ -73,9 +72,9 @@ const App = () => {
   //addingBlog
   const blogAdder = (blogObject) => {
     if (blogObject.title.length < 4) {
-      setNewMessage('Very short')
+      dispatch(addNotification('Very Short'))
       setTimeout(() => {
-        setNewMessage(null)
+        dispatch(addNotification(''))
       }, 5000)
       return console.log('give longer value')
     }
@@ -83,9 +82,9 @@ const App = () => {
     blogService.create(blogObject).then((response) => {
       blogFormRef.current.toggleVisibility()
       setBlogs(blogs.concat(response))
-      setNewMessage(`${blogObject.title} added`)
+      dispatch(addNotification(`added${blogObject.title}`))
       setTimeout(() => {
-        setNewMessage(null)
+        dispatch(addNotification(''))
       }, 5000)
     })
   }
@@ -146,7 +145,6 @@ const App = () => {
         <div>
           <Togglable buttonLabel="Login">
             <LoginForm
-              message={message}
               username={username}
               password={password}
               handleUsernameChange={({ target }) => setUsername(target.value)}
@@ -175,7 +173,7 @@ const App = () => {
         </Togglable>
       </section>
 
-      <Notification message={message} />
+      <Notification />
       <section className="blogsCreated">
         {sortedBlogs.map((blog) => (
           <Blog

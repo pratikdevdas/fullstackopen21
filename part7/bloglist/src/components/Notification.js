@@ -1,9 +1,9 @@
-// import { useDispatch, useSelector } from 'react-redux'
-
 import React from 'react'
-
-const Notification = ({ message }) => {
-  return <div>{message}</div>
+import { useSelector } from 'react-redux'
+const Notification = () => {
+  const notification = useSelector((state) => state.notification)
+  const value = notification.map((n) => n.message).reverse()[0]
+  return <div>{value}</div>
 }
 
 export default Notification
