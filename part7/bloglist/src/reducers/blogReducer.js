@@ -9,7 +9,6 @@ const blogSlice = createSlice({
     },
     addBlogs(state, action) {
       const blog = action.payload
-      console.log(blog)
       state.push(blog)
     },
   },
