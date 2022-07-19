@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { addBlogs } from '../reducers/blogReducer'
 // import PropTypes from 'prop-types'
 
 const BlogForm = ({ blogAdder }) => {
   const [newTitle, setNewTitle] = useState('')
   const [newAuthor, setNewAuthor] = useState('')
   const [newUrl, setNewUrl] = useState('')
+
+  const dispatch = useDispatch()
 
   const handleTitle = (event) => {
     event.preventDefault()
@@ -23,15 +27,17 @@ const BlogForm = ({ blogAdder }) => {
 
   const addBlog = (event) => {
     event.preventDefault()
-    blogAdder({
+    const blog = {
       title: newTitle,
       author: newAuthor,
       url: newUrl,
       likes: 0,
-    })
+    }
+    blogAdder(blog)
     setNewTitle('')
     setNewAuthor('')
     setNewUrl('')
+    dispatch(addBlogs(blog))
   }
 
   return (
