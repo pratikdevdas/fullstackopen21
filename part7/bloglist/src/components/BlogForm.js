@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
-const BlogForm = ({ blogAdder, message }) => {
+const BlogForm = ({ blogAdder }) => {
   const [newTitle, setNewTitle] = useState('')
   const [newAuthor, setNewAuthor] = useState('')
   const [newUrl, setNewUrl] = useState('')
@@ -37,7 +37,6 @@ const BlogForm = ({ blogAdder, message }) => {
   return (
     <div className="formDiv">
       <div>
-        <div className="msg">{message}</div>
         <form onSubmit={addBlog}>
           <div>
             Title:{' '}

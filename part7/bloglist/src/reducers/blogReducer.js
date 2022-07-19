@@ -1,4 +1,4 @@
 const blogReducer = () => {
-  return 'ho'
+  return 'h o'
 }
 export default blogReducer

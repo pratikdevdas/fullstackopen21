@@ -1,18 +1,31 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
+import Notification from './components/Notification'
 
 const App = () => {
-  const [loginVisible, setLoginVisible] = useState(false)
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [message, setNewMessage] = useState(null)
+
+  //ref hook is used to extract a variable from a component and use it
+
+  /*
+  The useRef hook is used to create a blogFormRef ref,
+   that is assigned to the Togglable component containing
+    the creation blog form. The blogFormRef variable acts as
+    a reference to the component. This hook ensures the same
+     reference (ref) is kept throughout re-renders of the component.
+  */
+
+  const blogFormRef = useRef()
+  console.log(blogFormRef)
 
   // effect to get blogs
   useEffect(() => {
@@ -60,7 +73,6 @@ const App = () => {
   //addingBlog
   const blogAdder = (blogObject) => {
     if (blogObject.title.length < 4) {
-      console.log(blogAdder)
       setNewMessage('Very short')
       setTimeout(() => {
         setNewMessage(null)
@@ -69,6 +81,7 @@ const App = () => {
     }
 
     blogService.create(blogObject).then((response) => {
+      blogFormRef.current.toggleVisibility()
       setBlogs(blogs.concat(response))
       setNewMessage(`${blogObject.title} added`)
       setTimeout(() => {
@@ -110,35 +123,6 @@ const App = () => {
     }
   }
 
-  const loginForm = () => {
-    const hideWhenVisible = { display: loginVisible ? 'none' : '' }
-    const showWhenVisible = { display: loginVisible ? '' : 'none' }
-    return (
-      <div>
-        <div style={hideWhenVisible}>
-          <button onClick={() => setLoginVisible(true)}>log in</button>
-        </div>
-        <div style={showWhenVisible}>
-          <LoginForm
-            message={message}
-            username={username}
-            password={password}
-            handleUsernameChange={({ target }) => setUsername(target.value)}
-            handlePasswordChange={({ target }) => setPassword(target.value)}
-            handleSubmit={handleLogin}
-          />
-          <button onClick={() => setLoginVisible(false)}> cancel </button>
-        </div>
-      </div>
-    )
-  }
-  const blogForm = () => {
-    return (
-      <Togglable buttonLabel="Create a new Blog">
-        <BlogForm message={message} blogAdder={blogAdder} />
-      </Togglable>
-    )
-  }
   // sorting blogs according to like
   const sortedBlogs = blogs.sort((a, b) => b.likes - a.likes)
 
@@ -156,7 +140,24 @@ const App = () => {
     )
   }
 
-  if (user === null) return <>{loginForm()}</>
+  if (user === null) {
+    return (
+      <>
+        <div>
+          <Togglable buttonLabel="Login">
+            <LoginForm
+              message={message}
+              username={username}
+              password={password}
+              handleUsernameChange={({ target }) => setUsername(target.value)}
+              handlePasswordChange={({ target }) => setPassword(target.value)}
+              handleSubmit={handleLogin}
+            />
+          </Togglable>
+        </div>
+      </>
+    )
+  }
 
   return (
     <div>
@@ -169,9 +170,12 @@ const App = () => {
 
       <section>
         <h2>createNew</h2>
-        {blogForm()}
+        <Togglable buttonLabel="Create a new Blog" ref={blogFormRef}>
+          <BlogForm blogAdder={blogAdder} />
+        </Togglable>
       </section>
 
+      <Notification message={message} />
       <section className="blogsCreated">
         {sortedBlogs.map((blog) => (
           <Blog
