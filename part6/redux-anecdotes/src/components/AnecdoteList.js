@@ -16,7 +16,6 @@ import { manageNotification } from '../reducers/notificationReducer';
     // https://stackoverflow.com/questions/4317456/getting-the-last-item-in-a-javascript-object
     const filter = filtering[Object.keys(filtering)[Object.keys(filtering).length - 1]]
     
-    console.log(anecdotes)
     
     const filteredAnecdotes = anecdotes.filter(a=> a.content.toLowerCase().includes(filter.toLowerCase()))
     console.log(filteredAnecdotes)
