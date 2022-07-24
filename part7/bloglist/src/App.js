@@ -84,41 +84,6 @@ const App = () => {
     })
   }
 
-  // updating likes
-  // const updateBlog = async (blog) => {
-  //   const updateData = {
-  //     title: blog.title,
-  //     author: blog.author,
-  //     url: blog.url,
-  //     likes: blog.likes,
-  //   }
-  //   try {
-  //     await blogService.update(blog.id, updateData)
-  //     const newBlogs = blogs.map((currentBlog) =>
-  //       currentBlog.id === blog.id
-  //         ? { ...currentBlog, likes: currentBlog.likes + 1 }
-  //         : currentBlog
-  //     )
-  //     setBlogs(newBlogs)
-  //   } catch (error) {
-  //     console.log('error')
-  //   }
-  // }
-
-  // removing blogs
-  // const removeBlog = async (id, title) => {
-  //   try {
-  //     if (window.confirm(`Delete ${title}`)) {
-  //       await blogService.remove(id)
-  //       setBlogs(blogs.filter((blog) => blog.id !== id))
-  //     }
-  //   } catch (error) {
-  //     console.log('error')
-  //   }
-  // }
-
-  // sorting blogs according to like
-
   //logout
   const logOut = () => {
     const handleLogout = (event) => {

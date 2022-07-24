@@ -1,5 +1,6 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { removeBlog, updateBlog } from '../reducers/blogReducer'
 import Togglable from './Togglable'
 
 const Blog = () => {
@@ -11,9 +12,16 @@ const Blog = () => {
     marginBottom: 5,
   }
 
-  const blog = useSelector((state) => state.blog)
+  const dispatch = useDispatch()
 
-  console.log(blog)
+  const handleLikes = async (blog) => {
+    dispatch(updateBlog(blog.id, { ...blog, likes: blog.likes + 1 }))
+  }
+
+  const handleDelete = async (blog) => {
+    dispatch(removeBlog(blog.id))
+  }
+  const blog = useSelector((state) => state.blog)
 
   return (
     <>
@@ -23,11 +31,12 @@ const Blog = () => {
           <Togglable buttonLabel="show">
             <div>{blog.author}</div>
             <div>
-              likes:{blog.likes} <button> like </button>
+              likes:{blog.likes}{' '}
+              <button onClick={() => handleLikes(blog)}> like </button>
             </div>
             <div>{blog.url}</div>
             <div>
-              <button>remove</button>
+              <button onClick={() => handleDelete(blog)}>remove</button>
             </div>
           </Togglable>
         </div>
