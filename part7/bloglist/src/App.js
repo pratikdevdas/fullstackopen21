@@ -8,6 +8,7 @@ import Togglable from './components/Togglable'
 import Notification from './components/Notification'
 import { useDispatch, useSelector } from 'react-redux'
 import { addNotification } from './reducers/notificationReducer'
+import { logoutUser } from './reducers/userReducer'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -46,9 +47,8 @@ const App = () => {
 
   //logout
   const logOut = () => {
-    const handleLogout = (event) => {
-      event.preventDefault()
-      window.localStorage.removeItem('loggedBlogappUser')
+    const handleLogout = async () => {
+      dispatch(logoutUser())
     }
     return (
       <div>
