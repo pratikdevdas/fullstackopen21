@@ -7,6 +7,9 @@ const blogSlice = createSlice({
     appendBlog(state, action) {
       state.push(action.payload)
     },
+    setBlogs(state, action) {
+      return action.payload
+    },
     addBlogs(state, action) {
       const blog = action.payload
       state.push(blog)
@@ -30,8 +33,13 @@ const blogSlice = createSlice({
   },
 })
 
-export const { addBlogs, appendBlog, increaseLikes, filterDeletedBlogs } =
-  blogSlice.actions
+export const {
+  addBlogs,
+  appendBlog,
+  increaseLikes,
+  filterDeletedBlogs,
+  setBlogs,
+} = blogSlice.actions
 
 export const updateBlog = (id, content) => {
   return async (dispatch) => {

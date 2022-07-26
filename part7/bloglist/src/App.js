@@ -1,23 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
-import loginService from './services/login'
+// import loginService from './services/login'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
 import Notification from './components/Notification'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addNotification } from './reducers/notificationReducer'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
-
   const dispatch = useDispatch()
-  //ref hook is used to extract a variable from a component and use it
+  const user = useSelector((state) => state.user.currentUser)
 
+  //ref hook is used to extract a variable from a component and use it
   /*
   The useRef hook is used to create a blogFormRef ref,
    that is assigned to the Togglable component containing
@@ -26,44 +23,9 @@ const App = () => {
      reference (ref) is kept throughout re-renders of the component.
   */
   const blogFormRef = useRef()
-
-  //useeffect to get it from windowlocal storage
-  useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      blogService.setToken(user.token)
-    }
-  }, [])
-
-  const handleLogin = async (event) => {
-    event.preventDefault()
-    console.log('logging in with', username, password)
-
-    try {
-      const user = await loginService.login({
-        username,
-        password,
-      })
-      // saving token to browsers local storage
-      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
-      blogService.setToken(user.token)
-
-      setUser(user)
-      // for token change to call method
-      blogService.setToken(user.token)
-      setUsername('')
-      setPassword('')
-    } catch (exception) {
-      dispatch(addNotification('Wrong UserName or Password'))
-      setTimeout(() => {
-        dispatch(addNotification(''))
-      }, 5000)
-      console.log('error hogaya')
-    }
+  if (user) {
+    blogService.setToken(user.token)
   }
-
   //addingBlog
   const blogAdder = (blogObject) => {
     if (blogObject.title.length < 4) {
@@ -71,9 +33,7 @@ const App = () => {
       setTimeout(() => {
         dispatch(addNotification(''))
       }, 5000)
-      return console.log('give longer value')
     }
-
     blogService.create(blogObject).then((response) => {
       blogFormRef.current.toggleVisibility()
       setBlogs(blogs.concat(response))
@@ -88,7 +48,6 @@ const App = () => {
   const logOut = () => {
     const handleLogout = (event) => {
       event.preventDefault()
-      setUser(null)
       window.localStorage.removeItem('loggedBlogappUser')
     }
     return (
@@ -103,13 +62,7 @@ const App = () => {
       <>
         <div>
           <Togglable buttonLabel="Login">
-            <LoginForm
-              username={username}
-              password={password}
-              handleUsernameChange={({ target }) => setUsername(target.value)}
-              handlePasswordChange={({ target }) => setPassword(target.value)}
-              handleSubmit={handleLogin}
-            />
+            <LoginForm />
           </Togglable>
         </div>
       </>
