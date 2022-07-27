@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react'
 import Blog from './components/Blog'
+
 import blogService from './services/blogs'
 // import loginService from './services/login'
 import LoginForm from './components/LoginForm'
@@ -8,7 +9,7 @@ import Togglable from './components/Togglable'
 import Notification from './components/Notification'
 import { useDispatch, useSelector } from 'react-redux'
 import { addNotification } from './reducers/notificationReducer'
-import { logoutUser } from './reducers/userReducer'
+import Navbar from './components/Navbar'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -45,18 +46,6 @@ const App = () => {
     })
   }
 
-  //logout
-  const logOut = () => {
-    const handleLogout = async () => {
-      dispatch(logoutUser())
-    }
-    return (
-      <div>
-        <button onClick={handleLogout}>logOut</button>
-      </div>
-    )
-  }
-
   if (user === null) {
     return (
       <>
@@ -71,11 +60,9 @@ const App = () => {
 
   return (
     <div>
+      <Navbar />
       <section className="header">
-        <h2>blogs</h2>
         <div className="notificationShow"></div>
-        {user.name} loggedin
-        {logOut()}
       </section>
 
       <section>
