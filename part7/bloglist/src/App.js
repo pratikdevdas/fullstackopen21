@@ -1,21 +1,30 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Blog from './components/Blog'
-
 import blogService from './services/blogs'
-// import loginService from './services/login'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
 import Notification from './components/Notification'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { createBlog, initializeBlogs } from './reducers/blogReducer'
 import { addNotification } from './reducers/notificationReducer'
 import Navbar from './components/Navbar'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
+  const [newTitle, setNewTitle] = useState('')
+  const [newAuthor, setNewAuthor] = useState('')
+  const [newUrl, setNewUrl] = useState('')
   const dispatch = useDispatch()
+
   const user = useSelector((state) => state.user.currentUser)
 
+  useEffect(() => {
+    dispatch(initializeBlogs())
+  }, [dispatch])
+
+  if (user) {
+    blogService.setToken(user.token)
+  }
   //ref hook is used to extract a variable from a component and use it
   /*
   The useRef hook is used to create a blogFormRef ref,
@@ -24,26 +33,48 @@ const App = () => {
     a reference to the component. This hook ensures the same
      reference (ref) is kept throughout re-renders of the component.
   */
+
   const blogFormRef = useRef()
-  if (user) {
-    blogService.setToken(user.token)
+
+  const handleTitle = (event) => {
+    event.preventDefault()
+    setNewTitle(event.target.value)
   }
-  //addingBlog
-  const blogAdder = (blogObject) => {
-    if (blogObject.title.length < 4) {
+
+  const handleAuthor = (event) => {
+    event.preventDefault()
+    setNewAuthor(event.target.value)
+  }
+
+  const handleUrl = (event) => {
+    event.preventDefault()
+    setNewUrl(event.target.value)
+  }
+
+  const addBlog = (event) => {
+    event.preventDefault()
+    const blog = {
+      title: newTitle,
+      author: newAuthor,
+      url: newUrl,
+      likes: 0,
+      id: 'fsdfdsdg3rg',
+    }
+    setNewTitle('')
+    setNewAuthor('')
+    setNewUrl('')
+    if (blog.title.length < 4) {
       dispatch(addNotification('Very Short'))
       setTimeout(() => {
         dispatch(addNotification(''))
       }, 5000)
     }
-    blogService.create(blogObject).then((response) => {
-      blogFormRef.current.toggleVisibility()
-      setBlogs(blogs.concat(response))
-      dispatch(addNotification(`added${blogObject.title}`))
-      setTimeout(() => {
-        dispatch(addNotification(''))
-      }, 5000)
-    })
+    blogFormRef.current.toggleVisibility()
+    dispatch(createBlog(blog))
+    dispatch(addNotification(`added${blog.title}`))
+    setTimeout(() => {
+      dispatch(addNotification(''))
+    }, 5000)
   }
 
   if (user === null) {
@@ -68,7 +99,15 @@ const App = () => {
       <section>
         <h2>createNew</h2>
         <Togglable buttonLabel="Create a new Blog" ref={blogFormRef}>
-          <BlogForm blogAdder={blogAdder} />
+          <BlogForm
+            addBlog={addBlog}
+            handleAuthor={handleAuthor}
+            handleUrl={handleUrl}
+            handleTitle={handleTitle}
+            newAuthor={newAuthor}
+            newUrl={newUrl}
+            newTitle={newTitle}
+          />
         </Togglable>
       </section>
 
