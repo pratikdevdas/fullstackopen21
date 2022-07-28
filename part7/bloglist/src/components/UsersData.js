@@ -7,7 +7,6 @@ const UsersData = () => {
   const users = useSelector((state) => state.user.allUsers)
   const id = useParams().id
   const findUser = users.find((n) => n.id === id)
-  console.log(findUser)
   return (
     <div>
       <Navbar />
