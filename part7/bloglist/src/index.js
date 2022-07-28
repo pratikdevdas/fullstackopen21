@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import Users from './components/Users'
 import SingleUser from './components/SingleUser.js'
+import SingleBlog from './components/SingleBlog.js'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './reducers/store'
@@ -19,6 +20,7 @@ ReactDOM.render(
         <Routes>
           <Route path="/users" element={<Users />} />
           <Route path="/users/:id" element={<SingleUser />} />
+          <Route path="/blogs/:id" element={<SingleBlog />} />
           <Route path="/" element={<App />} />
         </Routes>
       </Router>

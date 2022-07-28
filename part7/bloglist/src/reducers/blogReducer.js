@@ -23,7 +23,6 @@ const blogSlice = createSlice({
       /* The way its working: The updatelikes reducer fucntion is dispatched from BlogJs and the updatevote Dispatches show likes */
       const id = action.payload
       const blogToLike = state.find((n) => n.id === id)
-      console.log(blogToLike)
       const changedBlog = {
         ...blogToLike,
         likes: blogToLike.likes + 1,
