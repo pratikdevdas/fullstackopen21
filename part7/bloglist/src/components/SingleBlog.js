@@ -32,7 +32,9 @@ const SingleBlog = () => {
         likes:{findBlog.likes}{' '}
         <button onClick={() => handleLikes(findBlog)}> like </button>
       </div>
-      <div>{findBlog.url}</div>
+      <div>
+        <a href={findBlog.url}>{findBlog.url}</a>
+      </div>
       <div>
         <button onClick={() => handleDelete(findBlog)}>remove</button>
       </div>

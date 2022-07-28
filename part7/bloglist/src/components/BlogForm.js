@@ -1,45 +1,15 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { addBlogs } from '../reducers/blogReducer'
+import React from 'react'
+
 // import PropTypes from 'prop-types'
-
-const BlogForm = ({ blogAdder }) => {
-  const [newTitle, setNewTitle] = useState('')
-  const [newAuthor, setNewAuthor] = useState('')
-  const [newUrl, setNewUrl] = useState('')
-
-  const dispatch = useDispatch()
-
-  const handleTitle = (event) => {
-    event.preventDefault()
-    setNewTitle(event.target.value)
-  }
-
-  const handleAuthor = (event) => {
-    event.preventDefault()
-    setNewAuthor(event.target.value)
-  }
-
-  const handleUrl = (event) => {
-    event.preventDefault()
-    setNewUrl(event.target.value)
-  }
-
-  const addBlog = (event) => {
-    event.preventDefault()
-    const blog = {
-      title: newTitle,
-      author: newAuthor,
-      url: newUrl,
-      likes: 0,
-    }
-    blogAdder(blog)
-    setNewTitle('')
-    setNewAuthor('')
-    setNewUrl('')
-    dispatch(addBlogs(blog))
-  }
-
+const BlogForm = ({
+  addBlog,
+  newAuthor,
+  newUrl,
+  newTitle,
+  handleAuthor,
+  handleTitle,
+  handleUrl,
+}) => {
   return (
     <div className="formDiv">
       <div>
