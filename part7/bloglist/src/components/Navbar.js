@@ -17,16 +17,19 @@ const Navbar = () => {
   }
   return (
     <div>
-      <Link to="/users" onClick={loadUsers}>
-        User
-      </Link>
-      <br />
-      <Link to="/" onClick={loadUsers}>
-        Home
-      </Link>
-      <h2>blogs</h2>
-      {user?.name} loggedin
-      <button onClick={handleLogout}>logout</button>
+      <div style={{ display: 'flex' }}>
+        <Link to="/users" onClick={loadUsers} style={{ paddingLeft: '10px' }}>
+          User
+        </Link>
+        <Link to="/" onClick={loadUsers} style={{ paddingLeft: '10px' }}>
+          Home
+        </Link>
+        <div style={{ paddingLeft: '10px', paddingRight: '10px' }}>
+          {user?.name} loggedin
+        </div>
+        <button onClick={handleLogout}>logout</button>
+      </div>
+      <h2>blog app</h2>
     </div>
   )
 }
