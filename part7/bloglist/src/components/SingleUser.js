@@ -3,11 +3,10 @@ import { useParams } from 'react-router-dom'
 import Navbar from './Navbar'
 import { useSelector } from 'react-redux'
 
-const UsersData = () => {
+const SingleUser = () => {
   const users = useSelector((state) => state.user.allUsers)
   const id = useParams().id
   const findUser = users.find((n) => n.id === id)
-  console.log(findUser)
   return (
     <div>
       <Navbar />
@@ -20,4 +19,4 @@ const UsersData = () => {
   )
 }
 
-export default UsersData
+export default SingleUser

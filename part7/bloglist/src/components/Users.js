@@ -5,8 +5,6 @@ import { Link } from 'react-router-dom'
 
 const Users = () => {
   const users = useSelector((state) => state.user.allUsers)
-  console.log(users)
-
   return (
     <div>
       <Navbar />

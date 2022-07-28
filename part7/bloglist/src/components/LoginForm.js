@@ -15,7 +15,7 @@ const LoginForm = () => {
       event.target.password.value = ''
       dispatch(userLogin({ username, password }))
     } catch (err) {
-      console.log(err, 'fsdf')
+      console.log(err, 'error logging in')
     }
   }
 

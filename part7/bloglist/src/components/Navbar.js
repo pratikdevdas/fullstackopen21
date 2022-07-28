@@ -1,27 +1,20 @@
 import React from 'react'
 import { logoutUser, getUsers } from '../reducers/userReducer'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
   const dispatch = useDispatch()
   const user = useSelector((state) => state.user.currentUser)
+  const navigate = useNavigate()
   //logout
-  const logOut = () => {
-    const handleLogout = async () => {
-      dispatch(logoutUser())
-    }
-    return (
-      <div>
-        <button onClick={handleLogout}>logOut</button>
-      </div>
-    )
+  const handleLogout = async () => {
+    dispatch(logoutUser())
+    navigate('/')
   }
-
   const loadUsers = async () => {
     dispatch(getUsers())
   }
-
   return (
     <div>
       <Link to="/users" onClick={loadUsers}>
@@ -33,7 +26,7 @@ const Navbar = () => {
       </Link>
       <h2>blogs</h2>
       {user?.name} loggedin
-      {logOut()}
+      <button onClick={handleLogout}>logout</button>
     </div>
   )
 }
