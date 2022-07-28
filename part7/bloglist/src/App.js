@@ -58,7 +58,6 @@ const App = () => {
       author: newAuthor,
       url: newUrl,
       likes: 0,
-      id: 'fsdfdsdg3rg',
     }
     setNewTitle('')
     setNewAuthor('')
