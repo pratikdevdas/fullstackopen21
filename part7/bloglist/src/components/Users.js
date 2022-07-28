@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from './Navbar'
-
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 const Users = () => {
   const users = useSelector((state) => state.user.allUsers)
@@ -30,7 +30,9 @@ const Users = () => {
             width: '20%',
           }}
         >
-          <div>{user.name}</div>
+          <Link to={`/users/${user.id}`}>
+            <div>{user.name}</div>
+          </Link>
           <div>{user.blogs.length}</div>
         </div>
       ))}
