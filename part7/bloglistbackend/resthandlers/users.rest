@@ -3,12 +3,10 @@ POST http://localhost:8000/api/users
 content-type: application/json
 
 {
-   "username":"rev2",
-   "name":"revenants",
+   "username":"rev",
+   "name":"revenant",
    "password":"easy"
 }
 
 ###
-GET http://localhost:3003/api/users/
-
-
+GET http://localhost:8000/api/users/

@@ -1,9 +1,17 @@
-GET http://localhost:8000/api/blogs/61aae6e7051e2c2972e78984
+POST http://localhost:8000/api/blogs/62f0eacc54061d31bd9bb58f/comments
+content-type: application/json
+
+{
+ "comments":"kramjali hehe"
+}
+
+###
+GET http://localhost:8000/api/blogs/62f0eacc54061d31bd9bb58f
 
 ###
 POST http://localhost:8000/api/blogs
 content-type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJldiIsImlkIjoiNjFhYWNlYWE3YzQ3MWE5ZjlmNjBkODc0IiwiaWF0IjoxNjQwMjI4MjY4fQ.hfOhTuQhmXBkbZHJTS4org4YZj4ult9O16BFVBeiBJ8
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJldiIsImlkIjoiNjJlNjFhNmM5ZmIyOTc4NDhhZDI4NTc0IiwiaWF0IjoxNjU5NTk4Nzk2fQ.qieEuFvUCNMsHpPjrUt_zyISL_fLeatd-348Kkk980Q
 
 {
    "url": "dhkasdfj.com",

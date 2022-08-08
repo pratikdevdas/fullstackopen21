@@ -71,7 +71,7 @@ const App = () => {
     }
     blogFormRef.current.toggleVisibility()
     dispatch(createBlog(blog))
-    dispatch(addNotification(`added${blog.title}`))
+    dispatch(addNotification(`added ${blog.title}`))
     setTimeout(() => {
       dispatch(addNotification(''))
     }, 5000)

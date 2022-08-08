@@ -1,0 +1,9 @@
+POST http://localhost:8000/api/blogs/62eb77ec50b83c104c067e8a/comments
+content-type: application/json
+
+{
+   "comment": "a Must Read oncee more"
+}
+
+###
+GET  http://localhost:8000/api/blogs/comments
