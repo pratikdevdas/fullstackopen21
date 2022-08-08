@@ -34,8 +34,8 @@ const SingleBlog = () => {
       comments: comment,
     }
     dispatch(updateComment(findBlog.id, comments))
+    setComment('')
   }
-  console.log(findBlog)
 
   return (
     <div>
