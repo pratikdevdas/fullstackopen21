@@ -8,7 +8,6 @@ const blogSlice = createSlice({
       state.push(action.payload)
     },
     setBlogs(state, action) {
-      console.log('wollo e,', action.payload)
       return action.payload
     },
     filterDeletedBlogs(state, action) {
@@ -31,14 +30,11 @@ const blogSlice = createSlice({
     setComments(state, action) {
       const id = action.payload.id
       const commentsToPush = action.payload.content.comments
-      console.log(typeof commentsToPush)
       const blogWithUpdatedComment = state.find((n) => n.id === id)
-      console.log(blogWithUpdatedComment)
       const changedBlog = {
         ...blogWithUpdatedComment,
         comments: blogWithUpdatedComment.comments.concat([commentsToPush]),
       }
-      console.log(changedBlog)
       return state.map((blog) => (blog.id !== id ? blog : changedBlog))
     },
   },
@@ -62,7 +58,6 @@ export const initializeBlogs = () => {
 export const createBlog = (content) => {
   return async (dispatch) => {
     await blogService.create(content)
-    console.log(content)
     dispatch(appendBlog(content))
   }
 }

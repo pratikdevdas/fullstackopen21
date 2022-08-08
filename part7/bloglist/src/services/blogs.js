@@ -33,7 +33,6 @@ const remove = (id) => {
 }
 
 const addComment = (id, comments) => {
-  console.log(comments)
   return axios.post(`${baseUrl}/${id}/comments`, comments)
 }
 
