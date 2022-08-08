@@ -22,7 +22,7 @@ const SingleBlog = () => {
   if (!findBlog) {
     return <Navbar />
   }
-
+  console.log(blog)
   return (
     <div>
       <Navbar />
@@ -38,6 +38,10 @@ const SingleBlog = () => {
       <div>
         <button onClick={() => handleDelete(findBlog)}>remove</button>
       </div>
+      <h3>Comments</h3>
+      {findBlog.comments?.map((b) => (
+        <li key={b}>{b}</li>
+      ))}
     </div>
   )
 }
