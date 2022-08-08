@@ -57,8 +57,8 @@ const SingleBlog = () => {
         <input type="text" value={comment} onChange={handleComment} />
         <button type="submit">add comment</button>
       </form>
-      {findBlog.comments?.map((b) => (
-        <li key={b}>{b}</li>
+      {findBlog.comments?.map((b, i) => (
+        <li key={i}>{b}</li>
       ))}
     </div>
   )
