@@ -1,0 +1,32 @@
+GET http://localhost:8000/api/blogs/61aae6e7051e2c2972e78984
+
+###
+POST http://localhost:8000/api/blogs
+content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJldiIsImlkIjoiNjFhYWNlYWE3YzQ3MWE5ZjlmNjBkODc0IiwiaWF0IjoxNjQwMjI4MjY4fQ.hfOhTuQhmXBkbZHJTS4org4YZj4ult9O16BFVBeiBJ8
+
+{
+   "url": "dhkasdfj.com",
+  "title": "In sooth I know not",
+  "author": "Satish Chandra",
+  "likes": 526
+}
+
+###
+DELETE http://localhost:8000/api/blogs/61c4035f1df09498ebe4f88c
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJldiIsImlkIjoiNjFhYWNlYWE3YzQ3MWE5ZjlmNjBkODc0IiwiaWF0IjoxNjQwMzQ4NzA4fQ.BxaDHVd5oRkRqnm095xBG0FusDQXyU_5DdgA1DvKkf0
+
+###
+PUT http://localhost:8000/api/blogs/61aae6e7051e2c2972e78984
+content-type: application/json
+
+{
+     "title": "Hell wheres is the highway",
+  "author": "Sebastian Rathore",
+  "likes": 2,
+  "url": "jijijiji.com",
+  "userId":"61aaceaa7c471a9f9f60d874"
+}
+
+
+
