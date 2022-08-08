@@ -36,7 +36,7 @@ const blogSlice = createSlice({
       console.log(blogWithUpdatedComment)
       const changedBlog = {
         ...blogWithUpdatedComment,
-        comments: blogWithUpdatedComment.comments.push(commentsToPush),
+        comments: blogWithUpdatedComment.comments.concat([commentsToPush]),
       }
       console.log(changedBlog)
       return state.map((blog) => (blog.id !== id ? blog : changedBlog))
