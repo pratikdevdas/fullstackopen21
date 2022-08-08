@@ -2,7 +2,7 @@ POST http://localhost:8000/api/blogs/62f0eacc54061d31bd9bb58f/comments
 content-type: application/json
 
 {
- "comments":"kramjali hehe"
+ "comments":"kgdxfdfgdcvxvcxnbdzf"
 }
 
 ###

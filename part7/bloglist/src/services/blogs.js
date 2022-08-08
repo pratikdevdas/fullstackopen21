@@ -32,4 +32,9 @@ const remove = (id) => {
   return axios.delete(`${baseUrl}/${id}`, config)
 }
 
-export default { getAll, create, update, setToken, remove }
+const addComment = (id, comments) => {
+  console.log(comments)
+  return axios.post(`${baseUrl}/${id}/comments`, comments)
+}
+
+export default { getAll, create, update, setToken, remove, addComment }

@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { removeBlog, updateBlog } from '../reducers/blogReducer'
+import { removeBlog, updateBlog, updateComment } from '../reducers/blogReducer'
 import { useParams } from 'react-router-dom'
 import Navbar from './Navbar'
 
 const SingleBlog = () => {
+  const [comment, setComment] = useState('')
   const blog = useSelector((state) => state.blog)
   const dispatch = useDispatch()
 
@@ -22,7 +23,20 @@ const SingleBlog = () => {
   if (!findBlog) {
     return <Navbar />
   }
-  console.log(blog)
+
+  const handleComment = (event) => {
+    setComment(event.target.value)
+  }
+
+  const addComment = (event) => {
+    event.preventDefault()
+    const comments = {
+      comments: comment,
+    }
+    dispatch(updateComment(findBlog.id, comments))
+  }
+  console.log(findBlog)
+
   return (
     <div>
       <Navbar />
@@ -39,6 +53,10 @@ const SingleBlog = () => {
         <button onClick={() => handleDelete(findBlog)}>remove</button>
       </div>
       <h3>Comments</h3>
+      <form onSubmit={addComment}>
+        <input type="text" value={comment} onChange={handleComment} />
+        <button type="submit">add comment</button>
+      </form>
       {findBlog.comments?.map((b) => (
         <li key={b}>{b}</li>
       ))}
