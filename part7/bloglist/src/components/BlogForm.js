@@ -13,28 +13,40 @@ const BlogForm = ({
   return (
     <div className="formDiv">
       <div>
-        <form onSubmit={addBlog}>
-          <div>
-            Title:{' '}
+        <form onSubmit={addBlog} className="form-control">
+          <div className="my-2">
+            <span className="label-text">Title of the Blog :</span>
             <input
               value={newTitle}
               onChange={handleTitle}
-              placeholder="firsttitle"
+              className="input input-bordered px-3 mx-3 w-64 h-7"
+              placeholder="Title"
             />
           </div>
-          <div>
-            author:{' '}
+          <div className="my-2">
+            <span className="label-text">Author : </span>
+
             <input
               value={newAuthor}
               onChange={handleAuthor}
-              className="author"
+              placeholder="Author"
+              className="input input-bordered px-3 mx-3 w-64 h-7"
+            />
+          </div>
+          <div className="my-2">
+            <span className="label-text">Url : </span>
+
+            <input
+              value={newUrl}
+              onChange={handleUrl}
+              placeholder="URL"
+              className="input input-bordered px-3 mx-3 w-64 h-7"
             />
           </div>
           <div>
-            url: <input value={newUrl} onChange={handleUrl} />
-          </div>
-          <div>
-            <button type="submit">add</button>
+            <button type="submit" className="btn">
+              add
+            </button>
           </div>
         </form>
       </div>

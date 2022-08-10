@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import './index.css'
 import App from './App'
+
 import Users from './components/Users'
 import SingleUser from './components/SingleUser.js'
 import SingleBlog from './components/SingleBlog.js'

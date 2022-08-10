@@ -24,14 +24,27 @@ const LoginForm = () => {
       <Notification />
       <h2>Login</h2>
       <div>
-        username
-        <input type="text" name="username" />
+        Username :
+        <input
+          type="text"
+          name="username"
+          className="input input-bordered px-3 mx-3 w-64 h-7"
+        />
       </div>
       <div>
-        password
-        <input type="password" name="password" />
+        Password :
+        <input
+          type="password"
+          name="password"
+          className="input input-bordered px-3 mx-3 w-64 h-7"
+        />
       </div>
-      <button type="submit">login</button>
+      <button
+        type="submit"
+        className="badge badge-outline hover:bg-white hover:text-black"
+      >
+        login
+      </button>
     </form>
   )
 }

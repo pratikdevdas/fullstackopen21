@@ -16,20 +16,47 @@ const Navbar = () => {
     dispatch(getUsers())
   }
   return (
-    <div>
-      <div style={{ display: 'flex' }}>
-        <Link to="/users" onClick={loadUsers} style={{ paddingLeft: '10px' }}>
-          User
-        </Link>
-        <Link to="/" onClick={loadUsers} style={{ paddingLeft: '10px' }}>
-          Home
-        </Link>
-        <div style={{ paddingLeft: '10px', paddingRight: '10px' }}>
-          {user?.name} loggedin
-        </div>
-        <button onClick={handleLogout}>logout</button>
+    <div className="navbar bg-base-100">
+      <div className="navbar-start w-full">
+        <ul className="menu flex-row p-0 justify-between items-center w-full">
+          <h2 className="normal-case text-xl">blog app</h2>
+          <li className="normal-case">
+            <div style={{ paddingLeft: '10px', paddingRight: '10px' }}>
+              {user?.name} loggedin
+            </div>
+          </li>
+
+          <li>
+            <Link
+              to="/"
+              onClick={loadUsers}
+              className="btn btn-active btn-ghost hover:btn-outline"
+            >
+              Home
+            </Link>
+          </li>
+
+          <li>
+            <Link
+              to="/users"
+              onClick={loadUsers}
+              className="btn btn-active btn-ghost hover:btn-outline"
+              style={{ paddingLeft: '10px' }}
+            >
+              User
+            </Link>
+          </li>
+
+          <li>
+            <button
+              className="btn btn-active btn-ghost hover:btn-outline"
+              onClick={handleLogout}
+            >
+              logout
+            </button>
+          </li>
+        </ul>
       </div>
-      <h2>blog app</h2>
     </div>
   )
 }

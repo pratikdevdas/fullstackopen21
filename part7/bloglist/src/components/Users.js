@@ -6,34 +6,33 @@ import { Link } from 'react-router-dom'
 const Users = () => {
   const users = useSelector((state) => state.user.allUsers)
   return (
-    <div>
+    <div className="max-w-4xl mx-auto">
       <Navbar />
-      <h2>Users</h2>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          width: '20%',
-        }}
-      >
-        <div></div>
-        <div>no of blogs</div>
+
+      <div className="mt-10">
+        <table className="table table-zebra w-full">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>No Of Blogs</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user, index) => (
+              <tr key={user.id}>
+                <th>{index + 1}</th>
+                <td>
+                  <Link to={`/users/${user.id}`}>
+                    <div className="link link-primary">{user.name}</div>
+                  </Link>
+                </td>
+                <td>{user.blogs.length}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-      {users.map((user) => (
-        <div
-          key={user.id}
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            width: '20%',
-          }}
-        >
-          <Link to={`/users/${user.id}`}>
-            <div>{user.name}</div>
-          </Link>
-          <div>{user.blogs.length}</div>
-        </div>
-      ))}
     </div>
   )
 }

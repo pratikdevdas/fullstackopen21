@@ -90,31 +90,32 @@ const App = () => {
   }
 
   return (
-    <div>
+    <div className="max-w-4xl mx-auto">
       <Navbar />
-      <section className="header">
-        <div className="notificationShow"></div>
-      </section>
+      <div className="max-w-3xl mx-auto py-5 px-3">
+        <section className="header">
+          <div className="notificationShow"></div>
+        </section>
 
-      <section>
-        <h2>createNew</h2>
-        <Togglable buttonLabel="Create a new Blog" ref={blogFormRef}>
-          <BlogForm
-            addBlog={addBlog}
-            handleAuthor={handleAuthor}
-            handleUrl={handleUrl}
-            handleTitle={handleTitle}
-            newAuthor={newAuthor}
-            newUrl={newUrl}
-            newTitle={newTitle}
-          />
-        </Togglable>
-      </section>
+        <section className="py-4">
+          <Togglable buttonLabel="Create a new Blog" ref={blogFormRef}>
+            <BlogForm
+              addBlog={addBlog}
+              handleAuthor={handleAuthor}
+              handleUrl={handleUrl}
+              handleTitle={handleTitle}
+              newAuthor={newAuthor}
+              newUrl={newUrl}
+              newTitle={newTitle}
+            />
+          </Togglable>
+        </section>
 
-      <Notification />
-      <section className="blogsCreated">
-        <Blog />
-      </section>
+        <Notification />
+        <section className="blogsCreated">
+          <Blog />
+        </section>
+      </div>
     </div>
   )
 }

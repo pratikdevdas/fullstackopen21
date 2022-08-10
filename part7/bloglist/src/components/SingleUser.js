@@ -8,10 +8,10 @@ const SingleUser = () => {
   const id = useParams().id
   const findUser = users.find((n) => n.id === id)
   return (
-    <div>
+    <div className="max-w-4xl mx-auto">
       <Navbar />
-      <h2>{findUser.name}</h2>
-      added blogs
+      <h2 className="text-3xl bold">{findUser.name}</h2>
+      Added blogs -:
       {findUser.blogs.map((blog) => (
         <li key={blog.id}>{blog.title}</li>
       ))}
