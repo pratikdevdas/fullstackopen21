@@ -120,10 +120,11 @@ const resolvers = {
   },
   Authors: {
     bookCount: (root) => {
-      const map = books.map(element => element.author).reduce((cnt, cur) => (cnt[cur] = cnt[cur] + 1 || 1, cnt), {});
-    // console.log(map);
-    const value = books.map(element => element.author).find(element => element === root.name)
-    // console.log(value)
+      const mappper = books.map(element => element.author)
+      const map = mapper.reduce((cnt, cur) => (cnt[cur] = cnt[cur] + 1 || 1, cnt), {});
+      // console.log(map);
+      const value = mapper.find(element => element === root.name)
+      // console.log(value)
       // console.log(map[value])
       return map[value]
   }
