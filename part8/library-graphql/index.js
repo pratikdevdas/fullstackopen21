@@ -28,7 +28,7 @@ let authors = [
 
 /*
  * Suomi:
- * Saattaisi olla järkevämpää assosioida kirja ja sen tekijä tallettamalla kirjan yhteyteen tekijän nimen sijaan tekijän id
+ * Saattaisi o  lla järkevämpää assosioida kirja ja sen tekijä tallettamalla kirjan yhteyteen tekijän nimen sijaan tekijän id
  * Yksinkertaisuuden vuoksi tallennamme kuitenkin kirjan yhteyteen tekijän nimen
  *
  * English:
@@ -93,6 +93,7 @@ const typeDefs = gql`
     bookCount: Int!
     authorCount: Int!
     allBooks: [Books!]!
+    allAuthors: [Authors!]!
   }
 
   type Books{
@@ -103,6 +104,11 @@ const typeDefs = gql`
     id:ID!
   }
 
+  type Authors{
+    name: String!
+    id: String!
+    bookCount: Int!
+  }
 `
 
 const resolvers = {
@@ -110,7 +116,18 @@ const resolvers = {
     bookCount: () => books.length,
     authorCount: () => authors.length,
     allBooks: () => books,
+    allAuthors: () => authors
+  },
+  Authors: {
+    bookCount: (root) => {
+      const map = books.map(element => element.author).reduce((cnt, cur) => (cnt[cur] = cnt[cur] + 1 || 1, cnt), {});
+    // console.log(map);
+    const value = books.map(element => element.author).find(element => element === root.name)
+    // console.log(value)
+      // console.log(map[value])
+      return map[value]
   }
+}
 }
 
 const server = new ApolloServer({
