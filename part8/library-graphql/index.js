@@ -121,6 +121,8 @@ const resolvers = {
   Authors: {
     bookCount: (root) => {
       const mapper = books.map(element => element.author)
+      // COMMA OPERATOR
+      // https://stackoverflow.com/a/32886673/15688606
       const map = mapper.reduce((cnt, cur) => (cnt[cur] = cnt[cur] + 1 || 1, cnt), {});
       // console.log(map);
       const value = mapper.find(element => element === root.name)
