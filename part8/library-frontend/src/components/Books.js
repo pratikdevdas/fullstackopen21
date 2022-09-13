@@ -3,13 +3,12 @@ import { ALL_BOOKS } from '../queries'
 
 const Books = (props) => {
   const result = useQuery(ALL_BOOKS)
-  console.log(result)
-
+  
   if (!props.show) {
     return null
   }
 
-  const books = result.data.allBooks
+  const books = result?.data?.allBooks
 
   return (
     <div>
