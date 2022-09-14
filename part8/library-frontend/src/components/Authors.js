@@ -10,7 +10,7 @@ console.log(result)
   }
   
   const authors = result?.data?.allAuthors 
-console.log(result.data.allAuthors)
+// console.log(result.data.allAuthors)
   return (
     <div>
       <h2>authors</h2>
