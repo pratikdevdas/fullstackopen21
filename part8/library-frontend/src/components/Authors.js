@@ -2,6 +2,16 @@ import { ALL_AUTHORS,UPDATE_AUTHOR } from "../queries";
 import { useQuery, useMutation } from "@apollo/client";
 import { useState } from "react";
 
+import React from 'react'
+// import Select from 'react-select'
+
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' }
+]
+
+
 const Authors = (props) => {
 
   const [name, setName ] = useState('')
@@ -36,7 +46,7 @@ const Authors = (props) => {
             <th>books</th>
           </tr>
           {authors.map((a) => (
-            <tr key={a.name}>
+            <tr key={a.id}>
               <td>{a.name}</td>
               <td>{a.born}</td>
               <td>{a.bookCount}</td>
@@ -47,13 +57,16 @@ const Authors = (props) => {
       <h2>Set BirthYear</h2>
       <form onSubmit={onSubmitForm}>
         <div>
-          name
-          <input type="text" value={name} onChange={(event)=>{setName(event.target.value)}}/>
+        name
+        <select value={name} onChange={(event)=>{setName(event.target.value)}}>
+          {authors.map((n)=> <option>{n.name}</option> )}
+        </select>
         </div>
         <div>
           born
           <input type="number" value={born} onChange={(event)=>{setBorn(event.target.value)}}/>
         </div>
+       
         <button type="submit">update</button>
       </form>
     </div>
