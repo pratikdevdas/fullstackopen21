@@ -9,7 +9,7 @@ console.log(result)
     return null
   }
   
-  const authors = result?.data?.allAuthors 
+  const authors = result?.data?.allAuthors  ?? []
 // console.log(result.data.allAuthors)
   return (
     <div>
