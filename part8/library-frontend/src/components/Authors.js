@@ -2,16 +2,6 @@ import { ALL_AUTHORS,UPDATE_AUTHOR } from "../queries";
 import { useQuery, useMutation } from "@apollo/client";
 import { useState } from "react";
 
-import React from 'react'
-// import Select from 'react-select'
-
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }
-]
-
-
 const Authors = (props) => {
 
   const [name, setName ] = useState('')
@@ -20,7 +10,6 @@ const Authors = (props) => {
   const [changeBirth] = useMutation(UPDATE_AUTHOR,{
     refetchQueries:[ {query: ALL_AUTHORS}]})
 
-  console.log(result);
   if (!props.show) {
     return null;
   }
@@ -32,9 +21,8 @@ const Authors = (props) => {
     setName('')
     setBorn('')
   }
-
+  // nullish coelsing operator because graphql doesnt load same queries at both time
   const authors = result?.data?.allAuthors ?? [];
-  // console.log(result.data.allAuthors)
   return (
     <div>
       <h2>authors</h2>

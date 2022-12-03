@@ -1,108 +1,22 @@
+require('dotenv').config()
 const { ApolloServer, gql } = require('apollo-server')
 const { v1:uuid } = require('uuid')
+const mongoose = require('mongoose')
+const Author = require('./models/author')
+const Book = require('./models/Book')
 
-let authors = [
-  {
-    name: 'Robert Martin',
-    id: "afa51ab0-344d-11e9-a414-719c6709cf3e",
-    born: 1952,
-  },
-  {
-    name: 'Martin Fowler',
-    id: "afa5b6f0-344d-11e9-a414-719c6709cf3e",
-    born: 1963
-  },
-  {
-    name: 'Fyodor Dostoevsky',
-    id: "afa5b6f1-344d-11e9-a414-719c6709cf3e",
-    born: 1821
-  },
-  { 
-    name: 'Joshua Kerievsky', // birthyear not known
-    id: "afa5b6f2-344d-11e9-a414-719c6709cf3e",
-  },
-  { 
-    name: 'Sandi Metz', // birthyear not known
-    id: "afa5b6f3-344d-11e9-a414-719c6709cf3e",
-  },
-]
-
-/*
- * Suomi:
- * Saattaisi o  lla järkevämpää assosioida kirja ja sen tekijä tallettamalla kirjan yhteyteen tekijän nimen sijaan tekijän id
- * Yksinkertaisuuden vuoksi tallennamme kuitenkin kirjan yhteyteen tekijän nimen
- *
- * English:
- * It might make more sense to associate a book with its author by storing the author's id in the context of the book instead of the author's name
- * However, for simplicity, we will store the author's name in connection with the book
-*/
-
-let books = [
-  {
-    title: 'Clean Code',
-    published: 2008,
-    author: 'Robert Martin',
-    id: "afa5b6f4-344d-11e9-a414-719c6709cf3e",
-    genres: ['refactoring']
-  },
-  {
-    title: 'Agile software development',
-    published: 2002,
-    author: 'Robert Martin',
-    id: "afa5b6f5-344d-11e9-a414-719c6709cf3e",
-    genres: ['agile', 'patterns', 'design']
-  },
-  {
-    title: 'Refactoring, edition 2',
-    published: 2018,
-    author: 'Martin Fowler',
-    id: "afa5de00-344d-11e9-a414-719c6709cf3e",
-    genres: ['refactoring']
-  },
-  {
-    title: 'Refactoring to patterns',
-    published: 2008,
-    author: 'Joshua Kerievsky',
-    id: "afa5de01-344d-11e9-a414-719c6709cf3e",
-    genres: ['refactoring', 'patterns']
-  },  
-  {
-    title: 'Practical Object-Oriented Design, An Agile Primer Using Ruby',
-    published: 2012,
-    author: 'Sandi Metz',
-    id: "afa5de02-344d-11e9-a414-719c6709cf3e",
-    genres: ['refactoring', 'design']
-  },
-  {
-    title: 'Crime and punishment',
-    published: 1866,
-    author: 'Fyodor Dostoevsky',
-    id: "afa5de03-344d-11e9-a414-719c6709cf3e",
-    genres: ['classic', 'crime']
-  },
-  {
-    title: 'The Demon ',
-    published: 1872,
-    author: 'Fyodor Dostoevsky',
-    id: "afa5de04-344d-11e9-a414-719c6709cf3e",
-    genres: ['classic', 'revolution']
-  },
-]
+mongoose.connect(process.env.MONGO_URI).then(
+  () => {
+    console.log(' connection succcesssful')
+  }
+)
 
 const typeDefs = gql`
   type Query {
     bookCount: Int!
-    authorCount: Int!
+    # authorCount: Int!
     allBooks(author: String, genres: String): [Books!]!
     allAuthors: [Authors!]!
-  }
-
-  type Books{
-    title: String!
-    author: String!
-    published: String!
-    genres: [String!]!
-    id:ID!
   }
 
   type Authors{
@@ -112,6 +26,14 @@ const typeDefs = gql`
     bookCount: Int!
   }
 
+  type Books{
+    title: String!
+    published: String!
+    author: Authors
+    genres: [String!]!
+    id:ID!
+  }
+
   type Mutation{
     addBook(
       title: String!
@@ -119,70 +41,95 @@ const typeDefs = gql`
       published: Int!
       genres: [String!]!
     ):Books
-    editAuthor(
-      name:String!
-      born:Int!
-    ):Authors
+    # editAuthor(
+    #   name:String!
+    #   born:Int!
+    # ):Authors
   }
 `
 
 const resolvers = {
   Query: {
-    bookCount: () => books.length,
-    authorCount: () => authors.length,
-    allBooks: (root,args) => {
+    bookCount: async() => Book.collection.countDocuments(),
+    // authorCount: async() => Author.collection.countDocuments(),
+    allBooks: async(root,args) => {
       if(args.author && args.genres){
-       return books.filter(p => p.genres.includes(args.genres) && p.author === args.author)
+        console.log(args.author,args.genres)
+        const author = await Author.findOne({name: args.author})
+        const books = await Book.find({author: {$in:[author.id]},genres:{$in:[args.genres]}}).populate('author')
+        return books
       } else if(args.author) {
-        return books.filter(p => p.author === args.author)
+        const author = await Author.findOne({name: args.author})
+        const books = await Book.find({author: author.id}).populate('author')
+        return books
       } else if(args.genres){
-        return books.filter(p => p.genres.includes(args.genres))
+        const books = Book.find({genres: {$in:[ args.genres ]}}).populate('author')
+        return books
       } else {
+        const books = await Book.find({}).populate('author')
         return books
       }
     },
-    allAuthors: () => authors,
-  },
-  Authors: {
-    bookCount: (root) => {
-      const mapper = books.map(element => element.author)
-      // COMMA OPERATOR
-      // https://stackoverflow.com/a/32886673/15688606
-      const map = mapper.reduce((cnt, cur) => (cnt[cur] = cnt[cur] + 1 || 1, cnt), {});
-      // console.log(map);
-      const value = mapper.find(element => element === root.name)
-      // console.log(value)
-      // console.log(map[value])
-      return map[value]
-  },
-},
-Mutation:{
-  addBook: (root,args)=>{
-    const book = { ...args,id:uuid() }
-    books = books.concat(book)
-    if (!authors.includes(book.author)) {
-      authors = authors.concat({ name: book.author, id: uuid() })
-    }
-    return book
-  },
-  editAuthor: (root, args) => {
-    const author = authors.find(p => p.name === args.name)
-    console.log(author)
-    if(!author){
-      return null
-    }
-
-    const updatedAuthor = {...author, born: args.born}
-    console.log(updatedAuthor)
-    authors = authors.map(p => {
-      
-     let value =  p.name === args.name ? updatedAuthor : p
+    allAuthors: async() => {
+     const value = await Author.find({})
      console.log(value)
-     return value
-    })
-    console.log(authors)
-    return updatedAuthor
-  }
+      return Author.find({})
+    },
+  },
+
+//   Authors: {
+//     bookCount: (root) => {
+//       const mapper = books.map(element => element.author)
+//       // COMMA OPERATOR
+//       // https://stackoverflow.com/a/32886673/15688606
+//       const map = mapper.reduce((cnt, cur) => (cnt[cur] = cnt[cur] + 1 || 1, cnt), {});
+//       // console.log(map);
+//       const value = mapper.find(element => element === root.name)
+//       // console.log(value)
+//       // console.log(map[value])
+//       return map[value]
+//   },
+// },
+Mutation:{
+  addBook: async(root,args)=>{
+    console.log('books', args)
+
+    const author = new Author({ name: args.author})
+      await author.save()
+
+
+      const authorData = await Author.findOne({name: args.author})
+
+      console.log(authorData, "jack")
+    const book = new Book({ ...args, author: authorData.id})
+    // const debugValue = Author.findOne({ name: args.author })
+    
+    console.log(args.author)
+    console.log(book, 'deb')
+    
+    // if (!Author.findOne({ name: args.author })) {
+    
+    // }
+    return await book.save()
+  },
+  // editAuthor: (root, args) => {
+  //   const author = authors.find(p => p.name === args.name)
+  //   console.log(author)
+  //   if(!author){
+  //     return null
+  //   }
+
+  //   const updatedAuthor = {...author, born: args.born}
+  //   console.log(updatedAuthor)
+  //   authors = authors.map(p => {
+      
+  //    let value =  p.name === args.name ? updatedAuthor : p
+  //    console.log(value)
+  //    return value
+  //   })
+  //   console.log(authors)
+  //   return updatedAuthor
+  // }
 }
 }
 
@@ -191,6 +138,15 @@ const server = new ApolloServer({
   resolvers,
 })
 
-server.listen().then(({ url }) => {
-  console.log(`Server ready at ${url}`)
+server.listen({ port: 4002 }).then(({url}) => {
+//  console.log(Object.keys(server) === 'listen', server, typeof server)
+  console.log(`Server ready at ${url}`, typeof url)
 })
+
+const trio   =  {
+  name(){
+    console.log('My name is pratik')
+  }
+}    
+console.log(Object.keys(trio).includes('name'), )
+trio.name()
