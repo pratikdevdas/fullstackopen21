@@ -92,13 +92,20 @@ const resolvers = {
 // },
 Mutation:{
   addBook: async(root,args)=>{
+    if(args.author.length < 4 || args.title.length < 2){
+      throw new UserInputError("Author name must be at least 4 characters long and book title must be at least 2 characters long")
+    }
     // if author exists
-    if(Author.findOne({name: args.author})){
-      const authorData = await Author.findOne({name: args.author})
-      const book = new Book({ ...args, author: authorData.id})
+    const authorData1 = await Author.findOne({name: args.author})
+    if(authorData1){
+      console.log("first")
+      console.log(authorData1)
+      const book = new Book({ ...args, author: authorData1.id})
+      console.log(book)
       await book.save()
-      return book
+      return book.populate('author')
     } else {
+      console.log("second")
       // saving the author first
       const author = new Author({ name: args.author})
       await author.save()
@@ -110,7 +117,8 @@ Mutation:{
       await book.save()
       // const bookReturn = await Book.find({title: args.title}).populate('author')
       // console.log("jack", bookReturn, "jack")
-      return book
+      return book.populate('author')
+    }
     }
   },
   // editAuthor: (root, args) => {
@@ -132,7 +140,7 @@ Mutation:{
   //   return updatedAuthor
   // }
 }
-}
+
 
 const server = new ApolloServer({
   typeDefs, 
