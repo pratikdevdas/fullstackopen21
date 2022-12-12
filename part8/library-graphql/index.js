@@ -7,7 +7,6 @@ const Book = require('./models/Book')
 const jwt = require('jsonwebtoken')
 const User = require('./models/user')
 
-
 const JWT_SECRET = process.env.JWT_SECRET
 
 mongoose.connect(process.env.MONGO_URI).then(
@@ -25,7 +24,6 @@ const typeDefs = gql`
   type Token{
     value: String!
   }
-
 
   type Query {
     bookCount: Int!
@@ -49,7 +47,6 @@ const typeDefs = gql`
     genres: [String!]!
     id:ID!
   }
-
 
   type Mutation{
     addBook(
@@ -118,8 +115,6 @@ const resolvers = {
 //       return map[value]
 //   },
 // },
-
-
 
 Mutation:{
   addBook: async(root,args,context)=>{
@@ -198,7 +193,6 @@ Mutation:{
 }
 },
 }
-
 
 const server = new ApolloServer({
   typeDefs, 
