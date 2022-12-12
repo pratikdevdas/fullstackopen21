@@ -92,25 +92,26 @@ const resolvers = {
 // },
 Mutation:{
   addBook: async(root,args)=>{
-    console.log('books', args)
-
-    const author = new Author({ name: args.author})
-      await author.save()
-
-
+    // if author exists
+    if(Author.findOne({name: args.author})){
       const authorData = await Author.findOne({name: args.author})
-
+      const book = new Book({ ...args, author: authorData.id})
+      await book.save()
+      return book
+    } else {
+      // saving the author first
+      const author = new Author({ name: args.author})
+      await author.save()
+      // searching for the same author in database
+      const authorData = await Author.findOne({name: args.author})
       console.log(authorData, "jack")
-    const book = new Book({ ...args, author: authorData.id})
-    // const debugValue = Author.findOne({ name: args.author })
-    
-    console.log(args.author)
-    console.log(book, 'deb')
-    
-    // if (!Author.findOne({ name: args.author })) {
-    
-    // }
-    return await book.save()
+      // saving the book with the author id
+      const book = new Book({ ...args, author: authorData.id})
+      await book.save()
+      // const bookReturn = await Book.find({title: args.title}).populate('author')
+      // console.log("jack", bookReturn, "jack")
+      return book
+    }
   },
   // editAuthor: (root, args) => {
   //   const author = authors.find(p => p.name === args.name)
@@ -142,11 +143,3 @@ server.listen({ port: 4002 }).then(({url}) => {
 //  console.log(Object.keys(server) === 'listen', server, typeof server)
   console.log(`Server ready at ${url}`, typeof url)
 })
-
-const trio   =  {
-  name(){
-    console.log('My name is pratik')
-  }
-}    
-console.log(Object.keys(trio).includes('name'), )
-trio.name()
