@@ -2,6 +2,8 @@
 The fullstack open 2021 excercises. 
 Learn React, Redux, Node.js, MongoDB, GraphQL and TypeScript in one go!
 
-I have done till Part 6, Part left till 14
+I have done till Part 7
 start yourself at : https://fullstackopen.com/en/
-![certificate-fullstack](https://user-images.githubusercontent.com/63319865/160117091-c1bfb18f-53fc-4c0f-b608-92f1e3e2e91f.png)
+
+MyCertificate
+![certificate-fullstack](https://user-images.githubusercontent.com/63319865/209723686-b41f9bd5-3bd7-45cc-9d6f-ecb6dc59bf3e.png)
