@@ -11,7 +11,7 @@ const JWT_SECRET = process.env.JWT_SECRET
 
 mongoose.connect(process.env.MONGO_URI).then(
   () => {
-    console.log(' connection succcesssful')
+    console.log('mongo connection succcesssful')
   }
 )
 
