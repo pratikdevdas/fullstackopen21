@@ -1,4 +1,4 @@
-function calculateExcercises(daily: Array<number>, target: Number) {
+function calculateExcercises(daily: Array<number>, target: number) {
     const arr: Array<Number> = []
     daily.forEach((arrayValue) => arrayValue === 0 ? null : arr.push(arrayValue))
     let sum: number = 0;
