@@ -17,7 +17,7 @@ const parseArguments = (args: Array<string>): bmiValues => {
     }
   }
 
-const calculateBmi = (height: number, mass: number): string | void => {
+export const calculateBmi = (height: number, mass: number): string | void => {
     const res = mass / (height * height) * 10000;
     switch (true) {
         case (res < 16):
@@ -54,3 +54,4 @@ try {
     }
     console.log(errorMessage)
 }
+
