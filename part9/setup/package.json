@@ -2,17 +2,24 @@
   "name": "setup",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "ts-node":"ts-node",
+    "start": "ts-node index.ts",
+    "dev": "ts-node-dev index.ts",
+    "ts-node": "ts-node",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "bmiCalculate":"ts-node bmiCalculator.ts",
-    "excerciseCalculate":"ts-node excerciseCalculator.ts"
+    "bmiCalculate": "ts-node bmiCalculator.ts",
+    "excerciseCalculate": "ts-node excerciseCalculator.ts"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/express": "^4.17.15",
     "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
   }
 }

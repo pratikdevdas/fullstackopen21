@@ -3,7 +3,7 @@ interface Result {
     trainingDays: number,
     sucess: boolean,
     rating: number,
-    ratingDescription: string,
+    ratingDescription: string | undefined,
     target: number,
     average: number
 }
@@ -13,7 +13,7 @@ interface excerciseValue {
     value2: number
 }
 
-function arguments(args: Array<string>): excerciseValue {
+function argument(args: Array<string>): excerciseValue {
     let array: Array<number> = []
     let target
     if (args.length < 4) {
@@ -26,7 +26,7 @@ function arguments(args: Array<string>): excerciseValue {
     })
 
     target = array.shift()
-    if (array.length === 0) {
+    if (array.length === 0 || target === undefined) {
         throw new Error('Invalid Arguments')
     }
     return { value1: array, value2: target }
@@ -81,7 +81,7 @@ function calculateExcercises(daily: Array<number>, target: number): Result {
 
 
 try {
-    const { value1, value2 } = arguments(process.argv)
+    const { value1, value2 } = argument(process.argv)
     console.log(calculateExcercises(value1, value2))
 } catch (error) {
     let errorMessage = "Something Bad Happened"

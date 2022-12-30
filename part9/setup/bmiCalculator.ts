@@ -17,9 +17,8 @@ const parseArguments = (args: Array<string>): bmiValues => {
     }
   }
 
-const calculateBmi = (height: number, mass: number): string => {
+const calculateBmi = (height: number, mass: number): string | void => {
     const res = mass / (height * height) * 10000;
-    console.log(res);
     switch (true) {
         case (res < 16):
             return 'Underweight (Severe thinness)'
@@ -40,6 +39,7 @@ const calculateBmi = (height: number, mass: number): string => {
         default:
             break;
     }
+    return console.log('Error didnt work')
 }
 
 
