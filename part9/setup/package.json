@@ -9,7 +9,7 @@
     "ts-node": "ts-node",
     "test": "echo \"Error: no test specified\" && exit 1",
     "bmiCalculate": "ts-node bmiCalculator.ts",
-    "excerciseCalculate": "ts-node excerciseCalculator.ts",
+    "exerciseCalculate": "ts-node exerciseCalculator.ts",
     "lint":"eslint --ext .ts ."
   },
   "author": "",

@@ -8,12 +8,12 @@ interface Result {
     average: number
 }
 
-interface excerciseValue {
+interface exerciseValue {
     value1: Array<number>,
     value2: number
 }
 
-function argument(args: Array<string>): excerciseValue {
+function argument(args: Array<string>): exerciseValue {
     const array: Array<number> = [];
     let target;
     if (args.length < 4) {
@@ -34,7 +34,7 @@ function argument(args: Array<string>): excerciseValue {
 }
 
 
-function calculateExcercises(daily: Array<number>, target: number): Result {
+export function calculateExercises(daily: Array<number>, target: number): Result {
     const arr: Array<number> = [];
     daily.forEach((arrayValue) => arrayValue === 0 ? null : arr.push(arrayValue));
     let sum = 0;
@@ -83,11 +83,11 @@ function calculateExcercises(daily: Array<number>, target: number): Result {
 
 try {
     const { value1, value2 } = argument(process.argv);
-    console.log(calculateExcercises(value1, value2));
+    console.log(calculateExercises(value1, value2));
 } catch (error) {
     let errorMessage = "Something Bad Happened";
     if (error instanceof Error) {
         errorMessage += ' Error ' + error.message;
     }
-    throw new Error(errorMessage);
+    console.log(errorMessage);
 }
