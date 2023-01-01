@@ -5,7 +5,6 @@ import { LOGIN } from "../queries";
 
 const Login = ({show, setError, setToken }) => {
 
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -18,6 +17,7 @@ const Login = ({show, setError, setToken }) => {
   useEffect(() => {
     if (result.data) {
       const token = result.data.login.value;
+      console.log(result.data)
       setToken(token);
       localStorage.setItem("library-user-token", token);
     }
