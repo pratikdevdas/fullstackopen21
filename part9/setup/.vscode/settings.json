@@ -1,0 +1,10 @@
+{
+  "emmet.triggerExpansionOnTab": true,
+  "editor.codeActionsOnSave": {
+      //eslint-runs-automatically-on-save
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": [
+    "javascript"
+  ],
+}
