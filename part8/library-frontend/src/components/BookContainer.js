@@ -1,29 +1,43 @@
-import {useQuery} from '@apollo/client'
-import { ALL_BOOKS } from '../queries'
-import { useState } from 'react'
-import Books from './Books'
+import { useQuery } from "@apollo/client";
+import { ALL_BOOKS } from "../queries";
+import { useState } from "react";
+import Books from "./Books";
 
 const BookContainer = (props) => {
+  const [genre, setGenre] = useState(null);
+  console.log(genre)
 
-  const result = useQuery(ALL_BOOKS)
-  const [genre,setGenre] = useState(null)  
+  const result = useQuery(ALL_BOOKS);
+  const resultBasedOnGenre = useQuery(ALL_BOOKS,{
+    variables: genre,
+    skip: !genre
+  });
+
   if (!props.show) {
-    return null
+    return null;
   }
 
-  const books = result?.data?.allBooks
-  let array = []
-  books.forEach(element =>  array = element.genres.concat(array));
-  const uniq = [...new Set(array)]
+  const booksBasedOnGenre = resultBasedOnGenre?.data?.allBooks
+  console.log(booksBasedOnGenre)
 
+  const books = result?.data?.allBooks;
+  let array = [];
+  books.forEach((element) => (array = element.genres.concat(array)));
+  const uniq = [...new Set(array)];
+
+  const bookValue = genre ? booksBasedOnGenre : books
+  console.log(bookValue)
+  console.log(genre)
   return (
     <div>
       <h2>books</h2>
-      {genre && <>in genre {genre}</>}
-          <Books books={books} genre={genre} />
-          {uniq?.map((a)=><button onClick={()=>setGenre(a)}>{a}</button>)}
+      {uniq?.map((a) => (
+        <button onClick={() => setGenre(a)}>{a}</button>
+      ))}
+      <div>{genre && <>in genre {genre}</>}</div>
+      <Books books={bookValue} genre={genre} />
     </div>
-  )
-}
+  );
+};
 
-export default BookContainer
+export default BookContainer;
