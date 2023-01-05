@@ -59,7 +59,7 @@ const resolvers = {
       if (authorData) {
         const book = new Book({ ...args, author: authorData.id });
         await book.save();
-        pubsub.publish("BOOK_ADDED", { bookAdded: book });
+        pubsub.publish("BOOK_ADDED", { bookAdded: book.populate("author") });
         return book.populate("author");
         // if author doesn't exist
       } else {
@@ -72,7 +72,7 @@ const resolvers = {
         const book = new Book({ ...args, author: authorData.id });
         await book.save();
 
-        pubsub.publish("BOOK_ADDED", { bookAdded: book });
+        pubsub.publish("BOOK_ADDED", { bookAdded: book.populate("author") });
         return book.populate("author");
       }
     },

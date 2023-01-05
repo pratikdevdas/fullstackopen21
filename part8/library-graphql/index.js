@@ -5,7 +5,6 @@ const {
   ApolloServerPluginDrainHttpServer,
 } = require("@apollo/server/plugin/drainHttpServer");
 const { makeExecutableSchema } = require("@graphql-tools/schema");
-const { startStandaloneServer } = require("@apollo/server/standalone");
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
