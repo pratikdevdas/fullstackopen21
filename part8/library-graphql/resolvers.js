@@ -1,6 +1,11 @@
+const { PubSub } = require("graphql-subscriptions");
+const pubsub = new PubSub();
+
 const { UserInputError, AuthenticationError } = require("@apollo/server");
 const Author = require("./models/author");
 const Book = require("./models/Book");
+const User = require("./models/user");
+
 const jwt = require("jsonwebtoken");
 
 const resolvers = {
@@ -54,7 +59,9 @@ const resolvers = {
       if (authorData) {
         const book = new Book({ ...args, author: authorData.id });
         await book.save();
+        pubsub.publish("BOOK_ADDED", { bookAdded: book });
         return book.populate("author");
+        // if author doesn't exist
       } else {
         // saving the author first
         const author = new Author({ name: args.author });
@@ -64,6 +71,8 @@ const resolvers = {
         // saving the book with the author id
         const book = new Book({ ...args, author: authorData.id });
         await book.save();
+
+        pubsub.publish("BOOK_ADDED", { bookAdded: book });
         return book.populate("author");
       }
     },
@@ -103,8 +112,14 @@ const resolvers = {
         username: user.username,
         id: user._id,
       };
-      console.log(jwt.sign(userForToken, JWT_SECRET));
-      return { value: jwt.sign(userForToken, JWT_SECRET) };
+      console.log(jwt.sign(userForToken, process.env.JWT_SECRET));
+      return { value: jwt.sign(userForToken, process.env.JWT_SECRET) };
+    },
+  },
+
+  Subscription: {
+    bookAdded: {
+      subscribe: () => pubsub.asyncIterator("BOOK_ADDED"),
     },
   },
 };
