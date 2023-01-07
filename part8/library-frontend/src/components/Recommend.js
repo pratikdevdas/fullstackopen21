@@ -7,7 +7,7 @@ const Recommend = (props) => {
   const result = useQuery(USER);
   const resultBook = useQuery(ALL_BOOKS);
   const fav = result.data?.me?.favoriteGenre;
-  const books = resultBook.data.allBooks
+  const books = resultBook?.data?.allBooks
 
   if (!props.show) {
     return null;
