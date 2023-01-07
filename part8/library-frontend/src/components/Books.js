@@ -14,8 +14,8 @@ const Books = ({ books, genre }) => {
             <th>author</th>
             <th>published</th>
           </tr>
-          {filteredValue?.map((a) => (
-        <tr key={a._id}>
+          {filteredValue?.map((a,i) => (
+        <tr key={i}>
           <td>{a.title}</td>
           <td>{a.author.name}</td>
           <td>{a.published}</td>

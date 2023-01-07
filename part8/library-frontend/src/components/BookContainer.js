@@ -5,7 +5,6 @@ import Books from "./Books";
 
 const BookContainer = (props) => {
   const [genre, setGenre] = useState(null);
-  console.log(genre)
 
   const result = useQuery(ALL_BOOKS);
   const resultBasedOnGenre = useQuery(ALL_BOOKS,{
@@ -18,7 +17,6 @@ const BookContainer = (props) => {
   }
 
   const booksBasedOnGenre = resultBasedOnGenre?.data?.allBooks
-  console.log(booksBasedOnGenre)
 
   const books = result?.data?.allBooks;
   let array = [];
@@ -26,13 +24,12 @@ const BookContainer = (props) => {
   const uniq = [...new Set(array)];
 
   const bookValue = genre ? booksBasedOnGenre : books
-  console.log(bookValue)
-  console.log(genre)
+
   return (
     <div>
       <h2>books</h2>
-      {uniq?.map((a) => (
-        <button onClick={() => setGenre(a)}>{a}</button>
+      {uniq?.map((a,i) => (
+        <button key={i} onClick={() => setGenre(a)}>{a}</button>
       ))}
       <div>{genre && <>in genre {genre}</>}</div>
       <Books books={bookValue} genre={genre} />
