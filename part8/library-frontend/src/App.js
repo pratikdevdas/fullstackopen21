@@ -5,7 +5,7 @@ import BookContainer from "./components/BookContainer";
 import NewBook from "./components/NewBook";
 import Login from "./components/Login";
 import Recommend from "./components/Recommend";
-import { BOOK_ADDED } from "./queries";
+import { BOOK_ADDED, ALL_BOOKS } from "./queries";
 
 const App = () => {
   const [page, setPage] = useState("authors");
@@ -13,20 +13,31 @@ const App = () => {
   const [notify, setNotify] = useState(null);
   const client = useApolloClient();
 
-  useSubscription(BOOK_ADDED,{ 
-    onData: ({data})=>{
-      setNotify(`${data.data.bookAdded.title} added` )
-        setTimeout(()=>{setNotify(null)},5000)
-    }
-  })
+  useSubscription(BOOK_ADDED, {
+    onData: ({ data }) => {
+      const addedBook = data.data.bookAdded 
+      setNotify(`${data.data.bookAdded.title} added`);
+      setTimeout(() => {
+        setNotify(null);
+      }, 5000);
+
+      client.cache.updateQuery({query: ALL_BOOKS},({allBooks})=>{
+        console.log(allBooks)
+        return {
+          allBooks: allBooks.concat(addedBook)
+        }
+      })
+
+    },
+  });
 
   useEffect(() => {
-    const storedToken= localStorage.getItem('library-user-token')
-    if(storedToken){
-      setToken(storedToken)
+    const storedToken = localStorage.getItem("library-user-token");
+    if (storedToken) {
+      setToken(storedToken);
     }
-  }, [])
-  
+  }, []);
+
   const logout = () => {
     client.resetStore();
     setToken(null);
