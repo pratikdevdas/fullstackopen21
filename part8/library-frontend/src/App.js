@@ -10,15 +10,15 @@ import { BOOK_ADDED } from "./queries";
 const App = () => {
   const [page, setPage] = useState("authors");
   const [token, setToken] = useState(null);
+  const [notify, setNotify] = useState(null);
   const client = useApolloClient();
 
   useSubscription(BOOK_ADDED,{ 
     onData: ({data})=>{
-      console.log(data)
+      setNotify(`${data.data.bookAdded.title} added` )
+        setTimeout(()=>{setNotify(null)},5000)
     }
   })
-
-  console.log(useSubscription)
 
   useEffect(() => {
     const storedToken= localStorage.getItem('library-user-token')
@@ -52,6 +52,7 @@ const App = () => {
 
   return (
     <div>
+      {notify}
       <div>
         <button onClick={() => setPage("authors")}>authors</button>
         <button onClick={() => setPage("books")}>books</button>
