@@ -10,7 +10,6 @@ const jwt = require("jsonwebtoken");
 
 const resolvers = {
   Query: {
-    bookCount: async () => Book.collection.countDocuments(),
     allBooks: async (root, args) => {
       if (args.author && args.genres) {
         const author = await Author.findOne({ name: args.author });
@@ -35,7 +34,16 @@ const resolvers = {
       }
     },
     allAuthors: async () => {
-      return Author.find({});
+      const zen = await Author.find({});
+      const retro = zen.map((e) => {
+        return {
+          name: e.name,
+          born: e.born,
+          id: e.id,
+          books: e.books.length,
+        };
+      });
+      return retro;
     },
     me: (roots, args, context) => {
       return context.currentUser;
@@ -54,11 +62,16 @@ const resolvers = {
           "Author name must be at least 4 characters long and book title must be at least 2 characters long"
         );
       }
-      // if author exists
       const authorData = await Author.findOne({ name: args.author });
+      // if author exists
       if (authorData) {
         const book = new Book({ ...args, author: authorData.id });
+        // updating the book inside authors
+        console.log(book.id);
+        authorData.books = authorData.books.concat(book.id);
+        await authorData.save();
         await book.save();
+        console.log(authorData);
         pubsub.publish("BOOK_ADDED", { bookAdded: book.populate("author") });
         return book.populate("author");
         // if author doesn't exist
@@ -70,7 +83,11 @@ const resolvers = {
         const authorData = await Author.findOne({ name: args.author });
         // saving the book with the author id
         const book = new Book({ ...args, author: authorData.id });
+
         await book.save();
+        authorData.books = book;
+        await authorData.save();
+        console.log(author);
 
         pubsub.publish("BOOK_ADDED", { bookAdded: book.populate("author") });
         return book.populate("author");
