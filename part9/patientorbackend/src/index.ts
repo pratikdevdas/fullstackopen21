@@ -1,12 +1,12 @@
 import express from 'express';
-// import diagnosisRouter from './routes/diagnosis';
+const app = express();
+import diagnosisRouter from './routes/diagnosis';
+
 import cors from 'cors';
 
-const app = express();
 
+app.use(cors());
 app.use(express.json());
-app.use(cors);
-
 
 app.get('/ping', (_req, res) => {
   console.log('fds;');
@@ -14,7 +14,7 @@ app.get('/ping', (_req, res) => {
   res.send('pong');
 });
 
-// app.use('/api/dianosis',diagnosisRouter);
+app.use('/api/diagnosis/',diagnosisRouter);
 
 const PORT = 3001;
 app.listen(PORT, () => {
