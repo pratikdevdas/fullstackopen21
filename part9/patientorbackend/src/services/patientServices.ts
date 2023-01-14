@@ -22,8 +22,8 @@ const id = uuid();
 
 const addPatient = (entry: NewPatientEntry): PatientInfo => {
     const newDiaryEntry = {
-        id:id,
-        ...entry
+        id: id,
+        ...entry,
     };
     patient.push(newDiaryEntry);
     return newDiaryEntry;
