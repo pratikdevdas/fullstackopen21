@@ -1,1 +1,13 @@
 GET http://localhost:3001/ping
+
+###
+POST http://localhost:3001/api/patients
+Content-Type: application/json
+
+{
+		"ssn": 	"099816-102X",
+        "name": "Sarpai Dam",
+        "gender": "female",
+        "occupation": "Bhikari",
+        "dateOfBirth": "1996-07-19"
+}

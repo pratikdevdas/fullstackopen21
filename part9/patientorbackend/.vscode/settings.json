@@ -4,5 +4,6 @@
         //eslint-runs-automatically-on-save
         "source.fixAll.eslint": true
     },
+    // for cspell extension
     "cSpell.diagnosticLevel": "Hint"
 }
