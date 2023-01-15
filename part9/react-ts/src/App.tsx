@@ -5,12 +5,26 @@ const Header = ({ courseName } : {courseName : string}) => {
   )
 }
 
-interface Course{
-  name: string,
-  exerciseCount: number
+interface CoursePartOne{
+  name: 'Fundamentals';
+  exerciseCount: number;
+  description: string;
+}
+interface CoursePartTwo{
+  name: 'Using props to pass data';
+  exerciseCount: number;
+  groupProjectCount: number;
+}
+interface CoursePartThree{
+  name: 'Deeper type usage';
+  exerciseCount: number;
+  description: string;
+  exerciseSubmissionLink: string;
 }
 
-const Content = ({ courseParts } : {courseParts: Array<Course>}) => {
+type CoursePart = CoursePartOne | CoursePartTwo | CoursePartThree;
+
+const Content = ({ courseParts } : {courseParts: Array<CoursePart>}) => {
   return (
     <div>{courseParts.map((n, i) => <div key={i}>
       <li >{n.name} {n.exerciseCount}</li>
@@ -20,7 +34,7 @@ const Content = ({ courseParts } : {courseParts: Array<Course>}) => {
 }
 
 
-const Total = ({ courseParts } : {courseParts : Course[]}) => {
+const Total = ({ courseParts } : {courseParts : CoursePart[]}) => {
   return (
     <div>
       <p>
@@ -32,18 +46,22 @@ const Total = ({ courseParts } : {courseParts : Course[]}) => {
 }
 function App() {
   const courseName = 'Half Stack app dev'
-  const courseParts = [
+  const courseParts: CoursePart[] =  [
     {
       name: 'Fundamentals',
       exerciseCount: 10,
+      description: 'This is an awesome course part'
     },
     {
       name: 'Using props to pass data',
       exerciseCount: 7,
+      groupProjectCount: 3
     },
     {
       name: 'Deeper type usage',
       exerciseCount: 14,
+      description: 'Confusing description',
+      exerciseSubmissionLink: 'https://fake-exercise-submit.made-up-url.dev'
     }
   ]
 
