@@ -5,19 +5,21 @@ const Header = ({ courseName } : {courseName : string}) => {
   )
 }
 
-interface CoursePartOne{
-  name: 'Fundamentals';
+interface CoursePartBase{
+  name: string;
   exerciseCount: number;
+}
+interface CoursePartOne extends CoursePartBase{
+  name: 'Fundamentals';
   description: string;
 }
-interface CoursePartTwo{
+interface CoursePartTwo extends CoursePartBase{
   name: 'Using props to pass data';
-  exerciseCount: number;
   groupProjectCount: number;
 }
-interface CoursePartThree{
+
+interface CoursePartThree extends CoursePartBase{
   name: 'Deeper type usage';
-  exerciseCount: number;
   description: string;
   exerciseSubmissionLink: string;
 }
@@ -32,7 +34,6 @@ const Content = ({ courseParts } : {courseParts: Array<CoursePart>}) => {
     )}</div>
   )
 }
-
 
 const Total = ({ courseParts } : {courseParts : CoursePart[]}) => {
   return (
@@ -64,6 +65,30 @@ function App() {
       exerciseSubmissionLink: 'https://fake-exercise-submit.made-up-url.dev'
     }
   ]
+
+  /* Once you have either explicitly declared or TypeScript has inferred that a variable is of type union and that each type in the type union contains a certain attribute, we can use that as a type identifier. We can then build a switch case around that attribute and TypeScript will know which attributes are available within each case block. */
+  courseParts.forEach(part => {
+    switch (part.name){
+    case 'Fundamentals':
+      break
+    case 'Using props to pass data':
+      console.log(part.groupProjectCount)
+      break
+    case 'Deeper type usage':
+      console.log(part.description)
+      break
+    default:
+      return assertNever(part)
+    }
+  })
+
+  // exhaustive type checking in default block
+  const assertNever = (value: never): never => {
+    throw new Error(
+      `Unhandled discriminated union member: ${JSON.stringify(value)}`
+    )
+  }
+  /* In the above example, TypeScript knows that a part has the type CoursePart. It can then infer that part is of either type CoursePartOne, CoursePartTwo or CoursePartThree. The name is distinct for each type, so we can use it to identify each type and TypeScript can let us know which attributes are available in each case block. Then, TypeScript will produce an error if you try to use the part.description within the "Using props to pass data" block for example. */
 
   return (
     <div className="App">
