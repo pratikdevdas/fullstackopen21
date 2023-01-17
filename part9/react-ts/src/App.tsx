@@ -1,41 +1,130 @@
+const Header = ({ courseName }: { courseName: string }) => {
+  return <div>{courseName}</div>
+}
 
-const Header = ({ courseName } : {courseName : string}) => {
+interface CoursePartBase {
+  name: string
+  exerciseCount: number
+  type: string
+}
+
+interface CourseNormalPart extends CoursePartBase, CourseDescriptionPart {
+  type: 'normal'
+}
+
+interface CourseDescriptionPart extends CoursePartBase {
+  description: string
+}
+
+interface CourseRequirementPart extends CoursePartBase, CourseDescriptionPart {
+  type: 'special'
+  requirements: string[]
+}
+interface CourseProjectPart extends CoursePartBase {
+  type: 'groupProject'
+  groupProjectCount: number
+}
+
+interface CourseSubmissionPart extends CoursePartBase, CourseDescriptionPart {
+  type: 'submission'
+  exerciseSubmissionLink: string
+}
+
+type CoursePart = CourseNormalPart | CourseProjectPart | CourseSubmissionPart | CourseRequirementPart
+
+const courseParts: CoursePart[] = [
+  {
+    name: 'Fundamentals',
+    exerciseCount: 10,
+    description: 'This is the easy course part',
+    type: 'normal',
+  },
+  {
+    name: 'Advanced',
+    exerciseCount: 7,
+    description: 'This is the hard course part',
+    type: 'normal',
+  },
+  {
+    name: 'Using props to pass data',
+    exerciseCount: 7,
+    groupProjectCount: 3,
+    type: 'groupProject',
+  },
+  {
+    name: 'Deeper type usage',
+    exerciseCount: 14,
+    description: 'Confusing description',
+    exerciseSubmissionLink: 'https://fake-exercise-submit.made-up-url.dev',
+    type: 'submission',
+  },
+  {
+    name: 'Backend development',
+    exerciseCount: 21,
+    description: 'Typing the backend',
+    requirements: ['nodejs', 'jest'],
+    type: 'special'
+  }
+]
+
+// eslint-disable-next-line react/prop-types, @typescript-eslint/no-explicit-any
+const Part = ({ part }: { part: CoursePart }) => {
+  console.log(part.type)
+  switch (part.type) {
+  case 'normal':
+    return (
+      <div>
+        <strong>
+          {part.name} {part.exerciseCount}
+        </strong>
+        <div>{part.description}</div>
+      </div>
+    )
+  case 'groupProject':
+    return (
+      <div>
+        <strong>
+          {part.name} {part.exerciseCount}
+        </strong>
+        <div>{part.groupProjectCount}</div>
+      </div>
+    )
+  case 'submission':
+    return (
+      <div>
+        <strong>
+          {part.name} {part.exerciseCount}
+        </strong>
+        <div>{part.description}</div>
+        <div>{part.exerciseSubmissionLink}</div>
+      </div>
+    )
+  case 'special':
+    return (
+      <div>
+        <strong>
+          {part.name} {part.exerciseCount}
+        </strong>
+        <div>{part.description}</div>
+        <div>requirement: {part.requirements.map((n,i) => <span key={i}>{n},</span>)}</div>
+      </div>
+    )
+  default:
+    return null
+  }
+}
+
+const Content = ({ courseParts }: { courseParts: Array<CoursePart> }) => {
   return (
-    <div>{courseName}</div>
-  )
-}
-
-interface CoursePartBase{
-  name: string;
-  exerciseCount: number;
-}
-interface CoursePartOne extends CoursePartBase{
-  name: 'Fundamentals';
-  description: string;
-}
-interface CoursePartTwo extends CoursePartBase{
-  name: 'Using props to pass data';
-  groupProjectCount: number;
-}
-
-interface CoursePartThree extends CoursePartBase{
-  name: 'Deeper type usage';
-  description: string;
-  exerciseSubmissionLink: string;
-}
-
-type CoursePart = CoursePartOne | CoursePartTwo | CoursePartThree;
-
-const Content = ({ courseParts } : {courseParts: Array<CoursePart>}) => {
-  return (
-    <div>{courseParts.map((n, i) => <div key={i}>
-      <li >{n.name} {n.exerciseCount}</li>
+    <div>
+      {courseParts.map((part, i) => (
+        <Part part={part} key={i} />
+      ))}
     </div>
-    )}</div>
   )
 }
 
-const Total = ({ courseParts } : {courseParts : CoursePart[]}) => {
+const Total = ({ courseParts }: { courseParts: CoursePart[] }) => {
   return (
     <div>
       <p>
@@ -45,56 +134,14 @@ const Total = ({ courseParts } : {courseParts : CoursePart[]}) => {
     </div>
   )
 }
-function App() {
+
+function App(): JSX.Element {
   const courseName = 'Half Stack app dev'
-  const courseParts: CoursePart[] =  [
-    {
-      name: 'Fundamentals',
-      exerciseCount: 10,
-      description: 'This is an awesome course part'
-    },
-    {
-      name: 'Using props to pass data',
-      exerciseCount: 7,
-      groupProjectCount: 3
-    },
-    {
-      name: 'Deeper type usage',
-      exerciseCount: 14,
-      description: 'Confusing description',
-      exerciseSubmissionLink: 'https://fake-exercise-submit.made-up-url.dev'
-    }
-  ]
-
-  /* Once you have either explicitly declared or TypeScript has inferred that a variable is of type union and that each type in the type union contains a certain attribute, we can use that as a type identifier. We can then build a switch case around that attribute and TypeScript will know which attributes are available within each case block. */
-  courseParts.forEach(part => {
-    switch (part.name){
-    case 'Fundamentals':
-      break
-    case 'Using props to pass data':
-      console.log(part.groupProjectCount)
-      break
-    case 'Deeper type usage':
-      console.log(part.description)
-      break
-    default:
-      return assertNever(part)
-    }
-  })
-
-  // exhaustive type checking in default block
-  const assertNever = (value: never): never => {
-    throw new Error(
-      `Unhandled discriminated union member: ${JSON.stringify(value)}`
-    )
-  }
-  /* In the above example, TypeScript knows that a part has the type CoursePart. It can then infer that part is of either type CoursePartOne, CoursePartTwo or CoursePartThree. The name is distinct for each type, so we can use it to identify each type and TypeScript can let us know which attributes are available in each case block. Then, TypeScript will produce an error if you try to use the part.description within the "Using props to pass data" block for example. */
-
   return (
     <div className="App">
-      <Header courseName={courseName}/>
-      <Content courseParts={courseParts}/>
-      <Total courseParts={courseParts}/>
+      <Header courseName={courseName} />
+      <Content courseParts={courseParts} />
+      <Total courseParts={courseParts} />
     </div>
   )
 }
