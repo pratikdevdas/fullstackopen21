@@ -8,11 +8,16 @@ router.get('/', (_req, res) => {
     res.send(medService.getPatients());
 });
 
+router.get('/:id', (_req, res) => {
+    const id:string = _req.params.id;
+    res.send(medService.getSinglePatient(id));
+});
+
 router.post('/', (req, res) => {
     try {
         const newPatientEntry = toNewPatientPost(req.body);
         const addedEntry = medService.addPatient(newPatientEntry);
-
+        console.log(addedEntry);
         res.json(addedEntry);
     } catch (error) {
         let errorMessage = 'Something bad happened';
