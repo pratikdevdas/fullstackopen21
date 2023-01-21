@@ -1,6 +1,7 @@
 import patient from '../../data/patients';
-import { PatientInfo, HidePatientSsn, NewPatientEntry } from '../types';
+import { PatientInfo, HidePatientSsn, toNewPatientPost } from '../types';
 import { v1 as uuid } from 'uuid';
+
 const getPatients = (): Array<PatientInfo> => {
     return patient;
 };
@@ -18,9 +19,14 @@ const getPatientsWithoutSsn = (): HidePatientSsn[] => {
     });
 };
 
+const getSinglePatient = (id: string): toNewPatientPost[] => {
+    console.log(patient.filter(n => n.id === id));
+    return patient.filter(n => n.id === id);
+};
+
 const id = uuid();
 
-const addPatient = (entry: NewPatientEntry): PatientInfo => {
+const addPatient = (entry: toNewPatientPost): PatientInfo => {
     const newDiaryEntry = {
         id: id,
         ...entry,
@@ -28,8 +34,10 @@ const addPatient = (entry: NewPatientEntry): PatientInfo => {
     patient.push(newDiaryEntry);
     return newDiaryEntry;
 };
+
 export default {
     getPatients,
+    getSinglePatient,
     getPatientsWithoutSsn,
     addPatient,
 };

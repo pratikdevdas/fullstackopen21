@@ -1,4 +1,7 @@
-GET http://localhost:3001/ping
+
+GET http://localhost:3001/api/patients/
+###
+GET http://localhost:3001/api/patients/d2773c6e-f723-11e9-8f0b-362b9e155667
 
 ###
 POST http://localhost:3001/api/patients
@@ -9,5 +12,6 @@ Content-Type: application/json
         "name": "Sarpai Dam",
         "gender": "female",
         "occupation": "Bhikari",
-        "dateOfBirth": "1996-07-19"
+        "dateOfBirth": "1996-07-19",
+        "entries": []
 }
