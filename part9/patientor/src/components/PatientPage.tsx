@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useStateValue } from "../state";
+import { useStateValue, singlePatient } from "../state";
 import axios from 'axios';
 import { apiBaseUrl } from '../constants';
 import { Patient } from '../types';
@@ -9,7 +9,6 @@ import FemaleIcon from '@mui/icons-material/Female';
 const PatientPage = () => {
 	const [{ patients }, dispatch] = useStateValue();
 	const { id } = useParams<{ id: string }>();
-	console.log(id);
 	const idVal = id ? id : '';
 
 	React.useEffect(() => {
@@ -20,8 +19,7 @@ const PatientPage = () => {
 					// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 					`${apiBaseUrl}/patients/${id}`
 				);
-				dispatch({ type: "SINGLE_PATIENT", payload: singlePatientFromApi });
-				console.log(singlePatientFromApi);
+				dispatch(singlePatient(singlePatientFromApi));
 			} catch (e) {
 				console.error(e);
 			}
@@ -29,17 +27,16 @@ const PatientPage = () => {
 		void fetchPatientList();
 	}, [dispatch]);
 
-	// const value = patients.find((n: { id: string; })=> n.id === id);
-	// const rio = [...patients];
 	const value = patients[idVal];
-	console.log(Object.keys(patients).length);
-	console.log(value?.id);
+
 	return (
 		<div>
 			<div>
 				<h2>{value?.name}</h2>
 				{
-					value?.gender === 'male' ? <MaleIcon /> : <FemaleIcon />
+					value?.gender === 'male' ? <MaleIcon />
+						: value?.gender === 'female' ? <FemaleIcon />
+							: null
 				}
 			</div>
 			<p>ssh  : {value?.ssn}</p>
