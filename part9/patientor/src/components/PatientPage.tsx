@@ -27,8 +27,9 @@ const PatientPage = () => {
 		void fetchPatientList();
 	}, [dispatch]);
 
-	const value = patients[idVal];
 
+	const value = patients[idVal];
+	console.log(value);
 	return (
 		<div>
 			<div>
@@ -41,6 +42,12 @@ const PatientPage = () => {
 			</div>
 			<p>ssh  : {value?.ssn}</p>
 			<p>occupation : {value?.occupation}</p>
+
+			<h3>entries</h3>
+			{value?.entries.map(n => <>{n.date}
+				<div>{n.description}</div>
+				{n.diagnosisCodes?.map(d => <li key={d}>{d}</li>)}
+			</>)}
 		</div>
 	);
 };
