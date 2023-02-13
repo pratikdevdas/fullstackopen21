@@ -8,6 +8,8 @@ import MaleIcon from '@mui/icons-material/Male';
 import FemaleIcon from '@mui/icons-material/Female';
 const PatientPage = () => {
 	const [{ patients }, dispatch] = useStateValue();
+	const [{ diagnosis }] = useStateValue();
+	console.log(diagnosis);
 	const { id } = useParams<{ id: string }>();
 	const idVal = id ? id : '';
 
@@ -18,6 +20,7 @@ const PatientPage = () => {
 				const { data: singlePatientFromApi } = await axios.get<Patient>(
 					// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 					`${apiBaseUrl}/patients/${id}`
+					
 				);
 				dispatch(singlePatient(singlePatientFromApi));
 			} catch (e) {
@@ -46,7 +49,9 @@ const PatientPage = () => {
 			<h3>entries</h3>
 			{value?.entries.map(n => <>{n.date}
 				<div>{n.description}</div>
-				{n.diagnosisCodes?.map(d => <li key={d}>{d}</li>)}
+				{n.diagnosisCodes?.map(d => <li key={d}>{d}
+				{diagnosis[d] && <> {diagnosis[d].name}</>}
+				</li>)}
 			</>)}
 		</div>
 	);

@@ -7,10 +7,10 @@ export interface Diagnosis {
 export enum Gender {
   Male = "male",
   Female = "female",
-Other = "other"
+  Other = "other"
 }
 
- export interface Patient {
+export interface Patient {
   id: string;
   name: string;
   occupation: string;
@@ -19,7 +19,6 @@ Other = "other"
   dateOfBirth?: string;
   entries: Entry[]
 }
-
 
 interface BaseEntry {
   id: string;
