@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import patient from '../../data/patients';
-import { PatientInfo, HidePatientSsn, toNewPatientPost } from '../types';
+import { PatientInfo, HidePatientSsn, toNewPatientPost, EntryWithoutId, Entry } from '../types';
 import { v1 as uuid } from 'uuid';
 
 const getPatients = (): Array<PatientInfo> => {
@@ -35,9 +36,22 @@ const addPatient = (entry: toNewPatientPost): PatientInfo => {
     return newDiaryEntry;
 };
 
+const addInsidePatientEntry = (entryInsidePerson:EntryWithoutId, id:string):Entry => {
+    const rio = patient.find(n => n.id === id)?.entries;
+    const newEntry = {
+        id:id,
+        ...entryInsidePerson
+    };
+    if(rio){
+        rio.push(newEntry);
+    }
+    return newEntry;
+};
+
 export default {
     getPatients,
     getSinglePatient,
     getPatientsWithoutSsn,
     addPatient,
+    addInsidePatientEntry
 };

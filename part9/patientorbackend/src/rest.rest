@@ -9,9 +9,51 @@ Content-Type: application/json
 
 {
 		"ssn": 	"099816-102X",
-        "name": "Sarpai Dam",
+        "name": "Sarpai Damodar",
         "gender": "female",
         "occupation": "Bhikari",
         "dateOfBirth": "1996-07-19",
         "entries": []
+}
+
+
+###Occupational
+POST http://localhost:3001/api/patients/d2773c6e-f723-11e9-8f0b-362b9e155667/entries   
+Content-Type: application/json
+
+{
+  "description": "fever",
+  "date": "1996-12-12",
+  "specialist": "MD",
+  "type": "OccupationalHealthcare",
+  "diagnosisCodes": [],
+  "employerName": "Hikaru"
+
+}
+###
+POST http://localhost:3001/api/patients/d2773c6e-f723-11e9-8f0b-362b9e155667/entries   
+Content-Type: application/json
+
+{
+  "description": "Lung problem reported",
+  "date": "1996-12-12",
+  "specialist": "MD",
+  "type": "Hospital",
+  "diagnosisCodes": [],
+  "discharge": {
+    "date" : "1997-1-12",
+    "criteria": "lung infection healed"
+  }
+}
+###
+POST http://localhost:3001/api/patients/d2773c6e-f723-11e9-8f0b-362b9e155667/entries   
+Content-Type: application/json
+
+{
+  "description": "fdsf",
+  "date": "1996-12-12",
+  "specialist": "MD",
+  "type": "HealthCheck",
+  "diagnosisCodes": [],
+  "healthCheckRating": 2
 }

@@ -1,4 +1,4 @@
-import { toNewPatientPost, Gender } from './types';
+import { toNewPatientPost, Gender, DiagnosisInfo, BaseEntryWithoutId, EntryWithoutId, HealthCheckRating } from './types';
 /* The function isString is a so-called type guard. That means it is a function which returns a boolean and which has a type predicate as the return type. In our case, the type predicate is:  test is string*/
 
 const isString = (text: unknown): text is string => {
@@ -31,6 +31,13 @@ const isDate = (date: string): boolean => {
     return Boolean(Date.parse(date));
 };
 
+const parseEntryDate = (date: unknown): string => {
+    if (!date || !isString(date) || !isDate(date)) {
+        throw new Error('Incorrect or missing date');
+    }
+    return date;
+};
+
 const parseBirthYear = (date: unknown): string => {
     if (!date || !isString(date) || !isDate(date)) {
         throw new Error('Incorrect or missing date');
@@ -54,9 +61,12 @@ const parseGender = (gender: unknown): Gender => {
     return gender;
 };
 
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const toNewPatientPost = (object: any): toNewPatientPost => {
+export const patientTypeguard = (object: any): toNewPatientPost => {
+    if (!object || typeof object !== 'object') {
+        throw new Error('Incorrect or missing data');
+    }
+
     const newPost: toNewPatientPost = {
         name: parseName(object.name),
         occupation: parseOccupation(object.occupation),
@@ -68,4 +78,98 @@ const toNewPatientPost = (object: any): toNewPatientPost => {
     return newPost;
 };
 
-export default toNewPatientPost;
+
+// Typeguards for entries
+const isNumber = (value: unknown): value is number => {
+    return typeof value === 'number';
+};
+const parseDescription = (description: unknown): string => {
+    if (!description || !isString(description)) {
+        throw new Error('Incorrect or missing description');
+    }
+    return description;
+};
+const parseSpecialist = (specialist: unknown): string => {
+    if (!specialist || !isString(specialist)) {
+        throw new Error('Incorrect or missing specialist');
+    }
+    return specialist;
+};
+const parseCriteria = (criteria: unknown): string => {
+    if (!criteria || !isString(criteria)) {
+        throw new Error('Incorrect or missing criteria');
+    }
+    return criteria;
+};
+
+const parseDiagnosisCodes = (object: unknown): Array<DiagnosisInfo['code']> => {
+    if (!object || typeof object !== 'object' || !('diagnosisCodes' in object)) {
+        // we will just trust the data to be in correct form
+        return [] as Array<DiagnosisInfo['code']>;
+    }
+
+    return object.diagnosisCodes as Array<DiagnosisInfo['code']>;
+};
+
+const isHealthCheckRating = (param: number): param is HealthCheckRating => {
+    return Object.values(HealthCheckRating).map(v => v).includes(param);
+};
+
+const parseHealthCheck = (health: unknown): HealthCheckRating => {
+    if (!health || !isNumber(health) || !isHealthCheckRating(health)) {
+        throw new Error('Incorrect or Health Check missing data');
+    }
+    return health;
+};
+
+const parseEmployeeName = (name: unknown): string => {
+    if (!name || !isString(name)) {
+        throw new Error('Incorrect or missing Employee name');
+    }
+    return name;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const entryTypeguard = (object: any): EntryWithoutId => {
+    if (!object || typeof object !== 'object') {
+        throw new Error('Incorrect or missing data');
+    }
+    const baseEntry: BaseEntryWithoutId = {
+        date: parseEntryDate(object.date),
+        description: parseDescription(object.description),
+        specialist: parseSpecialist(object.specialist),
+        diagnosisCodes: parseDiagnosisCodes(object.diagnosisCodes),
+    };
+    switch (object.type) {
+    case 'Hospital':
+        return {
+            ...baseEntry, type: 'Hospital', discharge: {
+                date: parseEntryDate(object.discharge.date),
+                criteria: parseCriteria(object.discharge.criteria)
+            }
+        };
+    case 'HealthCheck':
+        return {
+            ...baseEntry, type: 'HealthCheck',
+            healthCheckRating: parseHealthCheck(object.healthCheckRating)
+        };
+    case 'OccupationalHealthcare':
+        if (object.sickLeave) {
+            return {
+                ...baseEntry, type: 'OccupationalHealthcare',
+                employerName: parseEmployeeName(object.employerName),
+                sickLeave: {
+                    startDate: parseEntryDate(object.sickLeave.startDate),
+                    endDate: parseEntryDate(object.sickLeave.startDate)
+                }
+            };
+        } else {
+            return {
+                ...baseEntry, type: 'OccupationalHealthcare',
+                employerName: parseEmployeeName(object.employerName),
+            };
+        };
+    default:
+        throw new Error('Invalid or Missing Type');
+    }
+};
