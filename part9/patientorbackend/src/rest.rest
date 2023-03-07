@@ -16,7 +16,6 @@ Content-Type: application/json
         "entries": []
 }
 
-
 ###Occupational
 POST http://localhost:3001/api/patients/d2773c6e-f723-11e9-8f0b-362b9e155667/entries   
 Content-Type: application/json

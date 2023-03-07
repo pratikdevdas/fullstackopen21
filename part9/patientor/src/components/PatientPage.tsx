@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useStateValue, singlePatient } from "../state";
+import { useStateValue, singlePatient, addEntry } from "../state";
 import axios from 'axios';
 import { apiBaseUrl } from '../constants';
 import { Entry, Patient, HealthCheckEntry, HospitalEntry, OccupationalHealthcareEntry } from '../types';
@@ -9,11 +9,35 @@ import FemaleIcon from '@mui/icons-material/Female';
 import HealingIcon from '@mui/icons-material/Healing';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
+import AddEntryForm, { BaseEntryWithoutId } from './AddEntryForm';
+import { Button, Dialog, DialogTitle, DialogContent, Divider } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
+// Code for modal
+interface Props {
+	modalOpen: boolean;
+	onClose: () => void;
+	onSubmit: (values: BaseEntryWithoutId) => void;
+	error?: string;
+}
+
+const AddEntryModal = ({ modalOpen, onClose, onSubmit, error }: Props) => (
+	<Dialog fullWidth={true} open={modalOpen} onClose={() => onClose()}>
+		<DialogTitle>Add a new patient</DialogTitle>
+		<Divider />
+		<DialogContent>
+			{error && <Alert severity="error">{`Error: ${error}`}</Alert>}
+			<AddEntryForm onSubmit={onSubmit} onCancel={onClose} />
+		</DialogContent>
+	</Dialog>
+);
+
 
 const PatientPage = () => {
 	const [{ patients }, dispatch] = useStateValue();
-	const [{ diagnosis }] = useStateValue();
-	console.log(diagnosis);
+	// const [{ diagnosis }] = useStateValue();
+	const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+	const [error, setError] = React.useState<string | undefined>();
+
 	const { id } = useParams<{ id: string }>();
 	const idVal = id ? id : '';
 
@@ -21,10 +45,10 @@ const PatientPage = () => {
 		void axios.get<void>(`${apiBaseUrl}/ping`);
 		const fetchPatientList = async () => {
 			try {
+				console.log("render effect");
 				const { data: singlePatientFromApi } = await axios.get<Patient>(
 					// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 					`${apiBaseUrl}/patients/${id}`
-
 				);
 				dispatch(singlePatient(singlePatientFromApi));
 			} catch (e) {
@@ -33,10 +57,40 @@ const PatientPage = () => {
 		};
 		void fetchPatientList();
 	}, [dispatch]);
+	const openModal = (): void => setModalOpen(true);
 
+	console.log("render effect outside");
 
+	const closeModal = (): void => {
+		setModalOpen(false);
+		setError(undefined);
+	};
+
+	const submitNewEntry = async (values: BaseEntryWithoutId) => {
+		try {
+			console.log(values);
+			const { data: newEntry } = await axios.post<Entry>(
+				`${apiBaseUrl}/patients/${idVal}/entries`,
+				{
+					...values,
+					type: "HealthCheck", diagnosisCodes: [],
+					healthCheckRating: 2
+				}
+			);
+			console.log(newEntry);
+			dispatch(addEntry(newEntry));
+			closeModal();
+		} catch (e: unknown) {
+			if (axios.isAxiosError(e)) {
+				console.error(e?.response?.data || "Unrecognized axios error");
+				setError(String(e?.response?.data?.error) || "Unrecognized axios error");
+			} else {
+				console.error("Unknown error", e);
+				setError("Unknown error");
+			}
+		}
+	};
 	const value = patients[idVal];
-	console.log(value);
 	return (
 		<div>
 			<div>
@@ -49,7 +103,14 @@ const PatientPage = () => {
 			</div>
 			<p>ssh  : {value?.ssn}</p>
 			<p>occupation : {value?.occupation}</p>
+			<Button variant="contained" onClick={() => openModal()}>
+				Add New Entry
+			</Button>
 
+			<AddEntryModal modalOpen={modalOpen}
+				error={error}
+				onSubmit={submitNewEntry}
+				onClose={closeModal} />
 			<h3>entries</h3>
 			{value?.entries.map(n => <EntryDetails key={n.id} entry={n}>
 			</EntryDetails>)}
@@ -61,7 +122,6 @@ export default PatientPage;
 
 //  do  not use the following type label in new react projects
 const EntryDetails: React.FC<{ entry: Entry }> = ({ entry }) => {
-	console.log(entry);
 	switch (entry.type) {
 		case "Hospital":
 			return <Hospital entry={entry} />;

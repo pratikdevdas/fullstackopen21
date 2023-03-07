@@ -2,7 +2,7 @@ import { PatientInfo, Gender } from '../src/types';
 
 const patients: PatientInfo[] = [
     {
-        id: 'd2773336-f723-11e9-8f0b-362b9e155667',
+        id: 'd2773336-f723-11e9-8f0b-362b9e1556das',
         name: 'John McClane',
         dateOfBirth: '1986-07-09',
         ssn: '090786-122X',
@@ -25,7 +25,7 @@ const patients: PatientInfo[] = [
         ],
     },
     {
-        id: 'd2773598-f723-11e9-8f0b-362b9e155667',
+        id: 'd2773598-f723-11e9-8f0b-362b9e1556dasd7',
         name: 'Martin Riggs',
         dateOfBirth: '1979-01-30',
         ssn: '300179-777A',
@@ -58,7 +58,7 @@ const patients: PatientInfo[] = [
         entries: [],
     },
     {
-        id: 'd2773822-f723-11e9-8f0b-362b9e155667',
+        id: 'd2773822-f723-11e9-8f0b-362b9e155667fsd',
         name: 'Dana Scully',
         dateOfBirth: '1974-01-05',
         ssn: '050174-432N',
@@ -93,7 +93,7 @@ const patients: PatientInfo[] = [
         ],
     },
     {
-        id: 'd2773c6e-f723-11e9-8f0b-362b9e155667',
+        id: 'd2773c6e-f723-11e9-8f0b-362b9e1556fsd67',
         name: 'Matti Luukkainen',
         dateOfBirth: '1971-04-09',
         ssn: '090471-8890',

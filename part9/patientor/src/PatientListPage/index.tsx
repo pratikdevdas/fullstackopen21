@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Box, Table, Button, TableHead, Typography } from "@material-ui/core";
-import { Link  } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { PatientFormValues } from "../AddPatientModal/AddPatientForm";
 import AddPatientModal from "../AddPatientModal";
 import { Patient } from "../types";
@@ -18,7 +18,7 @@ const PatientListPage = () => {
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | undefined> ();
 
-  const openModal = (): void => setModalOpen(true);
+  // const openModal = (): void => setModalOpen(true);
 
   const closeModal = (): void => {
     setModalOpen(false);
@@ -79,7 +79,7 @@ const PatientListPage = () => {
         error={error}
         onClose={closeModal}
       />
-      <Button variant="contained" onClick={() => openModal()}>
+      <Button variant="contained" onClick={() => setModalOpen(true)}>
         Add New Patient
       </Button>
     </div>
