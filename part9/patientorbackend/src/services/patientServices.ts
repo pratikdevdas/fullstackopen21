@@ -25,9 +25,9 @@ const getSinglePatient = (id: string): toNewPatientPost[] => {
     return patient.filter(n => n.id === id);
 };
 
-const id = uuid();
 
 const addPatient = (entry: toNewPatientPost): PatientInfo => {
+    const id = uuid();
     const newDiaryEntry = {
         id: id,
         ...entry,
@@ -38,8 +38,9 @@ const addPatient = (entry: toNewPatientPost): PatientInfo => {
 
 const addInsidePatientEntry = (entryInsidePerson:EntryWithoutId, id:string):Entry => {
     const rio = patient.find(n => n.id === id)?.entries;
+    const uid = uuid();
     const newEntry = {
-        id:id,
+        id:uid,
         ...entryInsidePerson
     };
     if(rio){
