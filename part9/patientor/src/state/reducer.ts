@@ -27,8 +27,6 @@ export type Action =
 
 
 export const reducer = (state: State, action: Action): State => {
-  console.log(state);
-  console.log(action);
   switch (action.type) {
     case "SET_PATIENT_LIST":
       return {
@@ -59,9 +57,6 @@ export const reducer = (state: State, action: Action): State => {
       };
 
     case "ADD_PATIENT":
-      console.log(action.payload.id);
-      console.log(action.payload);
-      console.log(state);
       return {
         ...state,
         patients: {

@@ -45,7 +45,6 @@ const PatientPage = () => {
 		void axios.get<void>(`${apiBaseUrl}/ping`);
 		const fetchPatientList = async () => {
 			try {
-				console.log("render effect");
 				const { data: singlePatientFromApi } = await axios.get<Patient>(
 					// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 					`${apiBaseUrl}/patients/${id}`
@@ -59,7 +58,6 @@ const PatientPage = () => {
 	}, [dispatch]);
 	const openModal = (): void => setModalOpen(true);
 
-	console.log("render effect outside");
 
 	const closeModal = (): void => {
 		setModalOpen(false);
@@ -68,7 +66,6 @@ const PatientPage = () => {
 
 	const submitNewEntry = async (values: BaseEntryWithoutId) => {
 		try {
-			console.log(values);
 			const { data: newEntry } = await axios.post<Entry>(
 				`${apiBaseUrl}/patients/${idVal}/entries`,
 				{
