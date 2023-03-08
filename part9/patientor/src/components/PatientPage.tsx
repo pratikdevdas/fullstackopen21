@@ -77,8 +77,7 @@ const PatientPage = () => {
 					healthCheckRating: 2
 				}
 			);
-			console.log(newEntry);
-			dispatch(addEntry(newEntry));
+			dispatch(addEntry(newEntry, idVal));
 			closeModal();
 		} catch (e: unknown) {
 			if (axios.isAxiosError(e)) {

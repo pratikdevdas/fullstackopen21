@@ -20,7 +20,8 @@ export type Action =
   } |
   {
     type: "ADD_ENTRY",
-    payload: Entry
+    payload: Entry,
+    patientId: string;
   }
   ;
 
@@ -74,17 +75,11 @@ export const reducer = (state: State, action: Action): State => {
         ...state,
       };
     case "ADD_ENTRY":
-      console.log(action.payload.id);
-      console.log(action.payload);
-      console.log(state);
+      state.patients[action.patientId].entries.push(action.payload);
       return {
         ...state,
         patients: {
-          ...state.patients,
-          entries: {
-            ...state.patients.entries,
-            [action.payload.id]: action.payload
-          }
+          ...state.patients
         }
       };
     default:

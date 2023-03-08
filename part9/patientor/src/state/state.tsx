@@ -63,9 +63,10 @@ export const singlePatient = (data:Patient):Action => {
   };
 };
 
-export const addEntry = (data:Entry):Action => {
+export const addEntry = (data:Entry, patientId: string):Action => {
   return {
     type: "ADD_ENTRY",
-    payload: data
+    payload: data,
+    patientId:patientId
   };
 };
