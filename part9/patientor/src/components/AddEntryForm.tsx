@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Button } from "@material-ui/core";
 import { Field, Formik, Form } from "formik";
-import { TextField, DiagnosisSelection } from "../AddPatientModal/FormField";
+import { TextField, DiagnosisSelection} from "../AddPatientModal/FormField";
 import { BaseEntry } from '../types';
 import { useStateValue } from '../state';
 
@@ -21,8 +21,23 @@ const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
         specialist: ""
       }}
       onSubmit={onSubmit}
+      validate={(values) => {
+        const requiredError = "Field is required";
+        const errors: { [field: string]: string } = {};
+        if (!values.description) {
+          errors.description = requiredError;
+        }
+        if (!values.date) {
+          errors.date = requiredError;
+        }
+        if (!values.specialist) {
+          errors.specialist = requiredError;
+        }
+        return errors;
+      }}
     >
-      {({ isValid, dirty, setFieldValue, setFieldTouched }) => {
+      {({ isValid, dirty, setFieldValue, setFieldTouched, values }) => {
+        console.log(values);
         return (
           <Form className="form ui">
             <Field
@@ -46,6 +61,7 @@ const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
               setFieldTouched={setFieldTouched}
               diagnoses={Object.values(diagnosis)}
             />
+            <></>
             <Grid>
               <Grid item>
                 <Button

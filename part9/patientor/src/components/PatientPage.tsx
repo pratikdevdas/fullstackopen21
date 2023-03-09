@@ -38,7 +38,6 @@ const PatientPage = () => {
 	const [modalOpen, setModalOpen] = React.useState<boolean>(false);
 	const [error, setError] = React.useState<string | undefined>();
 
-	console.log(error);
 	const { id } = useParams<{ id: string }>();
 	const idVal = id ? id : '';
 
@@ -67,7 +66,6 @@ const PatientPage = () => {
 
 	const submitNewEntry = async (values: BaseEntryWithoutId) => {
 		try {
-			console.log(values);
 			const { data: newEntry } = await axios.post<Entry>(
 				`${apiBaseUrl}/patients/${idVal}/entries`,
 				{
@@ -76,12 +74,10 @@ const PatientPage = () => {
 					healthCheckRating: 2,
 				}
 			);
-			console.log(newEntry);
 			dispatch(addEntry(newEntry, idVal));
 			closeModal();
 		} catch (e: unknown) {
 			if (axios.isAxiosError(e)) {
-				console.log(typeof e?.response?.data);
 				console.error(e?.response?.data || "Unrecognized axios error");
 				setError(String(e?.response?.data) || "Unrecognized axios error");
 			} else {
