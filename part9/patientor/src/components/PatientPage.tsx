@@ -66,14 +66,16 @@ const PatientPage = () => {
 
 	const submitNewEntry = async (values: BaseEntryWithoutId) => {
 		try {
+			console.log(values);
 			const { data: newEntry } = await axios.post<Entry>(
 				`${apiBaseUrl}/patients/${idVal}/entries`,
 				{
 					...values,
-					type: "HealthCheck", diagnosisCodes: [],
-					healthCheckRating: 2
+					type: "HealthCheck",
+					healthCheckRating: 2,
 				}
 			);
+			console.log(newEntry);
 			dispatch(addEntry(newEntry, idVal));
 			closeModal();
 		} catch (e: unknown) {

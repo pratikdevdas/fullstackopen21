@@ -72,10 +72,7 @@ export const reducer = (state: State, action: Action): State => {
     case "ADD_ENTRY":
       state.patients[action.patientId].entries.push(action.payload);
       return {
-        ...state,
-        patients: {
-          ...state.patients
-        }
+        ...state
       };
     default:
       return state;

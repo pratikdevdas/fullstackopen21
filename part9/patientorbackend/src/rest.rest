@@ -53,6 +53,6 @@ Content-Type: application/json
   "date": "1996-12-12",
   "specialist": "MD",
   "type": "HealthCheck",
-  "diagnosisCodes": [],
+  "diagnosisCodes": ["Z74.3"],
   "healthCheckRating": 2
 }

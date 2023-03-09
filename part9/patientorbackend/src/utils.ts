@@ -104,6 +104,7 @@ const parseCriteria = (criteria: unknown): string => {
 
 const parseDiagnosisCodes = (object: unknown): Array<DiagnosisInfo['code']> => {
     if (!object || typeof object !== 'object' || !('diagnosisCodes' in object)) {
+        console.log('ha');
         // we will just trust the data to be in correct form
         return [] as Array<DiagnosisInfo['code']>;
     }
@@ -138,7 +139,7 @@ export const entryTypeguard = (object: any): EntryWithoutId => {
         date: parseEntryDate(object.date),
         description: parseDescription(object.description),
         specialist: parseSpecialist(object.specialist),
-        diagnosisCodes: parseDiagnosisCodes(object.diagnosisCodes),
+        diagnosisCodes: parseDiagnosisCodes(object),
     };
     switch (object.type) {
     case 'Hospital':
