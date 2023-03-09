@@ -38,6 +38,7 @@ const PatientPage = () => {
 	const [modalOpen, setModalOpen] = React.useState<boolean>(false);
 	const [error, setError] = React.useState<string | undefined>();
 
+	console.log(error);
 	const { id } = useParams<{ id: string }>();
 	const idVal = id ? id : '';
 
@@ -80,8 +81,9 @@ const PatientPage = () => {
 			closeModal();
 		} catch (e: unknown) {
 			if (axios.isAxiosError(e)) {
+				console.log(typeof e?.response?.data);
 				console.error(e?.response?.data || "Unrecognized axios error");
-				setError(String(e?.response?.data?.error) || "Unrecognized axios error");
+				setError(String(e?.response?.data) || "Unrecognized axios error");
 			} else {
 				console.error("Unknown error", e);
 				setError("Unknown error");
