@@ -1,15 +1,21 @@
 import React from 'react';
 import { Grid, Button } from "@material-ui/core";
 import { Field, Formik, Form } from "formik";
-import { TextField, DiagnosisSelection} from "../AddPatientModal/FormField";
-import { BaseEntry } from '../types';
+import { SelectField, TextField, NumberField, DiagnosisSelection, EntryTypeOption } from "../AddPatientModal/FormField";
+import { Entry, EntryTypes } from '../types';
 import { useStateValue } from '../state';
-
 interface Props {
-  onSubmit: (values: BaseEntryWithoutId) => void;
+  onSubmit: (values: EntryWithoutId) => void;
   onCancel: () => void;
 }
-export type BaseEntryWithoutId = Omit<BaseEntry, "id">;
+
+const entryOptions: EntryTypeOption[] = [
+  { value: EntryTypes.OccupationalHealthcare, label: "OccupationHealthCare" },
+  { value: EntryTypes.Hospital, label: "Hospital" },
+  { value: EntryTypes.HealthCheck, label: "HealthCheck" },
+];
+
+export type EntryWithoutId = Omit<Entry, "id">;
 
 const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
   const [{ diagnosis }] = useStateValue();
@@ -18,10 +24,12 @@ const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
       initialValues={{
         description: "",
         date: "",
-        specialist: ""
+        specialist: "",
+        type: "Hospital",
       }}
       onSubmit={onSubmit}
       validate={(values) => {
+        console.log(values);
         const requiredError = "Field is required";
         const errors: { [field: string]: string } = {};
         if (!values.description) {
@@ -36,7 +44,7 @@ const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
         return errors;
       }}
     >
-      {({ isValid, dirty, setFieldValue, setFieldTouched, values }) => {
+      {({ values, isValid, dirty, setFieldValue, setFieldTouched }) => {
         console.log(values);
         return (
           <Form className="form ui">
@@ -61,7 +69,8 @@ const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
               setFieldTouched={setFieldTouched}
               diagnoses={Object.values(diagnosis)}
             />
-            <></>
+            <SelectField label="Entry" name="type" options={entryOptions} />
+            <EntryInputs type={values.type} />
             <Grid>
               <Grid item>
                 <Button
@@ -91,5 +100,59 @@ const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
     </Formik>
   );
 };
+
+const EntryInputs: React.FC<{ type: string }> = ({ type }) => {
+  switch (type) {
+    case "Hospital":
+      return <Hospital />;
+    case "OccupationalHealthcare":
+      return <OccupationalHealthcare />;
+    case "HealthCheck":
+      return <HealthCheck />;
+    default:
+      return null;
+  }
+};
+
+const Hospital = () => {
+  return <>
+    <Field
+      label="DischargeDate"
+      placeholder="DischargeDate"
+      name="discharge.date"
+      component={TextField}
+    />
+    <Field
+      label="Criteria"
+      placeholder="Criteria"
+      name="discharge.criteria"
+      component={TextField}
+    />
+  </>;
+};
+
+const OccupationalHealthcare = () => {
+  return <>
+    <Field
+      label="Employer Name"
+      placeholder="Employer Name"
+      name="employerName"
+      component={TextField}
+    />
+  </>;
+};
+
+const HealthCheck = () => {
+  return <>
+  <Field
+      label="Health Check Rating"
+      placeholder="Health Check Rating"
+      name="healthCheckRating"
+      min="1"
+      max="3"
+      component={NumberField}
+    /></>;
+};
+
 
 export default AddEntryForm;

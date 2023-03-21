@@ -9,14 +9,14 @@ import FemaleIcon from '@mui/icons-material/Female';
 import HealingIcon from '@mui/icons-material/Healing';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
-import AddEntryForm, { BaseEntryWithoutId } from './AddEntryForm';
+import AddEntryForm, { EntryWithoutId } from './AddEntryForm';
 import { Button, Dialog, DialogTitle, DialogContent, Divider } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 // Code for modal
 interface Props {
 	modalOpen: boolean;
 	onClose: () => void;
-	onSubmit: (values: BaseEntryWithoutId) => void;
+	onSubmit: (values:EntryWithoutId) => void;
 	error?: string;
 }
 
@@ -30,7 +30,6 @@ const AddEntryModal = ({ modalOpen, onClose, onSubmit, error }: Props) => (
 		</DialogContent>
 	</Dialog>
 );
-
 
 const PatientPage = () => {
 	const [{ patients }, dispatch] = useStateValue();
@@ -64,16 +63,17 @@ const PatientPage = () => {
 		setError(undefined);
 	};
 
-	const submitNewEntry = async (values: BaseEntryWithoutId) => {
+	const submitNewEntry = async (values: EntryWithoutId) => {
 		try {
+
+			console.log(values);
 			const { data: newEntry } = await axios.post<Entry>(
 				`${apiBaseUrl}/patients/${idVal}/entries`,
 				{
 					...values,
-					type: "HealthCheck",
-					healthCheckRating: 2,
 				}
 			);
+			console.log(values);
 			dispatch(addEntry(newEntry, idVal));
 			closeModal();
 		} catch (e: unknown) {
@@ -102,14 +102,12 @@ const PatientPage = () => {
 			<Button variant="contained" onClick={() => openModal()}>
 				Add New Entry
 			</Button>
-
-			<AddEntryModal modalOpen={modalOpen}
+			<AddEntryModal  modalOpen={modalOpen}
 				error={error}
 				onSubmit={submitNewEntry}
 				onClose={closeModal} />
 			<h3>entries</h3>
-			{value?.entries.map(n => <EntryDetails key={n.id} entry={n}>
-			</EntryDetails>)}
+			{value?.entries.map(n => <EntryDetails key={n.id} entry={n}/>)}
 		</div>
 	);
 };

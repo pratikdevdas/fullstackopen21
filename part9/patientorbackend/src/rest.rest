@@ -41,7 +41,7 @@ Content-Type: application/json
   "diagnosisCodes": [],
   "discharge": {
     "date" : "1997-1-12",
-    "criteria": "lung infection healed"
+    "criteria": ""
   }
 }
 ###
@@ -54,5 +54,5 @@ Content-Type: application/json
   "specialist": "MD",
   "type": "HealthCheck",
   "diagnosisCodes": ["Z74.3"],
-  "healthCheckRating": 2
+  "healthCheckRating": 1
 }
