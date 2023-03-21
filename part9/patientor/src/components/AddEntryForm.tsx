@@ -1,8 +1,8 @@
 import React from 'react';
 import { Grid, Button } from "@material-ui/core";
 import { Field, Formik, Form } from "formik";
-import { SelectField, TextField, NumberField, DiagnosisSelection, EntryTypeOption } from "../AddPatientModal/FormField";
-import { Entry, EntryTypes } from '../types';
+import { SelectField, TextField, DiagnosisSelection, EntryTypeOption, HealthCheckOption } from "../AddPatientModal/FormField";
+import { Entry, EntryTypes, HealthCheckRating } from '../types';
 import { useStateValue } from '../state';
 interface Props {
   onSubmit: (values: EntryWithoutId) => void;
@@ -13,6 +13,14 @@ const entryOptions: EntryTypeOption[] = [
   { value: EntryTypes.OccupationalHealthcare, label: "OccupationHealthCare" },
   { value: EntryTypes.Hospital, label: "Hospital" },
   { value: EntryTypes.HealthCheck, label: "HealthCheck" },
+];
+
+
+const healthOptions: HealthCheckOption[] = [
+  { value: HealthCheckRating.Healthy, label: "Healthy" },
+  { value: HealthCheckRating.LowRisk, label: "LowRisk" },
+  { value: HealthCheckRating.HighRisk, label: "HighRisk" },
+  { value: HealthCheckRating.CriticalRisk, label: "CriticalRisk" },
 ];
 
 export type EntryWithoutId = Omit<Entry, "id">;
@@ -144,14 +152,7 @@ const OccupationalHealthcare = () => {
 
 const HealthCheck = () => {
   return <>
-  <Field
-      label="Health Check Rating"
-      placeholder="Health Check Rating"
-      name="healthCheckRating"
-      min="1"
-      max="3"
-      component={NumberField}
-    /></>;
+      <SelectField label="Health Check Rating" name="healthCheckRating" options={healthOptions} /></>;
 };
 
 

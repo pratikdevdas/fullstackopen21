@@ -113,11 +113,12 @@ const parseDiagnosisCodes = (object: unknown): Array<DiagnosisInfo['code']> => {
 };
 
 const isHealthCheckRating = (param: number): param is HealthCheckRating => {
-    return Object.values(HealthCheckRating).map(v => v).includes(param);
+    return Object.values(HealthCheckRating).includes(param);
 };
 
 const parseHealthCheck = (health: unknown): HealthCheckRating => {
-    if (!health || !isNumber(health) || !isHealthCheckRating(health)) {
+    console.log(health);
+    if (typeof health === undefined || !isNumber(health) || !isHealthCheckRating(health)) {
         throw new Error('Incorrect or Health Check missing data');
     }
     return health;
