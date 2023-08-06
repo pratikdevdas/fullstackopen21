@@ -75,8 +75,7 @@ const Part = ({ part }: { part: CoursePart }) => {
     return (
       <div>
         <strong>
-          {part.name} {part.exerciseCount}
-        </strong>
+          {part.name} {part.exerciseCount}</strong>
         <div>{part.description}</div>
       </div>
     )
@@ -106,7 +105,7 @@ const Part = ({ part }: { part: CoursePart }) => {
           {part.name} {part.exerciseCount}
         </strong>
         <div>{part.description}</div>
-        <div>requirement: {part.requirements.map((n,i) => <span key={i}>{n},</span>)}</div>
+        <div>requirement: {part.requirements.map((n, i) => <span key={i}>{n},</span>)}</div>
       </div>
     )
   default:

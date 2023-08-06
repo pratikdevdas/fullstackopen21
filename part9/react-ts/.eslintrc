@@ -29,7 +29,7 @@
         "object-curly-spacing": ["error", "always"],
         "arrow-spacing": ["error", { "before": true, "after": true }],
         "semi": ["error", "never"],
-        "no-multiple-empty-lines": 1,
+        "no-multiple-empty-lines": 2,
         "no-console": 0
     }
 }
